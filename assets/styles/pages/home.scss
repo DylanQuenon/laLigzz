@@ -1,3 +1,108 @@
-.slide{
-    background-color: red;
+@import "../variables/variables.scss";
+#home {
+  @include background("../../../public/images/background/backgroundHome.webp");
+  .container_home {
+    padding: $spacing-9xl 0;
+    #row_home {
+      .left {
+        @include flexGap(column, $spacing-4xl);
+       
+        ;
+        @media all and (max-width: 798px) {
+          order: 2;
+        }
+      }
+      @media all and (max-width: 798px) {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8xl;
+        align-items: center;
+      }
+    }
+    .logo {
+      height: 50px;
+    }
+    .jumbotron {
+      @include flexGap(column, $spacing-2xl);
+      color: $color-secondary;
+      .jumbotron_text {
+        @include flexGap(column, $spacing-md);
+      }
+      .jumbotron_button {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        a {
+          align-items: center;
+        @include button-primary();
+        }
+      }
+    }
+  }
+}
+#right {
+  // position: relative;
+  @media all and (max-width: 798px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    order: 1;
+  }
+
+  .circleP {
+    width: 411.37px;
+    height: 411.37px;
+    border-radius: $radius-full;
+    background: $gradient-circle;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    @media all and (max-width: 798px) {
+      width: 200px;
+      height: 200px;
+    }
+    img {
+      display: block;
+      height: 600px;
+      z-index: 5;
+      @media all and (max-width: 798px) {
+        height: 350px;
+      }
+    }
+  }
+  .circle_tiny {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: $radius-full;
+    background: $gradient-circle2;
+    &:nth-child(1) {
+      top: -23%;
+      left: 93%;
+    }
+  }
+  .circleT {
+    bottom: -27% !important;
+    left: -31% !important;
+  }
+}
+
+//keyframes apparition
+.logo{
+  width: 180px;
+  display: flex;
+  object-fit: cover;
+  position: absolute;
+  top: 35%;
+  padding: $spacing-sm 0;
+  transform: translateX(-74%) rotate(-90deg);
+  position: relative;
+  border-bottom: solid 2px $color-secondary;
+  @media all and (max-width: 798px) {
+
+    display: none;
+
+  }
 }

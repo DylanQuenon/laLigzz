@@ -7,8 +7,11 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 import './styles/bootstrap.min.css';
-import './styles/pages/home.scss'
+import './styles/pages/home.scss';
+import './styles/partials/header.scss';
 import 'bootstrap/dist/js/bootstrap.bundle';
+import './js/home.js'
+import 'gsap'
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

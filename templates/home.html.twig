@@ -1,12 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
-<div class="slide">
-    <div class="col-md-6 offset-md-3">
-        <div class="alert alert-success">
-            danger
-        </div>
-</div>
+	<div class="slide" id="home">
+		{# JUMBOTRON AVEC CERCLES D IMAGES#}
+		<div class="wrapper">
+			<div class="container_home" id="">
+				<div
+					class="row" id="row_home">
+					{# JUMBOTRON AVEC PARTIE GAUCHE#}
+					<div class="col-md-5 d-flex left">
+
+						<img src="../../images/logo-laliga.webp" class="logo" alt="Logo - LaLiga">
+
+
+						<div class="jumbotron">
+							<div class="jumbotron_text">
+								<h1 class="display-xl kizard">La Liga no se juega, se gana</h1>
+								<p class="text-lg hero">Plongez dans l'univers envoûtant de la Liga. Actualités, matchs et classement vous y attendent.</p>
+							</div>
+							<div class="jumbotron_button">
+								<a href="#" class="text-lg hero d-flex position-relative">Découvrez le classement
+									<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#FF4B44"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
+								</a>
+							</div>
+
+						</div>
+					</div>
+					{# JUMBOTRON AVEC PARTIE DROITE#}
+					<div class="col-md-5 offset-md-2" id="right">
+						<div class="circleP">
+							<div class="circle_tiny"></div>
+							<div class="circle_tiny circleT"></div>
+							<img src="../../images/players.webp" class="players_pic" alt="Axel Witsel - Atlético Madrid">
+						</div>
+
+
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
 {% endblock %}

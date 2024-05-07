@@ -83,7 +83,7 @@ $color-tertiary:#FF4B44;
 $darken-tertiary:#C8433D;
 $tertiary-transparent:rgba(255, 75, 68,0.5);
 $gradient-circle:linear-gradient(90deg, rgba(255,75,68,1) 0%, rgba(153,45,41,1) 100%);
-$gradient-circle2:linear-gradient(90deg,#992d29 100%, rgba(255,75,68,1) 0%, );
+$gradient-circle2:linear-gradient(240deg,#992d29 0%, rgba(255,75,68,1) 100%, );
 
 
 // Mixins
@@ -100,7 +100,7 @@ $gradient-circle2:linear-gradient(90deg,#992d29 100%, rgba(255,75,68,1) 0%, );
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: $url-image
+    background-image: url($url-image);
 }
 @mixin flex($direction){
     display: flex;
@@ -114,7 +114,56 @@ $gradient-circle2:linear-gradient(90deg,#992d29 100%, rgba(255,75,68,1) 0%, );
     flex-direction: $direction;
     gap: $spacing;
 }
+@mixin button-primary(){
+    text-decoration: none;
+    overflow: hidden;
+    border-radius: $radius-full;
+    gap: $spacing-xxs;
+    background-color: $tertiary-transparent;
+    border: solid 1px $color-tertiary;
+    padding: 8px 16px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    color: $color-secondary;
+    &:hover::before {
+      animation: shine 1.5s ease-out infinite;
+    }
 
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100%;
+      background-image: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0) 70%
+      );
+      top: 0;
+      left: -100px;
+      opacity: 0.6;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100px;
+      }
+
+      60% {
+        left: 100%;
+      }
+
+      to {
+        left: 100%;
+      }
+    }
+}
+.wrapper{
+    margin: 0 auto;
+    width: 85%;
+
+}
 
 .display-2xl {
     @include font-style($font-family-hero, $display-font-size-2xl, $font-weight-regular, 1.2);
