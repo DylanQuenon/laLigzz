@@ -6,7 +6,18 @@ header{
     top: 0;
     left: 0;
     z-index: 200;
+    background-color: #2525250b;
+    backdrop-filter: blur(2px);
+    transition: all 0.3s;
 }  
+header.hide{
+  transform: translateY(-110%);
+  opacity: 0;
+}
+header.show{
+  transform: translateY(0%);
+  opacity: 1;
+}
 
 .menu {
     background-color: transparent;

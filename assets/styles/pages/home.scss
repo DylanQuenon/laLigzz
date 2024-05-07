@@ -1,5 +1,10 @@
 @import "../variables/variables.scss";
 #home {
+  position: relative;
+  .home_wave{
+    position: absolute;
+    left: 0;
+    bottom: 0  }
   @include background("../../../public/images/background/backgroundHome.webp");
   .container_home {
     padding: $spacing-9xl 0;
@@ -105,4 +110,34 @@
     display: none;
 
   }
+}
+.totop{
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  background-color: $color-primary;
+  z-index: 100;
+  transition: all 0.3s;
+  border: solid 1px $color-tertiary;
+  &:hover{
+    background-color: $color-tertiary;
+    svg {
+      fill: $color-primary;
+    }
+  }
+
+  svg{
+      text-align: center;
+      z-index: 100;
+      fill: $color-tertiary;
+      width: 48px;
+      transition: all 0.5s;  
+      
+  }
+}
+//css slider team
+#slider_team{
+  background-color: $color-secondary;
 }
