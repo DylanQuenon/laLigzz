@@ -2,12 +2,12 @@ import { TweenMax, Power1 } from 'gsap';
 
 //menu burger
 
+const menu = document.querySelector('.menu');
+const menuMobile = document.getElementById('menuMobile');
+const menuItems = document.querySelectorAll('#menuMobile ul li a');
 document.querySelector('.menu svg').addEventListener('click', () => {
-    const menu = document.querySelector('.menu');
-    const menuMobile = document.getElementById('menuMobile');
     menu.classList.toggle('opened');
     menuMobile.classList.toggle('opened');
-    const menuItems = document.querySelectorAll('#menuMobile ul li a');
 
     // Si le menu est ouvert
     if (menu.classList.contains('opened')) {

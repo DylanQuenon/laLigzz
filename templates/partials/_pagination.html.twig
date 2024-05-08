@@ -1,0 +1,28 @@
+{# Pagination #}
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {# Lien précédent (désactivé si nous sommes sur la première page) #}
+            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, {'page': page - 1}) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {# Boucle pour afficher les numéros de page #}
+            {% for i in 1..pages %}
+                {# Marquer la page actuelle comme active dans la pagination #}
+                <li class="page-item {% if page == i %}active{% endif %}">
+                    <a class="page-link" href="{{ path(route, {'page': i}) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {# Lien suivant (désactivé si nous sommes sur la dernière page) #}
+            <li class="page-item {% if page == pages %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, {'page': page + 1}) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

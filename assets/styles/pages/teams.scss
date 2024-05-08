@@ -1,0 +1,21 @@
+@import '../variables/variables.scss';
+#teamsPage{
+    color: $color-secondary;
+    .wrapper{
+        padding: $spacing-9xl 0;
+        .container_teamsPage{
+            @include flexGap(column,$spacing-2xl);
+            .title h2{
+                color:$color-tertiary;
+                padding: 2px ;
+                border-bottom: solid 1px $color-tertiary;
+            }
+          
+        }
+    }
+    
+}
+
+.picTeam{
+    width: 73px;
+}

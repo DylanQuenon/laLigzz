@@ -1,0 +1,80 @@
+@import '../variables/variables.scss';
+.team_card{
+    border: solid 3px $color-tertiary;
+    border-radius: 0 25px 0 25px;
+    padding:  $spacing-2xl;
+    margin: $spacing-2xl 0;
+    @include flexGap(row,$spacing-2xl);
+    align-items: center;
+    &:nth-child(2n){
+        border-radius: 25px 0 25px 0px !important;
+    }
+    .name_team{
+        @include flexGap(column,9px);
+        img{
+            width: 80px;
+        }
+        p{
+            text-transform: uppercase;
+            text-align: center;
+            color: $color-tertiary;
+        }
+    }   
+
+    .text_team{
+        @include flexGap(column,$spacing-2xl);
+        .text_team_button{
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            a{
+                text-decoration: none;
+                @include flex(row);
+                gap: $spacing-xxs;
+                padding: 6px 12px;
+                border: solid 1px $color-secondary;
+                border-radius: $radius-full;
+                color: $color-secondary;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                transition: 0.3s color;
+                &:before {
+                    content: "";
+                    position: absolute;
+                    z-index: -1;
+                    background: $color-secondary;
+                    height: 150px;
+                    width: 200px;
+                    border-radius: 50%;
+                   }
+                   
+                   &:hover {
+                    color: $color-primary;
+                    border:solid 1px $color-primary;
+                    & svg{
+                        fill: $color-primary;
+                    }
+                   }
+                   
+                   &:before {
+                    top: 100%;
+                    left: 100%;
+                    transition: all .7s;
+                   }
+                   
+                   &:hover:before {
+                    top: -30px;
+                    left: -30px;
+                   }
+                   
+                svg{
+                    fill: $color-secondary;
+                    width: 14px;
+                }
+            }
+        }
+    }
+    
+}
+

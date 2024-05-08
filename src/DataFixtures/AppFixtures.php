@@ -19,12 +19,12 @@ class AppFixtures extends Fixture
         {
             $team= new Team();
             $team->setName('equipe ' . $i)
-            ->setLogo('https://picsum.photos/id/'.$i.'/200/200')
-            ->setDescription($faker->sentence(2))
+            ->setLogo('https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png')
+            ->setDescription("Le Real Madrid, symbole de légende et d'excellence, incarne la passion et le prestige dans l'histoire du football.")
             ->setDevise($faker->sentence(1))
             ->setFondation($faker->dateTimeBetween('-100 years','now'))
             ->setCoach($faker->name())
-            ->setGoalscorer($faker->name())
+            ->setGoalscorer($faker->name().'('.rand(100,400).')')
             ->setPresident($faker->name());
             
             $manager->persist($team);

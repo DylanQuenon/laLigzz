@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipes{% endblock %}
+
+{% block body %}
+<div class="slide" id="teamsPage">
+    <div class="wrapper">
+        <div class="container_teamsPage">
+            <div class="title">
+                <h2 class="display-md kizard col-md-3">Equipes</h2>
+            </div>
+            <div class="row row_teams">
+                {% for team in pagination.data() %}
+                    {% include "partials/_teamsCard.html.twig" %}
+                {% endfor %}
+                   <div class="pagination">
+                        {{ pagination.display() }} {# Appelle le display de la pagination (configuré dans service yaml)#}
+                    </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+{% endblock %}
