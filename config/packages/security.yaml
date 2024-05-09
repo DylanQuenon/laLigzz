@@ -13,6 +13,20 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        admin:
+            pattern: ^/admin
+            provider: app_user_provider
+            form_login:
+                default_target_path: admin_teams_index
+                login_path: admin_account_login
+                check_path: admin_account_login
+            logout:
+                path: admin_account_logout
+                target: homepage 
+            # configure the maximum login attempts
+            login_throttling:
+                max_attempts: 3          # per minute ...
+                interval: '15 minutes' # ... or in a custom period
         main:
             lazy: true
             provider: app_user_provider
@@ -28,6 +42,8 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:
