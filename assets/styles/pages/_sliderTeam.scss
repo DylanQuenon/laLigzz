@@ -1,0 +1,45 @@
+@import "../variables/variables.scss";
+.swiper-slide{
+    transition: all 0.3s;
+
+    #teamsCard{
+        width: 83.4%;
+   
+    }
+    &:nth-child(1){
+        margin-left: 7.3%;
+    }
+}
+.controls_slider{
+    gap:12px;
+    .controls_slider_arrow{
+        padding: 20px;
+        transition: all 0.2s;
+        border-radius: $radius-full;
+        cursor: pointer;
+        &:hover{
+            background-color: #e8e8e8;
+
+        }
+    }
+   
+}
+.team_card{
+    background-color: $color-primary;
+    color: $color-secondary;
+}
+.swiper{
+    margin: 0 auto;
+}
+.swiper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    .swiper-wrapper{
+        display: flex;
+        margin: 0 auto;
+        width: 100%;
+
+    }
+  }
+  
