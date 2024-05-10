@@ -5,6 +5,7 @@ use Faker\Factory;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Entity\Image;
 use Cocur\Slugify\Slugify;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -62,6 +63,8 @@ class AppFixtures extends Fixture
              $users[] = $user; // ajouter un user au tableau (pour les annonces)
  
          }
+        //fixtures des équipes
+        $captions = ['logo_bg', 'cover', 'news_image'];
         for($i=1; $i<=20; $i++)
         {
             $team= new Team();
@@ -73,6 +76,15 @@ class AppFixtures extends Fixture
             ->setCoach($faker->name())
             ->setGoalscorer($faker->name().'('.rand(100,400).')')
             ->setPresident($faker->name());
+            //gestion des images
+            for($g=1; $g <=3; $g++)
+            {
+                $image = new Image();
+                $image->setPath('https://picsum.photos/id/'.$g.'/900')
+                ->setCaption($captions[array_rand($captions)])
+                    ->setTeam($team);
+                $manager->persist($image);    
+            }
             
             $manager->persist($team);
         }
