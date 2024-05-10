@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TeamRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TeamRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields:['name'], message:"Une autre équipe possède déjà ce nom, merci de le modifier")]
+
 class Team
 {
     #[ORM\Id]
@@ -19,6 +22,7 @@ class Team
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 10, max: 255, minMessage:"Le nom doit faire plus de 10 caractères", maxMessage: "Le nom ne doit pas faire plus de 255 caractères")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -28,21 +32,26 @@ class Team
     private ?string $logo = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 10,max:500, minMessage:'Votre description doit faire plus de 10 caractères',maxMessage:"Votre description ne doit pas faire plus de 500 caractères")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 2, max: 255, minMessage:"La devise doit faire plus de 2 caractères", maxMessage: "La devise ne doit pas faire plus de 255 caractères")]
     private ?string $devise = null;
 
     #[ORM\Column]
     private ?\DateTime $fondation = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 2, max: 255, minMessage:"Le coach doit faire plus de 2 caractères", maxMessage: "Le coach ne doit pas faire plus de 255 caractères")]
     private ?string $coach = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 2, max: 255, minMessage:"Le meilleur buteur doit faire plus de 2 caractères", maxMessage: "Le meilleur buteur ne doit pas faire plus de 255 caractères")]
     private ?string $goalscorer = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 2, max: 255, minMessage:"Le président ne doit faire plus de 2 caractères", maxMessage: "Le président ne doit pas faire plus de 255 caractères")]
     private ?string $president = null;
 
     /**

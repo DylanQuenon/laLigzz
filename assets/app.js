@@ -15,6 +15,7 @@ import './styles/partials/_cardTeam.scss';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './js/home.js'
 import './js/sliderTeam.js'
+import './js/team.js'
 import 'gsap'
 
 
