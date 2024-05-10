@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Entity\Image;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,4 +40,29 @@ class TeamController extends AbstractController
             'pagination' => $pagination
         ]);
     }
+    #[Route("/teams/{slug}", name:"teams_show")]
+    public function show(string $slug, Team $team): Response
+    {
+        // Utilisation de la méthode générique pour récupérer les images spécifiques
+        $logoImage = $this->getImageByCaption($team, 'logo_bg');
+        $coverImage = $this->getImageByCaption($team, 'cover');
+        $newsImage = $this->getImageByCaption($team, 'news_image');
+    
+        return $this->render("team/show.html.twig", [
+            'team' => $team,
+            'logoImage' => $logoImage,
+            'coverImage' => $coverImage,
+            'newsImage' => $newsImage,
+        ]);
+    }
+    private function getImageByCaption(Team $team, string $caption): ?Image
+{
+    foreach ($team->getImages() as $image) {
+        if ($image->getCaption() === $caption) {
+            return $image;
+        }
+    }
+
+    return null;
+}
 }

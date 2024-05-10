@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ team.name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ team.name }}</h1>
+
+    {# Affichage du logo #}
+    {% if logoImage is not null %}
+        <img src="{{ logoImage.path }}" alt="logo de {{ team.name }}">
+    {% endif %}
+
+    {# Affichage de l'image de couverture #}
+    {% if coverImage is not null %}
+        <img src="{{ coverImage.path }}" alt="cover de {{ team.name }}">
+    {% endif %}
+
+    {# Affichage de l'image de news #}
+    {% if newsImage is not null %}
+        <img src="{{ newsImage.path }}" alt="news image de {{ team.name }}">
+    {% endif %}
+
+    {# Autres informations sur l'équipe #}
+    <p>{{ team.devise }}</p>
+    <p>{{ team.coach }}</p>
+    <p>{{ team.goalscorer }}</p>
+    <p>{{ team.president }}</p>
+    <p>{{ team.fondation | date("d/m/Y") }}</p>
+{% endblock %}

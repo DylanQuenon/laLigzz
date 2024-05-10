@@ -1,4 +1,5 @@
 <div class="col-md-4 d-flex " id="teamsCard">
+    {% set url = path('teams_show', {'slug':team.slug}) %}
 	<div class="team_card d-flex">
 		<div class="name_team">
 			<img src="{{team.logo}}" alt="Image de l'équipe : {{team.name}}" class="picTeam">
@@ -8,7 +9,7 @@
 		<div class="text_team">
 			<p class="text-md hero">{{team.description}}</p>
 			<div class="text_team_button">
-				<a href="#" class="text-md hero">Voir plus
+				<a href="{{url}}" class="text-md hero">Voir plus
 					<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#252525"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
 				</a>
 			</div>
