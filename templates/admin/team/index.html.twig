@@ -34,9 +34,9 @@
                         <td class="text-center">{{team.goalscorer}}</td>
                         <td class="text-center">{{team.president}}</td>
                       
-                        <td class="text-center">
-                            <a href="#" class="btn btn-warning my-2"><i class="fas fa-edit"></i></a>
-                            <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                         <td class="text-center">
+                            <a href="{{path("admin_teams_edit",{"slug":team.slug})}}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                            <a href="{{path("admin_teams_delete",{"slug":team.slug})}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}

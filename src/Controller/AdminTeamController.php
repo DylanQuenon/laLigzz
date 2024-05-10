@@ -71,4 +71,60 @@ class AdminTeamController extends AbstractController
         ]);
 
     }
+
+    /**
+     * Permet de modifier une team
+     *
+     * @param Teams $team
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[Route("/admin/teams/{slug}/edit", name: "admin_teams_edit")]
+    public function edit(Team $team, Request $request, EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(TeamType::class, $team);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($team);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "L'équipe <strong>".$team->getName()."</strong> a bien été modifiée"
+            );
+
+        }
+
+        return $this->render("admin/team/edit.html.twig",[
+            "team" => $team,
+            "myForm" => $form->createView()
+        ]);
+
+    }
+     
+    /**
+     * Permet d'effacer une team
+     *
+     * @param Team $team
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    #[Route("/admin/teams/{slug}/delete", name: "admin_teams_delete")]
+    public function delete(Team $team, EntityManagerInterface $manager): Response
+    {
+        // on en peut pas supprimer une annonce qui possède des réservations
+      
+            $this->addFlash(
+                "success",
+                "L'annonce <strong>".$team->getName()."</strong> a bien été supprimée"
+            );
+            $manager->remove($team);
+            $manager->flush();
+        
+
+        return $this->redirectToRoute('admin_teams_index');
+    }
 }
