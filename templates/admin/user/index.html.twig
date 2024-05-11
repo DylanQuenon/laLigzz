@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container-fluid full">
+        <h1 class="my-2">Gestion des utilisateurs</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom & Prénom</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Rôles</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in pagination.data %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.fullName }}</td>
+                        <td class="text-center">{{ user.email }}</td>
+                        <td class="text-center">
+                         {# place le formulaire ici#}
+                         {% for role in user.roles %}
+                         <span class="badge bg-primary">{{ role }}</span>
+                         {% endfor %}
+                        </td>
+                        <td class="text-center">
+                           <a href="{{path("admin_users_edit",{"id":user.id})}}">Modifier le role</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {# pagination #}
+        {{ pagination.display() }}
+    </div>
+{% endblock %}

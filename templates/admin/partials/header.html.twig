@@ -10,23 +10,21 @@
                 <a class="nav-link" href="{{ path('admin_dashboard_index') }}"><i class="fas fa-chart-line"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('admin_teams_index') }}"><i class="fas fa-hotel"></i> Annonces</a>
+                <a class="nav-link" href="{{ path('admin_teams_index') }}"><i class="fas fa-hotel"></i> Equipes</a>
             </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-folder"></i> Réservations</a>
+                <a class="nav-link" href="{{ path('admin_users_index')}}"><i class="fas fa-folder"></i> Utilisateurs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-comments"></i> Commentaires</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/logout"><i class="fas fa-users"></i> Se déconnecter</a>
-            </li>
+         
       </ul>
        <ul class="navbar-nav ms-auto me-5">
             <li class="nav-item">
                 <a href="{{ path('homepage') }}" target="_blank" class="nav-link"><i class="fas fa-eye"></i> Voir le site</a>
             </li>
-            {# {% if app.user %}
+            {% if app.user %}
                 <li class="nav-item dropdown">
                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="accountDropdownLink">
                     {% if app.user.picture %}
@@ -40,7 +38,7 @@
                         <a href="{{ path('admin_account_logout')}}" class="dropdown-item">Déconnexion</a>
                      </div>
                 </li>
-            {% endif %} #}
+            {% endif %}
 
       </ul>
 

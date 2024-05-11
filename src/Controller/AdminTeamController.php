@@ -15,6 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminTeamController extends AbstractController
 {
     //accéder aux équipes dans l'admin
+    /**
+     * Récupère les équipes pour l'administration
+     *
+     * @param PaginationService $pagination
+     * @param integer $page
+     * @return Response
+     */
     #[Route('/admin/teams/{page<\d+>?1}', name: 'admin_teams_index')]
     public function index(PaginationService $pagination, int $page): Response
     {
