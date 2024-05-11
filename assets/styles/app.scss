@@ -12,3 +12,7 @@ html,body{
     width: 100%;
     background-color: $color-primary;
 }
+.modal-content button:first-child {
+    background-color: none !important;
+    color: #fff;
+  }

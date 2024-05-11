@@ -97,6 +97,7 @@ class AdminTeamController extends AbstractController
         {
             $manager->persist($team);
             $manager->flush();
+            
 
             $this->addFlash(
                 'success',

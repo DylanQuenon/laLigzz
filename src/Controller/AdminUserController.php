@@ -56,9 +56,12 @@ class AdminUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                "Le roles de <strong>".$user->getFullName()."</strong> a bien été modifiée"
+                "Le roles de <strong>".$user->getFullName()."</strong> ont bien été modifiés"
             );
-
+            return $this->redirectToRoute('admin_users_index',[
+              
+              ]);
+            
         }
 
         return $this->render("admin/user/edit.html.twig",[
