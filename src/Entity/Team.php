@@ -61,9 +61,23 @@ class Team
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'Team', orphanRemoval: true)]
     private Collection $images;
 
+    /**
+     * @var Collection<int, News>
+     */
+    #[ORM\ManyToMany(targetEntity: News::class, mappedBy: 'team')]
+    private Collection $news;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'FollowedTeams')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->news = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
      /**
@@ -221,6 +235,60 @@ class Team
             if ($image->getTeam() === $this) {
                 $image->setTeam(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, News>
+     */
+    public function getNews(): Collection
+    {
+        return $this->news;
+    }
+
+    public function addNews(News $news): static
+    {
+        if (!$this->news->contains($news)) {
+            $this->news->add($news);
+            $news->addTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNews(News $news): static
+    {
+        if ($this->news->removeElement($news)) {
+            $news->removeTeam($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addFollowedTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeFollowedTeam($this);
         }
 
         return $this;

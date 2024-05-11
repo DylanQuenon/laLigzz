@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 use Faker\Factory;
 
+use App\Entity\News;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\Image;
@@ -37,29 +38,11 @@ class AppFixtures extends Fixture
           
         $manager->persist($admin);
 
-        // gestion des utilisateurs 
-        $users = []; // init d'un tableau pour récup des user pour les annonces
-        $genres = ['male','femelle'];
+      
+        //fixtures des actualités
+      
+        
 
-        for($u=1 ; $u <= 10; $u++)
-        {
-            $user = new User();
-            $genre = $faker->randomElement($genres);
-
-            $hash = $this->passwordHasher->hashPassword($user, 'password');
-
-            $user->setFirstName($faker->firstName($genre))
-                 ->setLastName($faker->lastName())
-                 ->setEmail($faker->email())
-                 ->setIntroduction($faker->sentence())
-                 ->setDescription('<p>'.join('</p><p>',$faker->paragraphs(3)).'</p>')
-                 ->setPassword($hash)
-                 ->setPicture('');
-
-            $manager->persist($user);    
-
-            $users[] = $user; 
-        }
 
         //fixtures des équipes
         $captions = ['logo_bg', 'cover', 'news_image'];
@@ -99,6 +82,62 @@ class AppFixtures extends Fixture
             }
             
             $manager->persist($team);
+            $teams[] = $team; 
+        }
+
+        //gestion des users 
+          // gestion des utilisateurs 
+          $users = []; // init d'un tableau pour récup des user pour les annonces
+          $genres = ['male','femelle'];
+  
+          for($u=1 ; $u <= 10; $u++)
+          {
+              $user = new User();
+              $genre = $faker->randomElement($genres);
+  
+              $hash = $this->passwordHasher->hashPassword($user, 'password');
+  
+              $user->setFirstName($faker->firstName($genre))
+                   ->setLastName($faker->lastName())
+                   ->setEmail($faker->email())
+                   ->setIntroduction($faker->sentence())
+                   ->setDescription('<p>'.join('</p><p>',$faker->paragraphs(3)).'</p>')
+                   ->setPassword($hash)
+                   ->setPicture('');
+                       // Génération aléatoire du nombre d'équipes associées à cette news
+                for($n=1;$n<=rand(1,2);$n++)
+                {
+                    $user->addFollowedTeam($teams[rand(0, count($teams) - 1)]);
+    
+                }
+  
+              $manager->persist($user);    
+  
+              $users[] = $user; 
+          }
+  
+
+        //gestion des actus
+        $status=['officiel','rumeur'];
+     
+        
+        for ($i = 1; $i <= 20; $i++) {
+            $news = new News();
+            $news->setTitle($faker->sentence(2))
+                ->setSubtitle($faker->sentence(2))
+                ->setText('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+                ->setStatus($faker->randomElement($status))
+                ->setCover('https://picsum.photos/id/1'.$i.'/200/300')
+                ->setAuthor($users[rand(0, count($users) - 1)]);
+            
+                // Génération aléatoire du nombre d'équipes associées à cette news
+                for($n=1;$n<=rand(1,2);$n++)
+                {
+                    $news->addTeam($teams[rand(0, count($teams) - 1)]);
+    
+                }
+            $manager->persist($news);
+        
         }
 
         $manager->flush();

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -51,6 +53,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    /**
+     * @var Collection<int, News>
+     */
+    #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'author')]
+    private Collection $news;
+
+    /**
+     * @var Collection<int, Team>
+     */
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'users')]
+    private Collection $FollowedTeams;
+
+    public function __construct()
+    {
+        $this->news = new ArrayCollection();
+        $this->FollowedTeams = new ArrayCollection();
+    }
 
     /**
      * Permet de créer un slug automatiquement avec le nom et prénom de l'utilisateur
@@ -221,6 +241,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, News>
+     */
+    public function getNews(): Collection
+    {
+        return $this->news;
+    }
+
+    public function addNews(News $news): static
+    {
+        if (!$this->news->contains($news)) {
+            $this->news->add($news);
+            $news->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNews(News $news): static
+    {
+        if ($this->news->removeElement($news)) {
+            // set the owning side to null (unless already changed)
+            if ($news->getAuthor() === $this) {
+                $news->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getFollowedTeams(): Collection
+    {
+        return $this->FollowedTeams;
+    }
+
+    public function addFollowedTeam(Team $followedTeam): static
+    {
+        if (!$this->FollowedTeams->contains($followedTeam)) {
+            $this->FollowedTeams->add($followedTeam);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowedTeam(Team $followedTeam): static
+    {
+        $this->FollowedTeams->removeElement($followedTeam);
 
         return $this;
     }
