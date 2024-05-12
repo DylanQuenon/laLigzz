@@ -56,7 +56,7 @@ class TeamController extends AbstractController
         ]);
     }
     private function getImageByCaption(Team $team, string $caption): ?Image
-{
+    {
     foreach ($team->getImages() as $image) {
         if ($image->getCaption() === $caption) {
             return $image;

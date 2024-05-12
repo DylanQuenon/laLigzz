@@ -1,75 +1,94 @@
-import { TweenMax, Power1 } from 'gsap';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-//menu burger
+gsap.registerPlugin(ScrollTrigger);
 
+// Menu burger
 const menu = document.querySelector('.menu');
 const menuMobile = document.getElementById('menuMobile');
 const menuItems = document.querySelectorAll('#menuMobile ul li a');
+
 document.querySelector('.menu svg').addEventListener('click', () => {
     menu.classList.toggle('opened');
     menuMobile.classList.toggle('opened');
 
-    // Si le menu est ouvert
     if (menu.classList.contains('opened')) {
         menuItems.forEach((item, index) => {
-            // Animation d'apparition progressive des éléments du menu
-            TweenMax.fromTo(item, 0.8, {
+            gsap.fromTo(item, {
                 opacity: 0,
                 y: 20
             }, {
                 opacity: 1,
                 y: 0,
-                ease: Power1.easeOut,
-                delay: index * 0.1 
+                ease: 'power1.out',
+                duration: 0.8,
+                delay: index * 0.1
             });
         });
     } else {
-        // Si le menu est fermé
         menuItems.forEach(item => {
-            // Animation de disparition des éléments du menu
-            TweenMax.to(item, 0.3, {
+            gsap.to(item, {
                 opacity: 0,
                 y: 20,
-                ease: Power1.easeIn
+                ease: 'power1.in',
+                duration: 0.3
             });
         });
     }
 });
 
-//class hide et active sur le header pour le scroll
-const header=document.querySelector('header')
+// Ajout des classes 'hide' et 'show' sur le header en fonction du scroll
+const header = document.querySelector('header');
 let lastScrollValue = 0;
 
-document.addEventListener('scroll',() => {
-    let top  = document.documentElement.scrollTop;
-if(lastScrollValue < top) {
-    header.classList.add("hide");
-    header.classList.remove("show");
-} else {
-    header.classList.remove("hide");
-    header.classList.add("show");
-}
-lastScrollValue = top;
+document.addEventListener('scroll', () => {
+    let top = document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (lastScrollValue < top) {
+        header.classList.add('hide');
+        header.classList.remove('show');
+    } else {
+        header.classList.remove('hide');
+        header.classList.add('show');
+    }
+    lastScrollValue = top;
 });
 
+// Bouton retour en haut de page
 const toTop = document.createElement('div');
 toTop.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FF4B44"><path d="m296-345-56-56 240-240 240 240-56 56-184-184-184 184Z"/></svg>`;
 document.body.appendChild(toTop);
 toTop.classList.add('totop');
-toTop.style.cssText = "position: fixed; bottom: 5px; right: 1%; cursor: pointer; border-radius: 50% 50%;";
+toTop.style.cssText = 'position: fixed; bottom: 5px; right: 1%; cursor: pointer; border-radius: 50% 50%;';
 
 toTop.addEventListener('click', () => {
-window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: "smooth",
-});
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
 });
 
 const onScroll = () => {
-const scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-toTop.style.display = scroll < 50 ? "none" : "flex";
+    const scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    toTop.style.display = scroll < 50 ? 'none' : 'flex';
 };
 
 onScroll();
 window.addEventListener('scroll', onScroll);
+
+// Fonction pour basculer la classe 'active' sur la carte
+const toggleCardDetail = (event) => {
+    const card = event.currentTarget;
+    card.classList.toggle('active');
+    console.log('click');
+};
+
+// Récupérer toutes les cartes
+const cards = document.querySelectorAll('.cardNews');
+
+// Ajouter un écouteur d'événement de clic à chaque carte
+cards.forEach(card => {
+    card.addEventListener('click', toggleCardDetail);
+});
+
+

@@ -143,10 +143,8 @@
 }
 
 //slider TEAM
-#slider_team{
-  .slider_container{
-    @include flexGap(column, $spacing-4xl);
-  }
+.slider_container{
+  @include flexGap(column, $spacing-4xl);
   .slider_container_heading{
     @include flexGap(column, $spacing-2xl);
     h2{
@@ -154,6 +152,6 @@
       padding: 2px 0;
       border-bottom: solid 2px $color-tertiary ;
     }
-
+  
   }
 }

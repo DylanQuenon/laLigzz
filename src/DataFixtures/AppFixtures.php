@@ -114,7 +114,7 @@ class AppFixtures extends Fixture
               $manager->persist($user);    
   
               $users[] = $user; 
-          }
+          } 
   
 
         //gestion des actus

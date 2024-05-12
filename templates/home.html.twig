@@ -58,30 +58,70 @@
 			</div>
 
 		</div>
-				<div class="swiper">
-					<!-- Additional required wrapper -->
-					<div class="swiper-wrapper">
-						{% for team in teams %}
-							<div class="swiper-slide">
-								{% include "partials/_teamsCard.html.twig" %}
-							</div>
-
-						{% endfor %}
+		<div class="swiper">
+			<!-- Additional required wrapper -->
+			<div class="swiper-wrapper">
+				{% for team in teams %}
+					<div class="swiper-slide">
+						{% include "partials/_teamsCard.html.twig" %}
 					</div>
-				
 
-					<!-- If we need navigation buttons -->
+				{% endfor %}
+			</div>
 
-					<!-- If we need scrollbar -->
-				
+
+			<!-- If we need navigation buttons -->
+
+			<!-- If we need scrollbar -->
+
+		</div>
+		<div class="wrapper">
+			<div class="controls_slider d-flex">
+				<div class="controls_slider_arrow arrow_prev">
+					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
 				</div>
-				<div class="wrapper">
-					<div class="controls_slider d-flex">
-						<div class="controls_slider_arrow arrow_prev"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg></div>
-						<div class="controls_slider_arrow arrow_next"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></div>
-					
-					</div>
-				
+				<div class="controls_slider_arrow arrow_next">
+					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
 				</div>
+
+			</div>
+
+		</div>
 	</div>
+	<div class="slide" id="news_team">
+	<div class="swiper-news">
+			<!-- Additional required wrapper -->
+			<div class="swiper-wrapper">
+				{% for new in news %}
+					<div class="swiper-slide">
+						{% include "partials/_cardNews.html.twig" %}
+					</div>
+
+				{% endfor %}
+			</div>
+
+
+			<!-- If we need navigation buttons -->
+
+			<!-- If we need scrollbar -->
+
+		</div>
+
+
+	</div>
+			<div class="wrapper">
+			<div class="controls_slider d-flex">
+				<div class="controls_slider_arrow arrow_prev_news">
+					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+				</div>
+				<div class="controls_slider_arrow arrow_next_news">
+					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
 {% endblock %}

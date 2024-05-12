@@ -1,0 +1,21 @@
+{% set n = new.team %}
+<div class="cardNews">
+	<img src="{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
+	<div class="card-content">
+		<div class="card-header">
+			<span class="card-title badge badge_news text-uppercase {{ new.status == 'officiel' ? 'red' : 'green' }}">
+				{{ new.status }}:
+			</span>
+			<br>
+
+			{% for n in n %}
+				<span class="card-title badge badge_news_teams text-uppercase">{{n.name}}</span>
+			{% endfor %}
+			<p class="card-title text-xl stratos text-uppercase">{{new.title}}</p>
+			<p class="card-title text-xs hero text-uppercase">{{new.createdAt | date('d-m-Y')}}</p>
+		</div>
+		{% set text_without_tags = new.text | striptags %}
+		<p class="card-text text-md hero">{{ text_without_tags | slice(0, 100) ~ '....' | raw | nl2br }}</p>
+		<a href="#" class="card-text button_news_more text-xs hero">VOIR PLUS</a>
+	</div>
+</div>
