@@ -108,5 +108,11 @@ margin: 6px 0;
 }
 .button_news_more{
     @include button-primary();
+    display: block;
+    overflow: hidden;
 
+}
+.link_news_button{
+  width: 100%;
+  display: flex;
 }

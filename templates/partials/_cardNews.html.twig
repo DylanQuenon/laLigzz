@@ -16,6 +16,8 @@
 		</div>
 		{% set text_without_tags = new.text | striptags %}
 		<p class="card-text text-md hero">{{ text_without_tags | slice(0, 100) ~ '....' | raw | nl2br }}</p>
-		<a href="#" class="card-text button_news_more text-xs hero">VOIR PLUS</a>
+		<div class="link_news_button">
+			<a href="#" class="card-text button_news_more text-xs hero">VOIR PLUS</a>
+		</div>
 	</div>
 </div>

@@ -9,6 +9,27 @@ header{
     background-color: #22222238;
     backdrop-filter: blur(2px);
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+ 
+   ul{
+    display: flex;
+    gap: $spacing-4xl;
+    align-items: center;
+    padding: $spacing-lg $spacing-md;
+    list-style: none;
+    li a{
+      padding: 8px 16px;
+      background-color: #e1e1e1bb;
+      border-radius: $radius-full;
+      border: solid 2px $color-secondary;
+      text-decoration: none;
+      color: $color-primary;
+      overflow: hidden;
+      display: block;
+    }
+   }
 }  
 header.hide{
   transform: translateY(-110%);
@@ -133,7 +154,7 @@ header.show{
                 z-index: 9855;
                 font-family: $font-family-stratos;
                 color: $color-tertiary;
-                font-size: $text-font-size-xl;
+                font-size: $text-font-size-lg;
                 letter-spacing: 0.2rem;
             }
            
