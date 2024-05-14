@@ -30,7 +30,7 @@
 					<tr>
 						<td>{{team.id}}</td>
 						<td>{{team.name}}</td>
-						<td><img src="{{team.logo}}" alt="" style="max-width: 30px;"></td>
+						<td><img src="/uploads/{{team.logo}}" alt="" style="max-width: 30px;"></td>
 						<td>{{ team.description|length > 50 ? team.description|slice(0, 50) ~ '...' : team.description }}</td>
 						<td class="text-center">{{team.devise}}</td>
 						<td class="text-center">{{team.fondation | date("d-m-Y")}}</td>

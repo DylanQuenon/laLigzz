@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ImageRepository;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -23,9 +24,22 @@ class Image
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $Team = null;
 
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): self
+    {
+        $this->file = $file;
+        return $this;
     }
 
     public function getPath(): ?string
@@ -63,4 +77,5 @@ class Image
 
         return $this;
     }
+
 }
