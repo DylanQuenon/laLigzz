@@ -65,7 +65,7 @@ class AppFixtures extends Fixture
             for($g=1; $g <= 3; $g++)
             {
                 $image = new Image();
-                $image->setPath('https://picsum.photos/id/'.$g.'/900');
+                $image->setUrl('https://picsum.photos/id/'.$g.'/900');
 
                 // Sélection aléatoire d'un type de caption qui n'a pas déjà été utilisé
                 do {

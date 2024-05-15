@@ -24,7 +24,7 @@ class TeamType extends ApplicationType
                     'placeholder' => "Entrez le nom de l'équipe",
                 ]
                 ])
-            ->add('logo', UrlType::class, $this->getConfiguration("Url de l'image", "Donnez l'adresse de votre image"))
+            ->add('logo', FileType::class, $this->getConfiguration("Url de l'image", "Donnez l'adresse de votre image"))
             ->add('description',TextareaType::class, $this->getConfiguration('Description du club','Donnez une brève description du club'))
             ->add('devise',TextType::class, $this->getConfiguration('Devise','Quelle est la devise du club'))
             ->add('fondation', null, [
@@ -39,8 +39,9 @@ class TeamType extends ApplicationType
             ->add('president',TextType::class,$this->getConfiguration("Nom du président","Qui est le président du club?"))
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,
-                'allow_add' => true, // pour le data_prototype
-                'allow_delete' => true
+                'allow_add' => true, 
+                'allow_delete' => true,
+                
             ])
         ;
     }

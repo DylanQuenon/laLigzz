@@ -14,28 +14,28 @@ class Image
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $path = null;
+    private ?string $url = null;
 
     #[ORM\Column(length: 255)]
     private ?string $caption = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Team $Team = null;
+    private ?Team $team = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPath(): ?string
+    public function getUrl(): ?string
     {
-        return $this->path;
+        return $this->url;
     }
 
-    public function setPath(string $path): static
+    public function setUrl(string $url): static
     {
-        $this->path = $path;
+        $this->url = $url;
 
         return $this;
     }
@@ -54,12 +54,12 @@ class Image
 
     public function getTeam(): ?Team
     {
-        return $this->Team;
+        return $this->team;
     }
 
-    public function setTeam(?Team $Team): static
+    public function setTeam(?Team $team): static
     {
-        $this->Team = $Team;
+        $this->team = $team;
 
         return $this;
     }

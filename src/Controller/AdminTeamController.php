@@ -34,30 +34,64 @@ class AdminTeamController extends AbstractController
            'pagination' => $pagination
         ]);
     }
+
     #[Route("/admin/teams/new", name:"admin_teams_create")]
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
-
         $team = new Team();
-
-        $form = $this->createForm(TeamType::class, $team);
-
-     
+        $form = $this->createForm(TeamType::class, $team);     
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // gestion des images 
-            foreach($team->getImages() as $image)
+            // dd($form['images']);
+            $file = $form['logo']->getData();
+            if(!empty($file))
             {
-                $image->setTeam($team);
-                $manager->persist($image);
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
+                try{
+                    $file->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e)
+                {
+                    return $e->getMessage();
+                }
+                $team->setLogo($newFilename);
+
             }
 
-            // intégration du user
-         ;
+            // gestion des images 
+            // $files=->getData();
+            // dd($files);
+            foreach($form['images'] as $myFile){
 
-            // je persiste mon objet Ad
+                // dd($file->getUrl());
+                $fileInfo=$myFile->getData();
+                dd($myFile);
+                $fileUrl=$fileInfo->getUrl();
+                // dd($file->getUrl());
+
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
+                try{
+                    $file->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                }catch(FileException $e)
+                {
+                    return $e->getMessage();
+                }
+                $image->setTeam($team);
+                $manager->persist($image);
+
+            }
+            // je persiste mon objet team
             $manager->persist($team);
             // j'envoie les persistances dans la bdd
             $manager->flush();
@@ -70,13 +104,11 @@ class AdminTeamController extends AbstractController
             return $this->redirectToRoute('admin_dashboard_index',[
                 'slug' => $team->getSlug()
             ]);
-
         }
 
         return $this->render("admin/team/new.html.twig",[
             'myForm' => $form->createView()
         ]);
-
     }
 
     /**
@@ -103,9 +135,7 @@ class AdminTeamController extends AbstractController
                 'success',
                 "L'équipe <strong>".$team->getName()."</strong> a bien été modifiée"
             );
-
         }
-
         return $this->render("admin/team/edit.html.twig",[
             "team" => $team,
             "myForm" => $form->createView()
@@ -123,16 +153,13 @@ class AdminTeamController extends AbstractController
     #[Route("/admin/teams/{slug}/delete", name: "admin_teams_delete")]
     public function delete(Team $team, EntityManagerInterface $manager): Response
     {
-        // on en peut pas supprimer une annonce qui possède des réservations
-      
-            $this->addFlash(
-                "success",
-                "L'annonce <strong>".$team->getName()."</strong> a bien été supprimée"
-            );
-            $manager->remove($team);
-            $manager->flush();
+        $this->addFlash(
+            "success",
+            "L'annonce <strong>".$team->getName()."</strong> a bien été supprimée"
+        );
+        $manager->remove($team);
+        $manager->flush();
         
-
         return $this->redirectToRoute('admin_teams_index');
     }
 }

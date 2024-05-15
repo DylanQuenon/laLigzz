@@ -25,7 +25,7 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('path', UrlType::class, [
+            ->add('url', FileType::class, [
                 'attr' => [
                     'placeholder' => 'Url de l\'image'
                 ]

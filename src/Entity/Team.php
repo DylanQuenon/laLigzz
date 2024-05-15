@@ -29,7 +29,7 @@ class Team
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Url(message: "Il faut une URL valide")]
+    // #[Assert\Url(message: "Il faut une URL valide")]
     private ?string $logo = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -58,7 +58,7 @@ class Team
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'Team', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'team', orphanRemoval: true)]
     private Collection $images;
 
     /**
