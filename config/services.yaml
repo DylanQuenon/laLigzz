@@ -26,3 +26,6 @@ services:
     App\Service\PaginationService:
         arguments:
             $templatePath: 'partials/_pagination.html.twig'
+    App\Service\FileUploaderService:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/public/uploads'

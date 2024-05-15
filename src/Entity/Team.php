@@ -28,8 +28,7 @@ class Team
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255)]
-    // #[Assert\Url(message: "Il faut une URL valide")]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $logo = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -55,11 +54,7 @@ class Team
     #[Assert\Length(min: 2, max: 255, minMessage:"Le président ne doit faire plus de 2 caractères", maxMessage: "Le président ne doit pas faire plus de 255 caractères")]
     private ?string $president = null;
 
-    /**
-     * @var Collection<int, Image>
-     */
-    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'team', orphanRemoval: true)]
-    private Collection $images;
+   
 
     /**
      * @var Collection<int, News>
@@ -72,6 +67,15 @@ class Team
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'FollowedTeams')]
     private Collection $users;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $logoBackground = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cover = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $newsPicture = null;
 
     public function __construct()
     {
@@ -210,35 +214,7 @@ class Team
         return $this;
     }
 
-    /**
-     * @return Collection<int, Image>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): static
-    {
-        if (!$this->images->contains($image)) {
-            $this->images->add($image);
-            $image->setTeam($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): static
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getTeam() === $this) {
-                $image->setTeam(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, News>
@@ -290,6 +266,42 @@ class Team
         if ($this->users->removeElement($user)) {
             $user->removeFollowedTeam($this);
         }
+
+        return $this;
+    }
+
+    public function getLogoBackground(): ?string
+    {
+        return $this->logoBackground;
+    }
+
+    public function setLogoBackground(?string $logoBackground): static
+    {
+        $this->logoBackground = $logoBackground;
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(?string $cover): static
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    public function getNewsPicture(): ?string
+    {
+        return $this->newsPicture;
+    }
+
+    public function setNewsPicture(?string $newsPicture): static
+    {
+        $this->newsPicture = $newsPicture;
 
         return $this;
     }

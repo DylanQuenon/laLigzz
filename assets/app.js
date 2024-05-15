@@ -10,14 +10,14 @@ import './styles/bootstrap.min.css';
 import './styles/pages/home.scss';
 import './styles/pages/teams.scss';
 import './styles/pages/_sliderTeam.scss';
-import './styles/partials/_cardNews.scss';
+// import './styles/partials/_cardNews.scss';
 import './styles/partials/header.scss';
 import './styles/partials/_cardTeam.scss';
 import 'bootstrap/dist/js/bootstrap.bundle';
+// import './js/sliderTeam.js'
 import './js/home.js'
-import './js/sliderTeam.js'
 import './js/_sliderNews.js'
-import './js/team.js'
+
 import 'gsap'
 
 

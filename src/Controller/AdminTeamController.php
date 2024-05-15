@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Entity\Image;
 use App\Form\TeamType;
+use App\Form\TeamEditType;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
+use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminTeamController extends AbstractController
@@ -34,9 +38,8 @@ class AdminTeamController extends AbstractController
            'pagination' => $pagination
         ]);
     }
-
-    #[Route("/admin/teams/new", name:"admin_teams_create")]
-    public function create(Request $request, EntityManagerInterface $manager): Response
+ #[Route("/admin/teams/new", name:"admin_teams_create")]
+    public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
     {
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);     
@@ -44,53 +47,11 @@ class AdminTeamController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // dd($form['images']);
-            $file = $form['logo']->getData();
-            if(!empty($file))
-            {
-                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
-                try{
-                    $file->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                }catch(FileException $e)
-                {
-                    return $e->getMessage();
-                }
-                $team->setLogo($newFilename);
+            $this->handleFileUpload($form, $team, 'logo', $fileUploader);
+            $this->handleFileUpload($form, $team, 'logoBackground', $fileUploader);
+            $this->handleFileUpload($form, $team, 'cover', $fileUploader);
+            $this->handleFileUpload($form, $team, 'newsPicture', $fileUploader);
 
-            }
-
-            // gestion des images 
-            // $files=->getData();
-            // dd($files);
-            foreach($form['images'] as $myFile){
-
-                // dd($file->getUrl());
-                $file=$myFile->getData();
-                // dd($myFile);
-                // $fileUrl=$fileInfo->getUrl();
-                // dd($file->getUrl());
-
-                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
-                try{
-                    $file->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                }catch(FileException $e)
-                {
-                    return $e->getMessage();
-                }
-                $image->setTeam($team);
-                $manager->persist($image);
-
-            }
             // je persiste mon objet team
             $manager->persist($team);
             // j'envoie les persistances dans la bdd
@@ -101,7 +62,7 @@ class AdminTeamController extends AbstractController
                 "L'équipe du <strong>".$team->getName()."</strong> a bien été enregistrée"
             );
 
-            return $this->redirectToRoute('admin_dashboard_index',[
+            return $this->redirectToRoute('admin_teams_edit',[
                 'slug' => $team->getSlug()
             ]);
         }
@@ -109,6 +70,16 @@ class AdminTeamController extends AbstractController
         return $this->render("admin/team/new.html.twig",[
             'myForm' => $form->createView()
         ]);
+    }
+
+    private function handleFileUpload($form, $team, $field, $fileUploader)
+    {
+        $file = $form[$field]->getData();
+        if ($file) {
+            $newFilename = $fileUploader->upload($file);
+            $setter = 'set' . ucfirst($field);
+            $team->$setter($newFilename);
+        }
     }
 
     /**
@@ -122,25 +93,25 @@ class AdminTeamController extends AbstractController
     #[Route("/admin/teams/{slug}/edit", name: "admin_teams_edit")]
     public function edit(Team $team, Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(TeamType::class, $team);
+        $form = $this->createForm(TeamEditType::class, $team);
         $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
+    
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($team);
             $manager->flush();
-            
-
+    
             $this->addFlash(
                 'success',
                 "L'équipe <strong>".$team->getName()."</strong> a bien été modifiée"
             );
+    
+            return $this->redirectToRoute('admin_teams_index');
         }
+    
         return $this->render("admin/team/edit.html.twig",[
             "team" => $team,
             "myForm" => $form->createView()
         ]);
-
     }
      
     /**
@@ -153,6 +124,22 @@ class AdminTeamController extends AbstractController
     #[Route("/admin/teams/{slug}/delete", name: "admin_teams_delete")]
     public function delete(Team $team, EntityManagerInterface $manager): Response
     {
+        if(!empty($team->getLogo()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$team->getLogo());
+        }
+        if(!empty($team->getLogoBackground()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$team->getLogoBackground());
+        }
+        if(!empty($team->getCover()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$team->getCover());
+        }
+        if(!empty($team->getNewsPicture()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$team->getNewsPicture());
+        }
         $this->addFlash(
             "success",
             "L'annonce <strong>".$team->getName()."</strong> a bien été supprimée"

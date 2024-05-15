@@ -1,3 +1,7 @@
+{% block stylesheets %}
+	{{encore_entry_link_tags('cardNewsStyle')}}
+{% endblock %}
+
 {% set n = new.team %}
 <div class="cardNews">
 	<img src="{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">

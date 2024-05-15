@@ -1,76 +1,64 @@
 {% extends "admin/base.html.twig" %}
 
-{% block title %}Edition de l'annonce: {{team.name}}{% endblock %}
+{% block title %}Edition de l'équipe:
+	{{ team.name }}
+{% endblock %}
 
 {% form_theme myForm _self %}
 
 {% block body %}
-    <div class="container">
-        <h1>Modification de l'équipe {{team.name}}</h1>
-        <a href="{{path('admin_teams_index')}}" class="btn btn-secondary my-3">Retour</a>
-        {{form_start(myForm)}}
-        <div class="row">
-            <div class="col">
-                <div class="card bg-light">
-                    <div class="card-header">
-                        <h4 class="card-title">Corriger l'équipe?</h4>
-                    </div>
-                    <div class="card-body">
-                        {{form_widget(myForm)}}
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-check"></i>
-                            Enregrister les Modifications
-                        </button>
-                    </div>
+<div class="container">
+	<h1>Modification de l'équipe
+		{{ team.name }}</h1>
+	<a href="{{ path('admin_teams_index') }}" class="btn btn-secondary my-3">Retour</a>
+	{{ form_start(myForm) }}
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card mb-4">
+				<div class="card-header">
+					<h4 class="card-title mb-0">Corriger l'équipe</h4>
+				</div>
+				<div class="card-body">
+					{{ form_widget(myForm) }}
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-check"></i>
+						Enregistrer les Modifications
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title mb-0">Images</h4>
+				</div>
+				<div class="card-body">
+					{% set images = [
+                        { 'url': team.logo, 'type': 'logo', 'label': 'Logo' },
+                        { 'url': team.logoBackground, 'type': 'logoBackground', 'label': 'Arrière-plan' },
+                        { 'url': team.cover, 'type': 'cover', 'label': 'Couverture' },
+                        { 'url': team.newsPicture, 'type': 'newsPicture', 'label': 'Image d\'actualité' }
+                    ] %}
+                    {% for image in images %}
+                        <div class="row align-items-center mb-3">
+                            <div class="col-4">
+                                <img src="{{ asset('uploads/' ~ image.url) }}" class="img-fluid" alt="{{ image.label }}">
+                            </div>
+                            <div class="col-5">
+                                <label class="form-label">{{ image.label }}</label>
+                            </div>
+                            <div class="col">
+                              <a href="{{ path('TeamImgModify', {'slug': team.slug, 'type': image.type | url_encode}) }}" class="btn btn-secondary">Modifier</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+            </div>
+
                 </div>
             </div>
-         
         </div>
-        {{form_end(myForm)}}
+        {{ form_end(myForm) }}
     </div>
-
-{% endblock %}
-
-{% block _annonce_images_widget %}
-    {{ form_widget(form) }}
-{% endblock %}
-
-{% block _annonce_images_entry_row %}
-    <div id="block_{{id}}">
-        {{ form_widget(form) }}
-    </div>
-{% endblock %}
-
-{% block _annonce_images_entry_widget %}
-    <div class="row align-items-center">
-        <div class="col-4">
-            {% if value %}
-                <img src="{{value.path}}" class="img-fluid">
-            {% endif %}
-                <span hidden>{{form_row(form.url)}}</span>
-        </div>
-        <div class="col-6">
-             {{form_row(form.caption)}}
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    </div>
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-        const buttonsDel = document.querySelectorAll('[data-action=delete]');
-        buttonsDel.forEach(button => {
-            button.addEventListener("click",(e)=>{
-                const target = button.dataset.target 
-                const elementTarget = document.querySelector(target)
-                if(elementTarget){
-                    elementTarget.remove()// supprimer l'élément 
-                }
-            })
-        });
-    </script>
 {% endblock %}

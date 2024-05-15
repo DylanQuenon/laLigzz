@@ -7,20 +7,10 @@
 {% block body %}
     <h1>{{ team.name }}</h1>
 
-    {# Affichage du logo #}
-    {% if logoImage is not null %}
-        <img src="/uploads/{{ logoImage.path }}" alt="logo de {{ team.name }}">
-    {% endif %}
-
-    {# Affichage de l'image de couverture #}
-    {% if coverImage is not null %}
-        <img src="/uploads/{{ coverImage.path }}" alt="cover de {{ team.name }}">
-    {% endif %}
-
-    {# Affichage de l'image de news #}
-    {% if newsImage is not null %}
-        <img src="/uploads/{{ newsImage.path }}" alt="{{ newsImage.path }}">
-    {% endif %}
+   <img src="/uploads/{{team.logoBackground}}" alt="{{team.logoBackground}}" width='100px'>
+   <img src="/uploads/{{team.cover}}" alt="{{team.cover}}"width='100px'>
+   <img src="/uploads/{{team.newsPicture}}" alt="{{team.cover}}"width='100px'>
+  
 
     {# Autres informations sur l'équipe #}
     <p>{{ team.devise }}</p>

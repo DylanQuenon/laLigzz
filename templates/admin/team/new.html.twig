@@ -1,34 +1,23 @@
 {% extends "admin/base.html.twig" %}
 
 
-{% block title %}Création d'une équipe{% endblock %}
+{% block title %}Création d'une équipe
+{% endblock %}
 
-{% form_theme myForm 'admin/team/_collection.html.twig' %}
+{% form_theme myForm _self %}
 
 {% block body %}
-    <div class="container">
-        <h1>Création d'une nouvelle équipe</h1>
+	<div class="container">
+		<h1>Création d'une nouvelle équipe</h1>
 
-        {{ form_start(myForm) }}
-
-
-
-
-             {{form_widget(myForm)}}
-
-            <button type="submit" class="btn btn-primary mt-3">Création d'une équipe</button>
+		{{ form_start(myForm) }}
+		{{form_widget(myForm)}}
+		<button type="submit" class="btn btn-primary mt-3">Création d'une équipe</button>
 
 
-
-        {{ form_end(myForm) }}
-    </div>
+		{{ form_end(myForm) }}
+	</div>
 {% endblock %}
 
 
-
-{% block javascripts %}
-   {{encore_entry_script_tags('team')}}
-{% endblock %}
-
-
-
+{% block javascripts %}{% endblock %}
