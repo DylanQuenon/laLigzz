@@ -44,7 +44,6 @@ class AdminTeamController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-<<<<<<< HEAD
             // dd($form['images']);
             $file = $form['logo']->getData();
             if(!empty($file))
@@ -63,50 +62,6 @@ class AdminTeamController extends AbstractController
                 }
                 $team->setLogo($newFilename);
 
-=======
-              // gestion de l'image
-              $file = $form['logo']->getData();
-              if(!empty($file))
-              {
-                  $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                  $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                  $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
-                  try{
-                      $file->move(
-                          $this->getParameter('uploads_directory'),
-                          $newFilename
-                      );
-                  }catch(FileException $e)
-                  {
-                      return $e->getMessage();
-                  }
-                  $team->setLogo($newFilename);
-  
-              }
-            // gestion des images 
-            foreach($team->getImages() as $image)
-            {
-                $file = $image->getFile();
-                if(!empty($file))
-                {
-                    $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                    $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
-                    try{
-                        $file->move(
-                            $this->getParameter('uploads_directory'),
-                            $newFilename
-                        );
-                    }catch(FileException $e)
-                    {
-                        return $e->getMessage();
-                    }
-                    $image->setPath($newFilename);
-    
-                }
-                $image->setTeam($team);
-                $manager->persist($image);
->>>>>>> ffe2fa776d69e48fbc735910e40dec5c3170fe99
             }
 
             // gestion des images 
@@ -115,9 +70,9 @@ class AdminTeamController extends AbstractController
             foreach($form['images'] as $myFile){
 
                 // dd($file->getUrl());
-                $fileInfo=$myFile->getData();
-                dd($myFile);
-                $fileUrl=$fileInfo->getUrl();
+                $file=$myFile->getData();
+                // dd($myFile);
+                // $fileUrl=$fileInfo->getUrl();
                 // dd($file->getUrl());
 
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);

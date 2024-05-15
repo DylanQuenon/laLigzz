@@ -31,22 +31,7 @@ class Image
         return $this->id;
     }
 
-<<<<<<< HEAD
     public function getUrl(): ?string
-=======
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    public function setFile(?File $file): self
-    {
-        $this->file = $file;
-        return $this;
-    }
-
-    public function getPath(): ?string
->>>>>>> ffe2fa776d69e48fbc735910e40dec5c3170fe99
     {
         return $this->url;
     }
