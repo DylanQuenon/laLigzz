@@ -1,0 +1,6 @@
+@import "../variables/variables.scss";
+.button_link_icon {
+    align-items: center;
+  @include button-primary();
+  width: fit-content;
+  }

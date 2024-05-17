@@ -15,17 +15,13 @@
 					<div class="col-md-5 d-flex left">
 
 						<img src="../../images/logo-laliga.webp" class="logo" alt="Logo - LaLiga">
-
-
 						<div class="jumbotron">
 							<div class="jumbotron_text">
 								<h1 class="display-xl kizard">La Liga no se juega, se gana</h1>
 								<p class="text-lg hero">Plongez dans l'univers envoûtant de la Liga. Actualités, matchs et classement vous y attendent.</p>
 							</div>
 							<div class="jumbotron_button">
-								<a href="#" class="text-lg hero d-flex position-relative">Découvrez le classement
-									<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#FF4B44"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
-								</a>
+							   {% include 'partials/_buttonLink.html.twig' with { 'url': path('account_login'), 'text': 'Découvrez le classement' } %}
 							</div>
 
 						</div>
@@ -48,13 +44,16 @@
 	</div>
 	<div class="slide" id="slider_team">
 		<div class="wrapper">
-			<div class="slider_container">
+			<div class="slider_container d-flex ">
 				<div class="slider_container_heading col-md-5">
 					<h2 class="display-xs kizard col-md-3">EQUIPES</h2>
 					<p class="supporting_text text-lg hero">
 						Explorez les vingt équipes vibrantes qui animent ce championnat, chacune apportant son énergie unique à cette compétition palpitante.
 					</p>
 				</div>
+				
+					<a href="{{path('team_index')}}" class="text-md button_teams hero">Découvrez toutes les équipes <i class="fa-solid fa-arrow-right-long"></i></a>
+				
 			</div>
 
 		</div>
@@ -65,17 +64,14 @@
 					<div class="swiper-slide">
 						{% include "partials/_teamsCard.html.twig" %}
 					</div>
-
 				{% endfor %}
 			</div>
-
-
-			<!-- If we need navigation buttons -->
-
-			<!-- If we need scrollbar -->
-
+		</div>
+		<div>
+		
 		</div>
 		<div class="wrapper">
+
 			<div class="controls_slider d-flex">
 				<div class="controls_slider_arrow arrow_prev">
 					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
@@ -88,7 +84,36 @@
 
 		</div>
 	</div>
-	<div class="slide" id="news_team" style="overflow:hidden">
+
+	{# Bannière du classement#}
+	<div id="banneer">
+		<div class="wrapper" id="row">
+			<div class="col-md-4">
+				<h3 class="title display-2xl stratos italic">Decouvrez <br><span>le classement</span> de la liga</h3>
+				<a href="#" class="text-lg hero">Voir tout le classement<i class="fa-solid fa-arrow-right-long"></i></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="slide" id="presentation">
+		<div class="wrapper">
+			<div class="row">
+				<div class="col-md-5" id="presentation_pic">
+					<img src="/images/trophy.jpeg" alt="Célébration du titre de la liga 2022-2023" class="img-fluid">
+					<p class="first-letter stratos">B <span class="cloned stratos">B</span></p>
+				</div>
+				<div class="col-md-5 offset-md-1">
+					<div class="presentation_text">
+						<h3 class="display-2xl stratos text-uppercase">La Liga</h3>
+						<p class="text-lg hero">La Liga, symbole du football espagnol, attire les foules avec ses équipes emblématiques telles que le FC Barcelone et le Real Madrid. Chaque saison, ces géants du football s'affrontent dans des duels électrisants, offrant aux fans des moments de pur plaisir. Que vous soyez un fervent supporter ou simplement un amateur de beau jeu, La Liga vous promet des matchs palpitants où se mêlent talent, passion et suspense.</p>
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	{# <div class="slide" id="news_team" style="overflow:hidden">
 	<div class="swiper-news">
 			<!-- Additional required wrapper -->
 			<div class="swiper-wrapper">
@@ -96,14 +121,8 @@
 					<div class="swiper-slide">
 						{% include "partials/_cardNews.html.twig" %}
 					</div>
-
 				{% endfor %}
 			</div>
-
-
-			<!-- If we need navigation buttons -->
-
-			<!-- If we need scrollbar -->
 
 		</div>
 
@@ -122,7 +141,7 @@
 
 		</div>
 
-	</div>
+	</div> #}
 
 {% endblock %}
 {% block javascripts %}

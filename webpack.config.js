@@ -25,6 +25,7 @@ Encore
     .addEntry('sliderTeam', './assets/js/sliderTeam.js')
     .addEntry('sliderNews', './assets/js/_sliderNews.js')
     .addEntry('cardNewsStyle', './assets/styles/partials/_cardNews.scss')
+    .addEntry('buttonLinkStyle', './assets/styles/partials/_buttonLinkStyle.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

@@ -186,6 +186,7 @@ $gradient-circle2:linear-gradient(240deg,#992d29 0%, rgba(255,75,68,1) 100%, );
 
     &.stratos {
         font-family: $font-family-stratos;
+        text-transform: uppercase;
 
         &.italic {
             font-style: italic;
@@ -390,7 +391,7 @@ $gradient-circle2:linear-gradient(240deg,#992d29 0%, rgba(255,75,68,1) 100%, );
 }
 
 .text-lg {
-    @include font-style($font-family-hero, $text-font-size-lg, $font-weight-regular, 1.2);
+    @include font-style($font-family-hero, $text-font-size-lg, $font-weight-regular, 1.5);
 
     &.hero {
         font-family: $font-family-hero;

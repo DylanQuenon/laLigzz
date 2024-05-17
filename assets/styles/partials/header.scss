@@ -27,7 +27,17 @@ header{
       text-decoration: none;
       color: $color-primary;
       overflow: hidden;
-      display: block;
+      transition: all 0.3s;
+      gap: $spacing-xs;
+      &:hover{
+        background-color: $color-primary;
+        border: solid 2px $color-primary;
+        color: $color-secondary;
+        svg,i{
+          fill: $color-secondary;
+          color: $color-secondary;
+        }
+      }
     }
    }
 }  

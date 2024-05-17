@@ -37,10 +37,7 @@
         width: 100%;
         display: flex;
         justify-content: end;
-        a {
-          align-items: center;
-        @include button-primary();
-        }
+     
       }
     }
   }
@@ -140,11 +137,16 @@
 //css slider team
 #slider_team{
   background-color: $color-secondary;
+  min-height: auto;
+  padding-bottom: $spacing-6xl !important;
 }
 
 //slider TEAM
 .slider_container{
-  @include flexGap(column, $spacing-4xl);
+  @include flex(row);
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
   .slider_container_heading{
     @include flexGap(column, $spacing-2xl);
     h2{
@@ -153,5 +155,105 @@
       border-bottom: solid 2px $color-tertiary ;
     }
   
+  }
+}
+.button_teams{
+  background-color: $color-primary;
+  padding: 10px 20px;
+  color: $color-secondary;
+  display: block;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  border-radius: $radius-full;
+  border: solid 2px $color-tertiary;
+  transition: all 0.3s ease-in;
+  &:hover{
+    i{
+      transform: translateX(50%) translateY(0);
+    }
+  }
+  i{
+    color: $color-tertiary;
+    transition: all 0.3s;
+  }
+}
+
+//bannière
+#banneer{
+  padding: $spacing-6xl 0;
+  background-color: $color-tertiary;
+  width: 100%;
+  .col-md-4{
+    @include flexGap(column,$spacing-4xl)
+  }
+  h3{
+    text-transform: uppercase;
+    -webkit-text-stroke: 2px $color-secondary;
+    color: transparent;
+   
+
+  }
+  a{
+    padding: 10px 20px;
+    display: block;
+    background-color: $color-secondary;
+    color: $color-primary;
+    border-radius: $radius-full;
+    text-transform: none;
+    width: fit-content;
+    text-decoration: none;
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+  }
+  span{
+    color: $color-secondary;
+    font-style: normal;
+  }
+}
+
+#presentation{
+  color: $color-secondary;
+  display: flex;
+  align-items: center;
+  .presentation_text{
+    @include flexGap(column,$spacing-2xl)
+  }
+  img{
+    filter: grayscale(1);
+    transition: all 0.3s;
+    animation: infinite colors 2s alternate-reverse;
+    position: relative;
+  }
+
+  
+}
+@keyframes colors {
+  from{
+    filter: grayscale(1);
+  }
+  to{
+    filter: grayscale(0);
+  }
+}
+#presentation_pic{
+  position: relative;
+  .first-letter{
+    position: absolute;
+    top: -50%;
+    z-index: 10;
+    font-size: 15rem;
+    color: $color-tertiary;
+    span{
+      position: absolute;
+      top: 0%;
+      left: 18% !important;
+      color: transparent;
+      -webkit-text-stroke: 2px #e5e2e2c4;
+      z-index: -1 !important;
+    }
   }
 }

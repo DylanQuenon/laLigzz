@@ -6,6 +6,7 @@ const swiper = new Swiper('.swiper', {
     // Optional parameters
     direction: 'horizontal',
     loop: true,
+    speed:1000,
   
   
     // Navigation arrows
@@ -33,10 +34,7 @@ const swiper = new Swiper('.swiper', {
     autoplay:true,
     autoplay: {
         delay: 3000, // Durée entre chaque changement de slide en millisecondes
-        disableOnInteraction: true, // Empêche l'autoplay de s'arrêter lors d'une interaction utilisateur (par défaut true)
     }
-  
-    // And if we need scrollbar
-  
+ 
   });
   
