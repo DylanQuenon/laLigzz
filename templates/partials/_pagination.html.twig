@@ -10,7 +10,11 @@
             </li>
 
             {# Boucle pour afficher les numéros de page #}
-            {% for i in 1..pages %}
+            {% set halfWindowSize = 1 %}
+            {% set startPage = (page - halfWindowSize) > 0 ? (page - halfWindowSize) : 1 %}
+            {% set endPage = (page + halfWindowSize) < pages ? (page + halfWindowSize) : pages %}
+
+            {% for i in startPage..endPage %}
                 {# Marquer la page actuelle comme active dans la pagination #}
                 <li class="page-item {% if page == i %}active{% endif %}">
                     <a class="page-link" href="{{ path(route, {'page': i}) }}">{{ i }}</a>

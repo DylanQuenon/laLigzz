@@ -21,7 +21,7 @@ class NewsController extends AbstractController
         ->setLimit($limit);
         $totalTeams = $repo->count([]);
     
-        // Vérifie si le nombre total de voitures et la limite sont non nuls avant de calculer le nombre de pages
+        // Vérifie si le nombre total d'équipes et la limite sont non nuls avant de calculer le nombre de pages
         $totalPages = ($totalTeams > 0 && $limit > 0) ? ceil($totalTeams / $limit) : 1;
         if ($page < 1 || $page > $totalPages) {
             // Redirige vers la dernière page

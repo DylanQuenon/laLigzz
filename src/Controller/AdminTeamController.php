@@ -31,7 +31,7 @@ class AdminTeamController extends AbstractController
     {
         $pagination->setEntityClass(Team::class) // App\Entity\Team string
                 ->setPage($page)
-                ->setLimit(10);
+                ->setLimit(9);
        
 
         return $this->render('admin/team/index.html.twig', [
