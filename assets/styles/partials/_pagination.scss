@@ -1,0 +1,54 @@
+@import '../variables/variables.scss';
+.active > .page-link, .page-link.active{
+    background-color: $color-tertiary;
+    border-color: $color-tertiary;
+    color: $color-secondary;
+}
+.page-link{
+    color: $color-tertiary;
+    border-radius: $radius-full;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    font-family: $font-family-stratos;
+    font-size: $text-font-size-lg;
+    &:hover{
+        background-color: $color-secondary;
+        color: $color-tertiary;
+    }
+    &:focus{
+        box-shadow: none;
+        outline: none;
+    }
+
+}
+.navigation .page-link {
+    border-radius: 0px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s; /* Ajout de la transition */
+
+}
+
+.navigation .page-link:hover {
+    color: $color-tertiary;
+    background-color: $color-secondary;
+    border-radius: $radius-full;
+}
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+

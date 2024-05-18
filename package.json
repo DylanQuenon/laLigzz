@@ -24,6 +24,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "aos": "^2.3.4",
         "bootstrap": "^5.3.3",
         "gsap": "^3.12.5",
         "install": "^0.13.0",

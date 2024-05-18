@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -27,12 +28,12 @@ class TeamType extends ApplicationType
             ->add('logo', FileType::class, $this->getConfiguration("Logo du club", "Choisissez le logo du club que vous insérez"))
             ->add('description',TextareaType::class, $this->getConfiguration('Description du club','Donnez une brève description du club'))
             ->add('devise',TextType::class, $this->getConfiguration('Devise','Quelle est la devise du club'))
-            ->add('fondation', null, [
+            ->add('fondation', DateType::class, [
                 'widget' => 'single_text',
                 'attr' => [
                     'placeholder' => "Entrez la date de fondation de l'équipe",
                 ],
-                'label'=>"Date de fondation de l'équipe"
+                'label'=>"Date de fondation de l'équipe",
             ])
             ->add('coach', TextType::class,$this->getConfiguration("Nom du coach","Qui est le coach actuel du club?"))
             ->add('goalscorer',TextType::class,$this->getConfiguration("Nom du meilleur buteur","Qui est le meilleur buteur du club?"))

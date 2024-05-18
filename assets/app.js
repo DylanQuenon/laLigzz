@@ -1,4 +1,6 @@
 import './bootstrap.js';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -19,6 +21,8 @@ import './js/home.js'
 import './js/_sliderNews.js'
 
 import 'gsap'
+
+AOS.init();
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

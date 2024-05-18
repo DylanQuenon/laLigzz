@@ -31,7 +31,7 @@ header{
       gap: $spacing-xs;
       &:hover{
         background-color: $color-primary;
-        border: solid 2px $color-primary;
+        border: solid 2px $color-secondary;
         color: $color-secondary;
         svg,i{
           fill: $color-secondary;
