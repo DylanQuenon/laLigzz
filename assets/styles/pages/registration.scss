@@ -1,64 +1,77 @@
 @import "../variables/variables.scss";
-#loginPage{
+
+@import "../variables/variables.scss";
+#registerPage {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     @include background("../../../public/images/background/image.webp");
 
-    .login-container{
-        @include flexGap(column,$spacing-2xl);
-        align-items:center;
+    .registration {
+        @include flexGap(column, $spacing-2xl);
+        align-items: center;
     }
-    .container_form{
+    .registration-form {
         border: solid 2px $color-tertiary;
         border-radius: 45px;
-        padding: $spacing-9xl;
+        padding: $spacing-8xl;
         background-color: #2d2d2d88;
         color: $color-secondary;
         @media all and (max-width: 798px) {
-           padding: 3rem;
-          }
-        form{
-            @include flexGap(column,$spacing-md);
-            width:100%;
+            padding: 6rem 3rem;
         }
-        .form-group{
+        form {
+            @include flexGap(column, $spacing-md);
+            width: 100%;
+        }
+        .form-group {
             display: flex;
             flex-direction: column;
             gap: $spacing-sm;
-            input:focus{
+            input:focus {
                 box-shadow: none;
                 border: none;
             }
-            input{
+            input {
                 border: none;
+                outline: none;
                 font-family: $font-family-hero;
                 font-size: $text-font-size-xs;
-                &::placeholder{
+                &::placeholder {
                     color: rgba(80, 78, 78, 0.708) !important;
-
                 }
             }
-            button[type="submit"]{
-                @include button-primary();
-            }
         }
-
     }
-    #showPassword{
+    button[type="submit"] {
+        @include button-primary();
+        font-size: $font-family-hero !important;
+    }
+    #showPassword {
         background-color: $color-primary;
         border: none;
         cursor: pointer;
-        i{
+        i {
             color: $color-tertiary;
         }
     }
 }
-.alert{
+.alert {
     background-color: $color-primary;
     border: solid 1px $color-tertiary;
     color: $color-secondary;
     outline: none;
     border-radius: $radius-xl;
+}
+textarea {
+    resize: none;
+}
+.form-control:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.form-control{
+border: none;
 }

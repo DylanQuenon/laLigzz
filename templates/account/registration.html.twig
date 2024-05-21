@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription au site{% endblock %}
+{% block stylesheets %}
+ {{ encore_entry_link_tags('registrationStyle') }}
+{% endblock %}
+
+
+{% block body %}
+    <div class="slide" id="registerPage">
+
+        <div class="registration">
+        <div class="registration-form">
+            <h1>Inscription sur LaLigzz</h1>
+            {{ form_start(myForm) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(myForm.firstName) }}
+                        {{ form_row(myForm.password) }}
+                        {{ form_row(myForm.picture) }}
+                        {{ form_row(myForm.introduction) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(myForm.lastName) }}
+                        {{ form_row(myForm.passwordConfirm) }}
+                        {{ form_row(myForm.email) }}
+                        {{ form_row(myForm.description) }}
+                    </div>
+                </div>
+                <button type="submit" class="">Confirmez l'inscription</button>
+            {{ form_end(myForm) }}
+        
+        </div>
+        
+        </div>
+
+    </div>
+{% endblock %}

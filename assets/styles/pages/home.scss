@@ -120,6 +120,7 @@
   border: solid 1px $color-tertiary;
   &:hover{
     background-color: $color-tertiary;
+    border:solid 1px $color-primary;
     svg {
       fill: $color-primary;
     }

@@ -29,6 +29,7 @@ Encore
     .addEntry('buttonLinkStyle', './assets/styles/partials/_buttonLinkStyle.scss')
     .addEntry('paginationStyle', './assets/styles/partials/_pagination.scss')
     .addEntry('loginStyle', './assets/styles/pages/login.scss')
+    .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
