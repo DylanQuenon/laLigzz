@@ -1,0 +1,66 @@
+@import "../variables/variables.scss";
+#loginPage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    @include background("../../../public/images/background/image.webp");
+
+    .login-container{
+        @include flexGap(column,$spacing-2xl);
+        align-items:center;
+    }
+    .container_form{
+        border: solid 2px $color-tertiary;
+        border-radius: 45px;
+        padding: $spacing-9xl;
+        background-color: #2d2d2d88;
+        color: $color-secondary;
+        @media all and (max-width: 798px) {
+           padding: 3rem;
+          }
+        form{
+            @include flexGap(column,$spacing-md);
+            width:100%;
+        }
+        .form-group{
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+            input:focus{
+                box-shadow: none;
+                border: none;
+            }
+            input{
+                border: none;
+                font-family: $font-family-hero;
+                font-size: $text-font-size-xs;
+                &::placeholder{
+                    color: rgba(80, 78, 78, 0.708) !important;
+
+                }
+            }
+            button[type="submit"]{
+                @include button-primary();
+            }
+        }
+
+    }
+    #showPassword{
+        background-color: $color-primary;
+        border: none;
+        cursor: pointer;
+        i{
+            color: $color-tertiary;
+        }
+    }
+}
+.alert{
+    background-color: $color-primary;
+    border: solid 1px $color-tertiary;
+    color: $color-secondary;
+    outline: none;
+    border-radius: $radius-xl;
+
+
+}

@@ -1,10 +1,11 @@
 @import '../variables/variables.scss';
 header{
     width: 100%;
-    padding: $spacing-lg $spacing-md;
+    min-height: 60px;
     position: fixed;
     top: 0;
     left: 0;
+    padding: 0 1%;
     z-index: 200;
     background-color: #22222238;
     backdrop-filter: blur(2px);
@@ -17,7 +18,7 @@ header{
     display: flex;
     gap: $spacing-4xl;
     align-items: center;
-    padding: $spacing-lg $spacing-md;
+    min-height: 60px;
     list-style: none;
     li a{
       padding: 8px 16px;

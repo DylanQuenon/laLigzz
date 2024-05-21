@@ -24,9 +24,11 @@ Encore
     // .addEntry('home', './assets/js/home.js')
     .addEntry('sliderTeam', './assets/js/sliderTeam.js')
     .addEntry('sliderNews', './assets/js/_sliderNews.js')
+    .addEntry('showPassword', './assets/js/showPassword.js')
     .addEntry('cardNewsStyle', './assets/styles/partials/_cardNews.scss')
     .addEntry('buttonLinkStyle', './assets/styles/partials/_buttonLinkStyle.scss')
     .addEntry('paginationStyle', './assets/styles/partials/_pagination.scss')
+    .addEntry('loginStyle', './assets/styles/pages/login.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
