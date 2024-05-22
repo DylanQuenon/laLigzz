@@ -3,12 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    font-family: $font-family-hero;
-    label,input,textarea{
-        font-size: $text-font-size-md
-    }
-    @include background("../../../public/images/background/register.webp");
+    @include background("../../../public/images/background/profilebg.webp");
 
     .registration {
         @include flexGap(column, $spacing-2xl);
@@ -20,10 +15,11 @@
         border-radius: 45px;
         padding: $spacing-4xl;
         background-color: #2d2d2d88;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         color: $color-secondary;
-        @media all and (max-width: 798px) {
-            padding: 6rem 3rem;
-        }
         form {
             @include flexGap(column, $spacing-md);
             width: 85%;

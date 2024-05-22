@@ -55,6 +55,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Image(mimeTypes:['image/png','image/jpeg', 'image/jpg', 'image/gif', 'image/webp'], mimeTypesMessage:"Vous devez upload un fichier jpg, jpeg, webp, png ou gif")]
+    #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $picture = null;
 
     #[ORM\Column(length: 255)]

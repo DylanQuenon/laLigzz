@@ -21,3 +21,30 @@ html,body{
   #loginPage{
     padding: $spacing-9xl 0;
   }
+  .avatar{
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-medium{
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.avatar-mini{
+    max-width: 24px;
+    max-height: 24px;
+}
+.alert {
+    background-color: $color-primary;
+    border: solid 1px $color-tertiary;
+    color: $color-secondary;
+    outline: none;
+    border-radius: $radius-xl;
+}
+
+#userPage{
+    padding: $spacing-9xl 0;
+}

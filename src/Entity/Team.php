@@ -29,6 +29,8 @@ class Team
     private ?string $slug = null;
 
     #[ORM\Column(length: 255,nullable: true)]
+    #[Assert\Image(mimeTypes:['image/png','image/jpeg', 'image/jpg', 'image/gif', 'image/webp'], mimeTypesMessage:"Vous devez upload un fichier jpg, jpeg, webp, png ou gif")]
+    #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $logo = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -69,12 +71,18 @@ class Team
     private Collection $users;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Image(mimeTypes:['image/png','image/jpeg', 'image/jpg', 'image/gif', 'image/webp'], mimeTypesMessage:"Vous devez upload un fichier jpg, jpeg, webp, png ou gif")]
+    #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $logoBackground = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Image(mimeTypes:['image/png','image/jpeg', 'image/jpg', 'image/gif', 'image/webp'], mimeTypesMessage:"Vous devez upload un fichier jpg, jpeg, webp, png ou gif")]
+    #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $cover = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Image(mimeTypes:['image/png','image/jpeg', 'image/jpg', 'image/gif', 'image/webp'], mimeTypesMessage:"Vous devez upload un fichier jpg, jpeg, webp, png ou gif")]
+    #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $newsPicture = null;
 
     public function __construct()

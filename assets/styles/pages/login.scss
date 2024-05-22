@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     @include background("../../../public/images/background/image.webp");
 
     .login-container{
