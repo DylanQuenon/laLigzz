@@ -2,34 +2,22 @@
 
 {% block title %}Modification du profil utilisateur{% endblock %}
 {% block stylesheets %}
- {{ encore_entry_link_tags('editProfileStyle') }}
+    {{ encore_entry_link_tags('editProfileStyle') }}
+    
 {% endblock %}
 
 {% block body %}
-       <div class="slide" id="registerPage">
-
-        <div class="registration">
-        <div class="registration-form">
-            <h1 class="display-xs hero">Modifier votre profil dès maintenant</h1>
-            {{ form_start(myForm) }}
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(myForm.firstName) }}
-                        {{ form_row(myForm.introduction) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(myForm.lastName) }}
-                        {{ form_row(myForm.email) }}
-                    </div>
-                        {{ form_row(myForm.description) }}
-                </div>
-                <button type="submit" class="">Modifier les infos</button>
-            {{ form_end(myForm) }}
-   
-        
-        </div>
-        
-        </div>
-
-    </div>
+    {% include 'partials/_form.html.twig' with {
+        slideId: 'editProfilePage',
+        title: 'Modifier votre profil dès maintenant',
+        form: myForm,
+        fields: [
+            myForm.firstName,
+            myForm.lastName,
+            myForm.email,
+            myForm.introduction
+        ],
+        textarea: myForm.description,
+        buttonText: 'Modifier les infos'
+    } %}
 {% endblock %}

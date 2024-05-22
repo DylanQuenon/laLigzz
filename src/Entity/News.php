@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use Cocur\Slugify\Slugify;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
@@ -46,6 +47,9 @@ class News
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'news')]
     private Collection $team;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->team = new ArrayCollection();
@@ -63,6 +67,22 @@ class News
             $this->createdAt = new \DateTimeImmutable();
         }
     }
+      /**
+     * Permet d'intialiser le slug automatiquement si on ne le donne pas
+     *
+     * @return void
+     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeSlug(): void
+    {
+        if(empty($this->slug))
+        {
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
+    }
+    
 
     public function getId(): ?int
     {
@@ -173,6 +193,18 @@ class News
     public function removeTeam(Team $team): static
     {
         $this->team->removeElement($team);
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

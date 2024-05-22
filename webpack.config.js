@@ -31,6 +31,7 @@ Encore
     .addEntry('loginStyle', './assets/styles/pages/login.scss')
     .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
     .addEntry('editProfileStyle', './assets/styles/pages/editProfile.scss')
+    .addEntry('formStyle', './assets/styles/pages/formStyle.scss')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

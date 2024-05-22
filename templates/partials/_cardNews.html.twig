@@ -3,8 +3,9 @@
 {% endblock %}
 
 {% set n = new.team %}
+    {% set url = path('news_show', {'slug':new.slug}) %}
 <div class="cardNews">
-	<img src="{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
+	<img src="/uploads/{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
 	<div class="card-content">
 		<div class="card-header">
 			<span class="card-title badge badge_news text-uppercase {{ new.status == 'officiel' ? 'red' : 'green' }}">
@@ -21,7 +22,7 @@
 		{% set text_without_tags = new.text | striptags %}
 		<p class="card-text text-md hero">{{ text_without_tags | slice(0, 100) ~ '....' | raw | nl2br }}</p>
 		<div class="link_news_button">
-			<a href="#" class="card-text button_news_more text-xs hero">VOIR PLUS</a>
+			<a href="{{url}}" class="card-text button_news_more text-xs hero">VOIR PLUS</a>
 		</div>
 	</div>
 </div>

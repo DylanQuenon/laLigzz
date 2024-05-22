@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Form\NewsType;
 use App\Repository\NewsRepository;
 use App\Service\PaginationService;
+use App\Service\FileUploaderService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +33,52 @@ class NewsController extends AbstractController
         }
         return $this->render('news/index.html.twig', [
             'pagination' => $pagination
+        ]);
+    }
+
+    #[Route("/news/{slug}", name:"news_show")]
+    public function show(string $slug, News $news): Response
+    {
+        
+
+    
+        return $this->render("news/show.html.twig", [
+            'news' => $news,
+        ]);
+    }
+
+    #[Route("/news/add", name:"news_create")]
+    public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
+    {
+        $news = new News();
+        $form = $this->createForm(NewsType::class, $news);     
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $file = $form['cover']->getData();
+            if($file){
+                $imageName = $fileUploader->upload($file);
+                $news->setCover($imageName);
+            }
+            $news->setAuthor($this->getUser());
+            // je persiste mon objet team
+            $manager->persist($news);
+            // j'envoie les persistances dans la bdd
+            $manager->flush();
+
+            $this->addFlash(
+                'success', 
+                "L'actualité <strong>".$news->getTitle()."</strong> a bien été enregistrée"
+            );
+
+            return $this->redirectToRoute('homepage',[
+                'slug' => $news->getSlug()
+            ]);
+        }
+
+        return $this->render("news/add.html.twig",[
+            'myForm' => $form->createView()
         ]);
     }
 }

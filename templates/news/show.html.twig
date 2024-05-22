@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ news.title }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ news.title }}</h1>
+    <h1>{{ news.subtitle }}</h1>
+
+    <img src="/uploads/{{ news.cover }}" alt="" style="width:400px">
+    <p class="article">{{ news.text }}</p>
+    <p>Écrit par {{ news.author.fullName }}</p>
+
+    {% set wordCount = news.text|length %}
+    {% set readingTime = (wordCount / 1000)|round(0, 'ceil') %}
+    <p>Temps de lecture estimé : {{ readingTime }} minute(s)</p>
+{% endblock %}

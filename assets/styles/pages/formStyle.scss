@@ -1,0 +1,95 @@
+@import "../variables/variables.scss";
+
+.slide  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-9xl 0;
+ 
+    .form-container {
+        
+        color: $color-secondary;
+        .form-content{
+            border: solid 2px $color-tertiary;
+            border-radius: 45px;
+                display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-4xl;
+    background-color: #2d2d2d88;
+
+        }
+
+        form {
+            @include flexGap(column, $spacing-md);
+            width: 85%;
+            @media all and (max-width: 798px) {
+                width: 100%;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+
+            input {
+                border: none;
+                outline: none;
+                font-family: $font-family-hero;
+                font-size: $text-font-size-xs;
+
+                &::placeholder {
+                    color: rgba(80, 78, 78, 0.708) !important;
+                }
+
+                &:focus {
+                    box-shadow: none;
+                    border: none;
+                }
+            }
+        }
+    }
+
+    button[type="submit"] {
+        @include button-primary();
+        font-size: $font-family-hero !important;
+        width: max-content;
+    }
+
+    #showPassword {
+        background-color: $color-primary;
+        border: none;
+        cursor: pointer;
+
+        i {
+            color: $color-tertiary;
+        }
+    }
+}
+
+.alert {
+    background-color: $color-primary;
+    border: solid 1px $color-tertiary;
+    color: $color-secondary;
+    outline: none;
+    border-radius: $radius-xl;
+}
+
+textarea.form-control {
+    resize: none;
+    min-height: 200px !important;
+}
+
+.form-control:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.form-control {
+    border: none;
+}
+#editProfilePage{
+       @include background("../../../public/images/background/profilebg.webp");
+}

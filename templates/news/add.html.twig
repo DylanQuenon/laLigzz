@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Création d'une news
+{% endblock %}
+
+{% form_theme myForm _self %}
+
+{% block body %}
+	<div class="container">
+		<h1>Création d'une actualité</h1>
+
+		{{ form_start(myForm) }}
+		{{form_widget(myForm)}}
+		<button type="submit" class="btn btn-primary mt-3">Création d'une actualité</button>
+
+
+		{{ form_end(myForm) }}
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}{% endblock %}

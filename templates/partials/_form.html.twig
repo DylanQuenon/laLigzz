@@ -1,0 +1,29 @@
+{# templates/form/_form.html.twig #}
+{% block stylesheets %}
+{{encore_entry_link_tags('formStyle')}}
+{% endblock %}
+<div class="slide" id="{{ slideId }}">
+<div class="wrapper">
+    <div class="form-container">
+        <div class="form-content">
+            <h1 class="display-xs hero">{{ title }}</h1>
+            {{ form_start(form) }}
+            <div class="row">
+                {% for field in fields %}
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(field) }}
+                    </div>
+                {% endfor %}
+             {% if textarea is defined %}
+                    <div class="col-12 mb-3">
+                        {{ form_row(textarea) }}
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</div>
+</div>
