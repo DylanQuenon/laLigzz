@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class NewsType extends ApplicationType
+class NewsEditType extends ApplicationType
 {
  
 
@@ -26,7 +26,7 @@ class NewsType extends ApplicationType
             ->add('title', TextType::class, $this->getConfiguration('Titre', 'Entrez le titre de la news'))
             ->add('subtitle', TextType::class, $this->getConfiguration('Sous-titre', 'Entrez le sous-titre de la news'))
           
-            ->add('cover', FileType::class, $this->getConfiguration('Couverture', 'URL de l\'image de couverture'))
+            // ->add('cover', FileType::class, $this->getConfiguration('Couverture', 'URL de l\'image de couverture'))
             ->add('status', ChoiceType::class, [
                 'choices' => [
                     'Officiel' => 'officiel',

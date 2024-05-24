@@ -40,12 +40,16 @@ class TeamController extends AbstractController
             'pagination' => $pagination
         ]);
     }
+    /**
+     * Affiche les équipes individuellement
+     *
+     * @param string $slug
+     * @param Team $team
+     * @return Response
+     */
     #[Route("/teams/{slug}", name:"teams_show")]
     public function show(string $slug, Team $team): Response
     {
-        
-
-    
         return $this->render("team/show.html.twig", [
             'team' => $team,
         ]);

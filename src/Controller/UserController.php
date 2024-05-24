@@ -9,6 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
+    /**
+     * Affiche le profil d'un utilisateur
+     *
+     * @param User $user
+     * @return Response
+     */
     #[Route('/user/{slug}', name: 'user_show')]
     public function index(User $user): Response
     {

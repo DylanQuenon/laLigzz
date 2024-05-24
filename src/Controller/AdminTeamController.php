@@ -18,9 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminTeamController extends AbstractController
 {
-    //accéder aux équipes dans l'admin
+  
     /**
-     * Récupère les équipes pour l'administration
+     * Récupère les équipes dans l'admin
      *
      * @param PaginationService $pagination
      * @param integer $page
@@ -38,7 +38,16 @@ class AdminTeamController extends AbstractController
            'pagination' => $pagination
         ]);
     }
- #[Route("/admin/teams/new", name:"admin_teams_create")]
+
+    /**
+     * Permet d'ajouter une équipe
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param FileUploaderService $fileUploader
+     * @return Response
+     */
+    #[Route("/admin/teams/new", name:"admin_teams_create")]
     public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
     {
         $team = new Team();

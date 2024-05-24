@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier la cover
+{% endblock %}
+
+{% block body %}
+
+	{% include 'partials/_form.html.twig' with {
+        slideId: "editCover",
+        title: 'Modification de la cover',
+        form: myForm,
+        fields: [
+            myForm.newPicture,
+        ],
+        buttonText: 'Confirmez la modification de la cover',
+  
+    } %}
+
+
+{% endblock %}

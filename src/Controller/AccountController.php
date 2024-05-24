@@ -102,6 +102,13 @@ class AccountController extends AbstractController
             'myForm' => $form->createView()
         ]);
     }
+    /**
+     * Permet d'éditer son profil
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route("/account/profile", name:"account_profile")]
     public function profile(Request $request, EntityManagerInterface $manager): Response
     {

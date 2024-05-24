@@ -1,22 +1,20 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Modifier avatar{% endblock %}
+{% block title %}Modifier avatar
+{% endblock %}
 
 {% block body %}
-           {% include 'partials/_form.html.twig' with {
-        slideId: 'changePicturePage',
+
+	{% include 'partials/_form.html.twig' with {
+        slideId: "editAvatar",
         title: 'Modification de la photo de profil',
         form: myForm,
         fields: [
             myForm.newPicture,
-       
         ],
-        buttonText: 'Confirmez la modification de la photo de profil'
+        buttonText: 'Confirmez la modification de la photo de profil',
+        imagePath: '/uploads/' ~ app.user.picture
     } %}
-    <div class="col-md-6">
- <img src="/uploads/{{app.user.picture}}" alt="avatar de {{app.user.email}}" width="120px">
-    
-    </div>
-    
 
-{% endblock %} 
+
+</div>{% endblock %}

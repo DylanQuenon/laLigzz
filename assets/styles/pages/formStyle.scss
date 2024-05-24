@@ -1,24 +1,24 @@
 @import "../variables/variables.scss";
 
-.slide  {
+.slide {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: $spacing-9xl 0;
- 
+
     .form-container {
-        
+        font-family: $font-family-hero;
         color: $color-secondary;
-        .form-content{
+        font-size: $text-font-size-md;
+        .form-content {
             border: solid 2px $color-tertiary;
             border-radius: 45px;
-                display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: $spacing-4xl;
-    background-color: #2d2d2d88;
-
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: $spacing-4xl;
+            background-color: #2d2d2d88;
         }
 
         form {
@@ -38,7 +38,7 @@
                 border: none;
                 outline: none;
                 font-family: $font-family-hero;
-                font-size: $text-font-size-xs;
+              
 
                 &::placeholder {
                     color: rgba(80, 78, 78, 0.708) !important;
@@ -89,7 +89,19 @@ textarea.form-control {
 
 .form-control {
     border: none;
+    font-size: $text-font-size-sm
 }
-#editProfilePage{
-       @include background("../../../public/images/background/profilebg.webp");
+#editProfilePage {
+    @include background("../../../public/images/background/profilebg.webp");
+}
+option,select,.selected{
+    font-family: $font-family-hero;
+    font-size: $text-font-size-md;
+}
+option{
+    margin: $spacing-sm 0;
+}
+
+.form-select{
+    font-size: $text-font-size-md !important;
 }

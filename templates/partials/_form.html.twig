@@ -1,29 +1,50 @@
 {# templates/form/_form.html.twig #}
 {% block stylesheets %}
-{{encore_entry_link_tags('formStyle')}}
+    {{ encore_entry_link_tags('formStyle') }}
 {% endblock %}
+
 <div class="slide" id="{{ slideId }}">
-<div class="wrapper">
-    <div class="form-container">
-        <div class="form-content">
-            <h1 class="display-xs hero">{{ title }}</h1>
-            {{ form_start(form) }}
-            <div class="row">
-                {% for field in fields %}
-                    <div class="col-md-6 mb-3">
-                        {{ form_row(field) }}
-                    </div>
-                {% endfor %}
-             {% if textarea is defined %}
-                    <div class="col-12 mb-3">
-                        {{ form_row(textarea) }}
-                    </div>
+    <div class="wrapper">
+        <div class="form-container">
+            <div class="form-content">
+                <h1 class="display-xs hero">{{ title }}</h1>
+                {% if imagePath is defined %}
+                    <img src="{{ imagePath }}" alt="Image à modifier" width="400px">
+                {% endif %}
+                {{ form_start(form) }}
+                <div class="row">
+                    {% for field in fields %}
+                       {# Condition pour l'image optionnelle #}
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(field) }}
+                        </div>
+                    {% endfor %}
+                    {% if textarea is defined %}
+                        <div class="col-12 mb-3">
+                            {{ form_row(textarea) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Condition pour le bloc optionnel #}
+                {% if block is defined %}
+                    {% block block %}
+                        {# Contenu du bloc #}
+                    {% endblock %}
+                {% endif %}
+
+                {# Condition pour les sous-liens optionnels #}
+
+             
+
+                <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
+                {{ form_end(form) }}
+                {% if sublinks is defined %}
+                    {% for sublink in sublinks %}
+                    <div>{{ sublink.text | raw }}</div>
+                    {% endfor %}
                 {% endif %}
             </div>
-            <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
-            {{ form_end(form) }}
         </div>
     </div>
-
-</div>
 </div>

@@ -16,21 +16,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminUserController extends AbstractController
 {
+    /**
+     * Affiche tous les users
+     *
+     * @param PaginationService $pagination
+     * @param integer $page
+     * @return Response
+     */
     #[Route('/admin/users/{page<\d+>?1}', name: 'admin_users_index')]
     public function index(PaginationService $pagination, int $page): Response
     {
         $pagination->setEntityClass(User::class) // App\Entity\Team string
                 ->setPage($page)
                 ->setLimit(10);
-       
-        
-       
-
+    
          return $this->render('admin/user/index.html.twig', [
            'pagination' => $pagination,
           
         ]);
     }
+    /**
+     * Permet de modifier uniquement le roles des users
+     *
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route("/admin/users/{id}/edit", name: "admin_users_edit")]
     public function edit(User $user, Request $request, EntityManagerInterface $manager): Response
     {

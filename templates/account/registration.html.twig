@@ -5,7 +5,13 @@
     {{ encore_entry_link_tags('registrationStyle') }}
 {% endblock %}
 
+
 {% block body %}
+{% set sublinks = [
+    {'text': '<div class="text-xs hero"><span>Vous avez déjà un compte</span>. <a href="' ~ path('account_login') ~ '" class="text-decoration-none hero">Connectez-vous</a></div>', 'url': '/'}
+] %}
+
+
     {% include 'partials/_form.html.twig' with {
         slideId: 'registerPage',
         title: 'Inscrivez-vous dès maintenant',
@@ -20,6 +26,7 @@
             myForm.passwordConfirm
         ],
         textarea: myForm.description,
-        buttonText: 'Confirmez l\'inscription'
+        buttonText: 'Confirmez l\'inscription',
+        sublinks: sublinks
     } %}
 {% endblock %}
