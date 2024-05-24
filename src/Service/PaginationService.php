@@ -58,6 +58,13 @@ class PaginationService{
     private string $templatePath;
 
     /**
+     * Ordre de tri des données
+     *
+     * @var array
+     */
+    private array $order = [];
+
+    /**
      * Constructeur du service de pagination 
      * ATTENTION CHANGER fichier service.yaml afin que Symfony sache quelle valeur utiliser pour le templatePath
      * 
@@ -158,7 +165,7 @@ class PaginationService{
         // renvoyer les données
         return $this->manager
                     ->getRepository($this->entityClass)
-                    ->findBy([],[],$this->limit,$offset);
+                    ->findBy([], $this->order, $this->limit, $offset);
     }
 
     /**
@@ -240,5 +247,26 @@ class PaginationService{
         return $this->route;
     }
 
+    /**
+     * Permet de définir l'ordre de tri des données
+     *
+     * @param array $order
+     * @return self
+     */
+    public function setOrder(array $order): self
+    {
+        $this->order = $order;
+        return $this;
+    }
+
+    /**
+     * Permet de récupérer l'ordre de tri des données
+     *
+     * @return array
+     */
+    public function getOrder(): array
+    {
+        return $this->order;
+    }
 
 }

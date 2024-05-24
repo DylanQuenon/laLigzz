@@ -27,25 +27,32 @@ class NewsController extends AbstractController
      * @return Response
      */
     #[Route('/news/{page<\d+>?1}', name: 'news_index')]
-    public function index(NewsRepository $repo,PaginationService $pagination, int $page): Response
+    public function index(NewsRepository $repo, PaginationService $pagination, int $page): Response
     {
-        $limit = 9;
 
         $pagination->setEntityClass(News::class)
-        ->setPage($page)
-        ->setLimit($limit);
-        $totalTeams = $repo->count([]);
-    
-        // Vérifie si le nombre total d'équipes et la limite sont non nuls avant de calculer le nombre de pages
-        $totalPages = ($totalTeams > 0 && $limit > 0) ? ceil($totalTeams / $limit) : 1;
+            ->setPage($page)
+            ->setLimit(9)
+            ->setOrder(['createdAt' => 'DESC']); // Trier par date de création décroissante
+
+        $totalNews = $repo->count([]);
+
+        // Calculer le nombre total de pages
+        $totalPages = ($totalNews > 0) ? ceil($totalNews / 9) : 1;
+
+        // Vérifier si la page demandée est valide
         if ($page < 1 || $page > $totalPages) {
-            // Redirige vers la dernière page
-            return $this->redirectToRoute('team_index', ['page' => $totalPages]);
+            // Rediriger vers la première page
+            return $this->redirectToRoute('news_index', ['page' => 1]);
         }
+
         return $this->render('news/index.html.twig', [
+            'news' => $pagination->getData(),
             'pagination' => $pagination
         ]);
     }
+
+
     
     /**
      * Ajoute une actualité
@@ -115,56 +122,68 @@ class NewsController extends AbstractController
             "myForm" => $form->createView()
         ]);
     }
-        #[Route("/news/{slug}/imgmodify", name:"news_img")]
-        public function imgModify(Request $request, EntityManagerInterface $manager, News $news): Response
+    #[Route("/news/{slug}/imgmodify", name:"news_img")]
+    public function imgModify(Request $request, EntityManagerInterface $manager, News $news, FileUploaderService $fileUploader): Response
+    {
+        $imgModify = new UserImgModify();
+        $form = $this->createForm(ImgUserModifyType::class, $imgModify);
+        $form->handleRequest($request);
+        
+        
+
+        if($form->isSubmitted() && $form->isValid())
         {
-            $imgModify = new UserImgModify();
-            $form = $this->createForm(ImgUserModifyType::class, $imgModify);
-            $form->handleRequest($request);
-    
-            if($form->isSubmitted() && $form->isValid())
+            
+            if(!$news->getCover() || !empty($news->getCover()))
             {
-             
-                if(!empty($news->getCover()))
-                {
-                    unlink($this->getParameter('uploads_directory').'/'.$news->getCover());
-                }
-    
-                  // gestion de l'image
-                  $file = $form['newPicture']->getData();
-                  if(!empty($file))
-                  {
-                      $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                      $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                      $newFilename = $safeFilename."-".uniqid().'.'.$file->guessExtension();
-                      try{
-                          $file->move(
-                              $this->getParameter('uploads_directory'),
-                              $newFilename
-                          );
-                      }catch(FileException $e)
-                      {
-                          return $e->getMessage();
-                      }
-                      $news->setCover($newFilename);
-                  }
-                  $manager->persist($news);
-                  $manager->flush();
-    
-                  $this->addFlash(
-                    'success',
-                    'La couverture a bien été modifié'
-                  );
-    
-                  return $this->redirectToRoute('news_edit',[
-                    'slug' => $news->getSlug()
-                ]);
+                unlink($this->getParameter('uploads_directory').'/'.$news->getCover());
             }
-    
-            return $this->render("news/imgModify.html.twig",[
-                'myForm' => $form->createView()
+
+                // gestion de l'image
+                $file = $form['newPicture']->getData();
+                if($file){
+                    $imageName = $fileUploader->upload($file);
+                    $news->setCover($imageName);
+                }
+                $manager->persist($news);
+                $manager->flush();
+
+                $this->addFlash(
+                'success',
+                'La couverture a bien été modifiée'
+                );
+
+                return $this->redirectToRoute('news_show',[
+                'slug' => $news->getSlug()
+                
             ]);
         }
+
+        return $this->render("news/imgModify.html.twig",[
+            'myForm' => $form->createView(),
+            
+        'news' => $news 
+            
+        ]);
+    }
+    #[Route("/news/{slug}/delete", name: "news_delete")]
+    public function delete(News $news, EntityManagerInterface $manager): Response
+    {
+        if(!empty($news->getCover()))
+        {
+            unlink($this->getParameter('uploads_directory').'/'.$news->getCover());
+        }
+      
+        $this->addFlash(
+            "success",
+            "L'annonce <strong>".$news->getTitle()."</strong> a bien été supprimée"
+        );
+        $manager->remove($news);
+        $manager->flush();
+        
+        return $this->redirectToRoute('news_index');
+    }
+ 
 
     /**
      * Vue individuelle des news

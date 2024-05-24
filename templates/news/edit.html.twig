@@ -1,23 +1,60 @@
 {% extends "base.html.twig" %}
 
-
-{% block title %}Création d'une news
+{% block title %}
+	Création d'une news
 {% endblock %}
 
 {% form_theme myForm _self %}
 
 {% block body %}
-{# {% set sublinks = [
-    {'text': '<a href="' ~ path('account_login') ~ '" class="text-decoration-none btn btn-danger hero">Supprimer</a>'},
-    {'text': '<a href="' ~ path('account_login') ~ '" class="text-decoration-none btn btn-danger hero">Modifier la cover</a>'}
-] %} #}
-	{% include 'partials/_form.html.twig' with {
-		slideId:"EditNews",
-		title: "Modification d'une actualité",
-		form: myForm,
-		fields: myForm,
-		buttonText: "Ajouter",
+	
 
-	} %}
+	<div class="slide">
+		<div class="container my-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card card-custom">
+						<div class="card-header">
+							<h1 class="display-xs hero text-center">Modification d'une actualité</h1>
+						</div>
+						<div class="card-body">
+							{{ form_start(myForm) }}
+							{{ form_widget(myForm) }}
+							<div class="d-flex justify-content-between mt-3">
+								<button type="submit" class="btn btn-primary">Enregistrer</button>
+								<div>
+									<a href="{{path('news_img', {'slug':news.slug})}} " class="btn btn-secondary me-2">Modifier la couverture</a>
+									<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer la news</button>
+								</div>
+							</div>
+							{{ form_end(myForm) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal de suppression -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Supprimer la news</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Êtes-vous sûr de vouloir supprimer cette news ?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<a href="{{ path('news_delete', {'slug': news.slug}) }}" class="btn btn-danger">Supprimer</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
-{% block javascripts %}{% endblock %}
+
+{% block javascripts %}
+	{# Scripts JavaScript #}
+{% endblock %}

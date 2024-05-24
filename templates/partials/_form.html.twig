@@ -6,6 +6,13 @@
 <div class="slide" id="{{ slideId }}">
     <div class="wrapper">
         <div class="form-container">
+           {% if actions is defined %}
+           <div class="d-flex flex-wrap">
+                    {% for action in actions %}
+                    <div class="m-3">{{ action.text | raw }}</div>
+                    {% endfor %}
+           </div>
+                {% endif %}
             <div class="form-content">
                 <h1 class="display-xs hero">{{ title }}</h1>
                 {% if imagePath is defined %}
@@ -25,18 +32,6 @@
                         </div>
                     {% endif %}
                 </div>
-
-                {# Condition pour le bloc optionnel #}
-                {% if block is defined %}
-                    {% block block %}
-                        {# Contenu du bloc #}
-                    {% endblock %}
-                {% endif %}
-
-                {# Condition pour les sous-liens optionnels #}
-
-             
-
                 <button type="submit" class="btn btn-primary">{{ buttonText }}</button>
                 {{ form_end(form) }}
                 {% if sublinks is defined %}
@@ -48,3 +43,8 @@
         </div>
     </div>
 </div>
+
+{# Code de suppression #}
+{% if deleteModal is defined %}
+    {{ deleteModal | raw }}
+{% endif %}
