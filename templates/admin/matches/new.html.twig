@@ -1,0 +1,101 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Création d'un match{% endblock %}
+
+{% form_theme myForm _self %}
+
+{% block stylesheets %}
+  
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Création d'un nouveau match</h1>
+
+        {{ form_start(myForm, {'attr': {'class': 'form-horizontal'}}) }}
+
+        <div class="form-group mb-3">
+            {{ form_label(myForm.journee, 'Journée', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(myForm.journee, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(myForm.journee) }}
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            {{ form_label(myForm.stadium, 'Stade', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(myForm.stadium, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(myForm.stadium) }}
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            {{ form_label(myForm.date, 'Date', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(myForm.date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(myForm.date) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <img id="homeTeamLogo" src="" alt="Logo équipe domicile" style="max-width: 100px; display: none; margin: auto;">
+                        <h5 class="card-title">Équipe domicile</h5>
+                        {{ form_row(myForm.homeTeam, {'attr': {'class': 'form-control', 'onchange': 'updateLogo("homeTeam", this)'}}) }}
+                        {{ form_row(myForm.homeTeamGoals, {'attr': {'class': 'form-control', 'placeholder': 'Buts'}}) }}
+                        {{ form_errors(myForm.homeTeam) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 text-center d-flex align-items-center justify-content-center">
+                <div class="display-2xl kizard">VS</div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <img id="awayTeamLogo" src="" alt="Logo équipe extérieure" style="max-width: 100px; display: none; margin: auto;">
+                        <h5 class="card-title">Équipe extérieure</h5>
+                        {{ form_row(myForm.awayTeam, {'attr': {'class': 'form-control', 'onchange': 'updateLogo("awayTeam", this)'}}) }}
+                        {{ form_row(myForm.awayTeamGoals, {'attr': {'class': 'form-control', 'placeholder': 'Buts'}}) }}
+                        {{ form_errors(myForm.awayTeam) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Créer le match</button>
+
+        {{ form_end(myForm) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function updateLogo(teamType, selectElement) {
+            const teamId = selectElement.value;
+            const logoElement = document.getElementById(teamType + 'Logo');
+
+            if (teamId) {
+                const url = '/admin/teams/json/' + teamId;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.logoUrl) {
+                            logoElement.src = data.logoUrl;
+                            logoElement.style.display = 'block';
+                        } else {
+                            logoElement.style.display = 'none';
+                        }
+                    })
+                    .catch(error => console.error('Error fetching team logo:', error));
+            } else {
+                logoElement.style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}

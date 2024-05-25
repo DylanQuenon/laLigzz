@@ -85,11 +85,19 @@ class Team
     #[Assert\File(maxSize:"1024k", maxSizeMessage: "La taille du fichier est trop grande")]
     private ?string $newsPicture = null;
 
+    /**
+     * @var Collection<int, Matches>
+     */
+    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'homeTeam')]
+    private Collection $matches;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->news = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->matches = new ArrayCollection();
+        $this->awayMatches = new ArrayCollection();
     }
 
      /**
@@ -310,6 +318,66 @@ class Team
     public function setNewsPicture(?string $newsPicture): static
     {
         $this->newsPicture = $newsPicture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Matches $match): static
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches->add($match);
+            $match->setHomeTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Matches $match): static
+    {
+        if ($this->matches->removeElement($match)) {
+            // set the owning side to null (unless already changed)
+            if ($match->getHomeTeam() === $this) {
+                $match->setHomeTeam(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getAwayMatches(): Collection
+    {
+        return $this->awayMatches;
+    }
+
+    public function addAwayMatch(Matches $match): static
+    {
+        if (!$this->awayMatches->contains($match)) {
+            $this->awayMatches->add($match);
+            $match->setAwayTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAwayMatch(Matches $match): static
+    {
+        if ($this->awayMatches->removeElement($match)) {
+            // set the owning side to null (unless already changed)
+            if ($match->getAwayTeam() === $this) {
+                $match->setAwayTeam(null);
+            }
+        }
 
         return $this;
     }
