@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\Matches;
+use App\Entity\Ranking;
 use App\Form\MatchesType;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,7 +51,20 @@ class AdminMatchesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            // je persiste mon objet team
+            // je persiste mon objet match
+            $homeTeam = $match->getHomeTeam();
+            $awayTeam = $match->getAwayTeam();
+            $homeTeamGoals = $match->getHomeTeamGoals();
+            $awayTeamGoals = $match->getAwayTeamGoals();
+
+                // Mise à jour du classement pour l'équipe à domicile
+        $this->updateTeamRanking($homeTeam, $homeTeamGoals, $awayTeamGoals, $manager);
+
+        // Mise à jour du classement pour l'équipe à l'extérieur
+        $this->updateTeamRanking($awayTeam, $awayTeamGoals, $homeTeamGoals, $manager);
+
+
+
             $manager->persist($match);
             // j'envoie les persistances dans la bdd
             $manager->flush();
@@ -132,6 +146,54 @@ class AdminMatchesController extends AbstractController
         
         return $this->redirectToRoute('admin_matches_index');
     }
- 
+
+    private function updateRanking(Matches $match, EntityManagerInterface $manager): void
+    {
+        $homeTeam = $match->getHomeTeam();
+        $awayTeam = $match->getAwayTeam();
+        $homeTeamGoals = $match->getHomeTeamGoals();
+        $awayTeamGoals = $match->getAwayTeamGoals();
+
+        // Met à jour le classement de l'équipe à domicile
+        $this->updateTeamRanking($homeTeam, $homeTeamGoals, $awayTeamGoals, $manager);
+
+        // Met à jour le classement de l'équipe à l'extérieur
+        $this->updateTeamRanking($awayTeam, $awayTeamGoals, $homeTeamGoals, $manager);
+    }
+
+    /**
+     * Met à jour le classement d'une équipe en fonction du résultat du match
+     *
+     * @param Team $team
+     * @param int $goalsFor
+     * @param int $goalsAgainst
+     * @param EntityManagerInterface $manager
+     */
+    private function updateTeamRanking(Team $team, int $goalsFor, int $goalsAgainst, EntityManagerInterface $manager): void
+    {
+        $ranking = $team->getRanking();
+
+        // if (!$ranking) {
+        //     $ranking = new Ranking();
+        //     $ranking->setTeam($team);
+        // }
+
+        $ranking->setMatchesPlayed($ranking->getMatchesPlayed() + 1);
+        $ranking->setGoalsFor($ranking->getGoalsFor() + $goalsFor);
+        $ranking->setGoalsAgainst($ranking->getGoalsAgainst() + $goalsAgainst);
+
+        if ($goalsFor > $goalsAgainst) {
+            $ranking->setWins($ranking->getWins() + 1);
+            $ranking->setPoints($ranking->getPoints() + 3);
+        } elseif ($goalsFor < $goalsAgainst) {
+            $ranking->setLosses($ranking->getLosses() + 1);
+        } else {
+            $ranking->setDraws($ranking->getDraws() + 1);
+            $ranking->setPoints($ranking->getPoints() + 1);
+        }
+
+        $manager->persist($ranking);
+        $manager->flush();
+    }
  
 }

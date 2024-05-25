@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Entity\Image;
 use App\Form\TeamType;
+use App\Entity\Ranking;
 use App\Form\TeamEditType;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
@@ -63,8 +64,20 @@ class AdminTeamController extends AbstractController
 
             // je persiste mon objet team
             $manager->persist($team);
-            // j'envoie les persistances dans la bdd
             $manager->flush();
+            // j'envoie les persistances dans la bdd
+            $ranking=new Ranking();
+            $ranking->setTeam($team)
+            ->setMatchesPlayed(0)
+            ->setWins(0)
+            ->setDraws(0)
+            ->setLosses(0)
+            ->setGoalsFor(0)
+            ->setGoalsAgainst(0)
+            ->setPoints(0);
+            $manager->persist($ranking);
+            $manager->flush();
+            
 
             $this->addFlash(
                 'success', 

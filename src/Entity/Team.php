@@ -91,6 +91,9 @@ class Team
     #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'homeTeam')]
     private Collection $matches;
 
+    #[ORM\OneToOne(mappedBy: 'team', cascade: ['persist', 'remove'])]
+    private ?Ranking $ranking = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -378,6 +381,28 @@ class Team
                 $match->setAwayTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRanking(): ?Ranking
+    {
+        return $this->ranking;
+    }
+
+    public function setRanking(?Ranking $ranking): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($ranking === null && $this->ranking !== null) {
+            $this->ranking->setTeam(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($ranking !== null && $ranking->getTeam() !== $this) {
+            $ranking->setTeam($this);
+        }
+
+        $this->ranking = $ranking;
 
         return $this;
     }
