@@ -107,13 +107,22 @@ class AdminMatchesController extends AbstractController
     #[Route("/admin/matches/{id}/edit", name: "admin_matches_edit")]
     public function edit(Matches $match, Request $request, EntityManagerInterface $manager): Response
     {
+      $oldHomeTeamGoals = $match->getHomeTeamGoals();
+      $oldAwayTeamGoals = $match->getAwayTeamGoals();
         $form = $this->createForm(MatchesType::class, $match);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+       $this->cancelTeamRanking($match->getHomeTeam(), $oldHomeTeamGoals, $oldAwayTeamGoals, $manager);
+       $this->cancelTeamRanking($match->getAwayTeam(), $oldAwayTeamGoals, $oldHomeTeamGoals, $manager);
+        
             $manager->persist($match);
             $manager->flush();
-    
+
+
+          $this->updateTeamRanking($match->getHomeTeam(), $match->getHomeTeamGoals(), $match->getAwayTeamGoals(), $manager);
+
+        $this->updateTeamRanking($match->getAwayTeam(), $match->getAwayTeamGoals(), $match->getHomeTeamGoals(), $manager);
             $this->addFlash(
                 'success',
                 "Le match <strong>".$match->getId()."</strong> a bien été modifié"
@@ -137,6 +146,14 @@ class AdminMatchesController extends AbstractController
     #[Route("/admin/matches/{id}/delete", name: "admin_matches_delete")]
     public function delete(Matches $match, EntityManagerInterface $manager): Response
     {
+        $oldHomeTeamGoals = $match->getHomeTeamGoals();
+
+    $oldAwayTeamGoals = $match->getAwayTeamGoals();
+
+
+    $this->cancelTeamRanking($match->getHomeTeam(), $oldHomeTeamGoals, $oldAwayTeamGoals, $manager);
+
+    $this->cancelTeamRanking($match->getAwayTeam(), $oldAwayTeamGoals, $oldHomeTeamGoals, $manager);
         $this->addFlash(
             "success",
             "Le match <strong>".$match->getId()."</strong> a bien été supprimé"
@@ -195,5 +212,35 @@ class AdminMatchesController extends AbstractController
         $manager->persist($ranking);
         $manager->flush();
     }
+
+    /**
+ * Annule les anciennes valeurs du classement d'une équipe
+ *
+ * @param Team $team
+ * @param int $oldGoalsFor
+ * @param int $oldGoalsAgainst
+ * @param EntityManagerInterface $manager
+ */
+private function cancelTeamRanking(Team $team, int $oldGoalsFor, int $oldGoalsAgainst, EntityManagerInterface $manager): void
+{
+    $ranking = $team->getRanking();
+
+    $ranking->setMatchesPlayed($ranking->getMatchesPlayed() - 1);
+    $ranking->setGoalsFor($ranking->getGoalsFor() - $oldGoalsFor);
+    $ranking->setGoalsAgainst($ranking->getGoalsAgainst() - $oldGoalsAgainst);
+
+    if ($oldGoalsFor > $oldGoalsAgainst) {
+        $ranking->setWins($ranking->getWins() - 1);
+        $ranking->setPoints($ranking->getPoints() - 3);
+    } elseif ($oldGoalsFor < $oldGoalsAgainst) {
+        $ranking->setLosses($ranking->getLosses() - 1);
+    } else {
+        $ranking->setDraws($ranking->getDraws() - 1);
+        $ranking->setPoints($ranking->getPoints() - 1);
+    }
+
+    $manager->persist($ranking);
+    $manager->flush();
+}
  
 }
