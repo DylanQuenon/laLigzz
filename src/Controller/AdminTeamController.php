@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Entity\Image;
 use App\Form\TeamType;
+use App\Entity\Matches;
 use App\Entity\Ranking;
 use App\Form\TeamEditType;
 use App\Repository\TeamRepository;
@@ -189,6 +190,7 @@ class AdminTeamController extends AbstractController
     #[Route("/admin/teams/{slug}/delete", name: "admin_teams_delete")]
     public function delete(Team $team, EntityManagerInterface $manager): Response
     {
+        $this->deleteAssociatedMatches($team, $manager);
         if(!empty($team->getLogo()))
         {
             unlink($this->getParameter('uploads_directory').'/'.$team->getLogo());
@@ -230,4 +232,53 @@ class AdminTeamController extends AbstractController
                 return null;
         }
     }
+
+    private function deleteAssociatedMatches(Team $team, EntityManagerInterface $manager): void
+{
+    // Récupérer tous les matchs associés à l'équipe en tant qu'équipe à domicile ou à l'extérieur
+    $matches = $manager->getRepository(Matches::class)->findBy(['homeTeam' => $team]);
+
+    foreach ($matches as $match) {
+        $this->deleteMatchAndUpdateRanking($match, $manager);
+    }
+
+    $matches = $manager->getRepository(Matches::class)->findBy(['awayTeam' => $team]);
+
+    foreach ($matches as $match) {
+        $this->deleteMatchAndUpdateRanking($match, $manager);
+    }
+}
+    private function deleteMatchAndUpdateRanking(Matches $match, EntityManagerInterface $manager): void
+{
+    $homeTeamGoals = $match->getHomeTeamGoals();
+    $awayTeamGoals = $match->getAwayTeamGoals();
+
+    $this->cancelTeamRanking($match->getHomeTeam(), $homeTeamGoals, $awayTeamGoals, $manager);
+    $this->cancelTeamRanking($match->getAwayTeam(), $awayTeamGoals, $homeTeamGoals, $manager);
+
+    $manager->remove($match);
+    $manager->flush();
+}
+
+private function cancelTeamRanking(Team $team, int $oldGoalsFor, int $oldGoalsAgainst, EntityManagerInterface $manager): void
+{
+    $ranking = $team->getRanking();
+
+    $ranking->setMatchesPlayed($ranking->getMatchesPlayed() - 1);
+    $ranking->setGoalsFor($ranking->getGoalsFor() - $oldGoalsFor);
+    $ranking->setGoalsAgainst($ranking->getGoalsAgainst() - $oldGoalsAgainst);
+
+    if ($oldGoalsFor > $oldGoalsAgainst) {
+        $ranking->setWins($ranking->getWins() - 1);
+        $ranking->setPoints($ranking->getPoints() - 3);
+    } elseif ($oldGoalsFor < $oldGoalsAgainst) {
+        $ranking->setLosses($ranking->getLosses() - 1);
+    } else {
+        $ranking->setDraws($ranking->getDraws() - 1);
+        $ranking->setPoints($ranking->getPoints() - 1);
+    }
+
+    $manager->persist($ranking);
+    $manager->flush();
+}
 }

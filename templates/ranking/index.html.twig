@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classement{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Classement</h1>
+     <div class="filters mb-3">
+        <!-- Liens pour les filtres -->
+        <a href="{{ path('app_ranking', {'filter': 'best_attack'}) }}" class="btn btn-primary mr-2">Meilleure Attaque</a>
+        <a href="{{ path('app_ranking', {'filter': 'best_defense'}) }}" class="btn btn-primary mr-2">Meilleure Défense</a>
+        <a href="{{ path('app_ranking', {'filter': 'most_wins'}) }}" class="btn btn-primary mr-2">Plus de Victoires</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Équipe</th>
+                <th>Matchs Joués</th>
+                <th>Victoires</th>
+                <th>Nuls</th>
+                <th>Défaites</th>
+                <th>Buts marqués</th>
+                <th>Buts encaissés</th>
+                <th>Différence de buts</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in ranking %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                <td>
+            <img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-width: 50px;"> {{ team.getTeam().getName() }}
+        </td>
+                    <td>{{ team.getMatchesPlayed() }}</td>
+                    <td>{{ team.getWins() }}</td>
+                    <td>{{ team.getDraws() }}</td>
+                    <td>{{ team.getLosses() }}</td>
+                    <td>{{ team.getGoalsFor() }}</td>
+                    <td>{{ team.getGoalsAgainst() }}</td>
+                    <td>{{ team.getGoalsFor() - team.getGoalsAgainst() }}</td>
+                    <td>{{ team.getPoints() }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

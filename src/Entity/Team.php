@@ -88,8 +88,15 @@ class Team
     /**
      * @var Collection<int, Matches>
      */
-    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'homeTeam')]
+    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'homeTeam', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $matches;
+
+      /**
+     * @var Collection<int, Matches>
+     */
+    #[ORM\OneToMany(targetEntity: Matches::class, mappedBy: 'awayTeam', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private Collection $awayMatches;
+
 
     #[ORM\OneToOne(mappedBy: 'team', cascade: ['persist', 'remove'])]
     private ?Ranking $ranking = null;
