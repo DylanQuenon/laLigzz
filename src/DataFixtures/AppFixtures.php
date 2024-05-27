@@ -58,7 +58,8 @@ class AppFixtures extends Fixture
                  ->setPresident($faker->name())
                  ->setLogoBackground('')
                  ->setCover('')
-                 ->setNewsPicture('');
+                 ->setNewsPicture('')
+                 ->setStadium('stade' . $i);
             
         
             

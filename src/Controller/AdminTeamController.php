@@ -116,10 +116,48 @@ class AdminTeamController extends AbstractController
     #[Route("/admin/teams/{slug}/edit", name: "admin_teams_edit")]
     public function edit(Team $team, Request $request, EntityManagerInterface $manager): Response
     {
+        $oldLogoPath = $this->getOldImagePath($team, 'logo');
+        $oldLogoBackgroundPath = $this->getOldImagePath($team, 'logoBackground');
+        $oldCoverPath = $this->getOldImagePath($team, 'cover');
+        $oldNewsPicturePath = $this->getOldImagePath($team, 'newsPicture');
+        
+        $logo = $team->getLogo();
+        if(!empty($logo)){
+            $team->setLogo(
+                new File($this->getParameter('uploads_directory').'/'.$team->getLogo())
+            );
+        }
+        $logoBackground = $team->getLogoBackground();
+        if(!empty($logoBackground)){
+            $team->setLogoBackground(
+                new File($this->getParameter('uploads_directory').'/'.$team->getLogoBackground())
+            );
+        }
+        $cover = $team->getCover();
+        if(!empty($cover)){
+            $team->setCover(
+                new File($this->getParameter('uploads_directory').'/'.$team->getCover())
+            );
+        }
+        $newsPicture = $team->getNewsPicture();
+        if(!empty($newsPicture)){
+            $team->setNewsPicture(
+                new File($this->getParameter('uploads_directory').'/'.$team->getNewsPicture())
+            );
+        }
+
+     
+
         $form = $this->createForm(TeamEditType::class, $team);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            $team->setLogo($logo)
+                ->setSlug('')
+                ->setLogoBackground($logoBackground)
+                ->setCover($cover)
+                ->setNewsPicture($newsPicture);
+
             $manager->persist($team);
             $manager->flush();
     
@@ -133,7 +171,11 @@ class AdminTeamController extends AbstractController
     
         return $this->render("admin/team/edit.html.twig",[
             "team" => $team,
-            "myForm" => $form->createView()
+            "myForm" => $form->createView(),
+            "oldLogoPath" => $oldLogoPath,
+            "oldLogoBackgroundPath" => $oldLogoBackgroundPath,
+            "oldCoverPath" => $oldCoverPath,
+            "oldNewsPicturePath" => $oldNewsPicturePath,
         ]);
     }
      
@@ -171,5 +213,21 @@ class AdminTeamController extends AbstractController
         $manager->flush();
         
         return $this->redirectToRoute('admin_teams_index');
+    }
+
+    private function getOldImagePath(Team $team, string $type): ?string
+    {
+        switch ($type) {
+            case 'logo':
+                return $team->getLogo();
+            case 'logoBackground':
+                return $team->getLogoBackground();
+            case 'cover':
+                return $team->getCover();
+            case 'newsPicture':
+                return $team->getNewsPicture();
+            default:
+                return null;
+        }
     }
 }

@@ -27,7 +27,7 @@ class MatchesType extends ApplicationType
                 'label' => 'Journée',
                 'placeholder' => 'Sélectionnez une journée'
             ])
-            ->add('stadium',TextType::class, $this->getConfiguration('Stade', 'Entrez le nom du stade'))
+            // ->add('stadium',TextType::class, $this->getConfiguration('Stade', 'Entrez le nom du stade'))
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
                 

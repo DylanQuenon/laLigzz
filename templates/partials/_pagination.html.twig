@@ -1,16 +1,26 @@
-{# Pagination #}
 {% block stylesheets %}
      {{ encore_entry_link_tags('paginationStyle') }}
 {% endblock %}
 <div class="w-100 d-flex justify-content-center">
     <nav aria-label="Page navigation">
         <ul class="pagination">
+
+        <div class="d-flex gap-2">
+            {# Lien première page (désactivé si nous sommes sur la première page) #}
+            <li class="page-item navigation extrem {% if page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, {'page': 1}) }}" aria-label="First">
+                    <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i></span>
+                </a>
+            </li>
+
             {# Lien précédent (désactivé si nous sommes sur la première page) #}
             <li class="page-item navigation {% if page == 1 %}disabled{% endif %}">
                 <a class="page-link" href="{{ path(route, {'page': page - 1}) }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                    <span aria-hidden="true"><i class="fa-solid fa-angle-left"></i></span>
                 </a>
             </li>
+        
+        </div>
 
             {# Boucle pour afficher les numéros de page #}
             {% set halfWindowSize = 1 %}
@@ -24,12 +34,25 @@
                 </li>
             {% endfor %}
 
-            {# Lien suivant (désactivé si nous sommes sur la dernière page) #}
+            <div class="d-flex gap-2">
+              {# Lien suivant (désactivé si nous sommes sur la dernière page) #}
             <li class="page-item navigation {% if page == pages %}disabled{% endif %}">
                 <a class="page-link" href="{{ path(route, {'page': page + 1}) }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+                <span  aria-hidden="true">
+                    <i class="fa-solid fa-angle-right"></i>
+                </span>
+                </a>
+            {# Lien dernière page (désactivé si nous sommes sur la dernière page) #}
+            <li class="page-item navigation  extrem {% if page == pages %}disabled{% endif %}">
+                <a class="page-link" href="{{ path(route, {'page': pages}) }}" aria-label="Last">
+                    <span aria-hidden="true"><i class="fa-solid fa-angles-right"></i></span>
                 </a>
             </li>
+            </li>
+
+            </div>
+
+          
         </ul>
     </nav>
 </div>

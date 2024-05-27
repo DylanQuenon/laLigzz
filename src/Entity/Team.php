@@ -94,6 +94,9 @@ class Team
     #[ORM\OneToOne(mappedBy: 'team', cascade: ['persist', 'remove'])]
     private ?Ranking $ranking = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $stadium = null;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -403,6 +406,18 @@ class Team
         }
 
         $this->ranking = $ranking;
+
+        return $this;
+    }
+
+    public function getStadium(): ?string
+    {
+        return $this->stadium;
+    }
+
+    public function setStadium(string $stadium): static
+    {
+        $this->stadium = $stadium;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MatchesRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Matches
 {
     #[ORM\Id]
@@ -34,6 +35,21 @@ class Matches
 
     #[ORM\Column]
     private ?int $awayTeamGoals = null;
+
+      /**
+     * Permet d'intialiser le slug automatiquement si on ne le donne pas
+     *
+     * @return void
+     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeStadium(): void
+    {
+        if(empty($this->stadium))
+        {
+            $this->stadium = $this->homeTeam->getStadium();
+        }
+    }
 
     public function getId(): ?int
     {

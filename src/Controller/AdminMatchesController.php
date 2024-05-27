@@ -107,31 +107,36 @@ class AdminMatchesController extends AbstractController
     #[Route("/admin/matches/{id}/edit", name: "admin_matches_edit")]
     public function edit(Matches $match, Request $request, EntityManagerInterface $manager): Response
     {
-      $oldHomeTeamGoals = $match->getHomeTeamGoals();
-      $oldAwayTeamGoals = $match->getAwayTeamGoals();
+        $oldHomeTeam = $match->getHomeTeam();
+        $oldAwayTeam = $match->getAwayTeam();
+        $oldHomeTeamGoals = $match->getHomeTeamGoals();
+        $oldAwayTeamGoals = $match->getAwayTeamGoals();
+
         $form = $this->createForm(MatchesType::class, $match);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-       $this->cancelTeamRanking($match->getHomeTeam(), $oldHomeTeamGoals, $oldAwayTeamGoals, $manager);
-       $this->cancelTeamRanking($match->getAwayTeam(), $oldAwayTeamGoals, $oldHomeTeamGoals, $manager);
-        
+            $match->setStadium('');
+            // Annuler les effets du match existant sur le classement
+            $this->cancelTeamRanking($oldHomeTeam, $oldHomeTeamGoals, $oldAwayTeamGoals, $manager);
+            $this->cancelTeamRanking($oldAwayTeam, $oldAwayTeamGoals, $oldHomeTeamGoals, $manager);
+
             $manager->persist($match);
             $manager->flush();
 
+            // Mettre à jour le classement avec les nouvelles données du match
+            $this->updateTeamRanking($match->getHomeTeam(), $match->getHomeTeamGoals(), $match->getAwayTeamGoals(), $manager);
+            $this->updateTeamRanking($match->getAwayTeam(), $match->getAwayTeamGoals(), $match->getHomeTeamGoals(), $manager);
 
-          $this->updateTeamRanking($match->getHomeTeam(), $match->getHomeTeamGoals(), $match->getAwayTeamGoals(), $manager);
-
-        $this->updateTeamRanking($match->getAwayTeam(), $match->getAwayTeamGoals(), $match->getHomeTeamGoals(), $manager);
             $this->addFlash(
                 'success',
                 "Le match <strong>".$match->getId()."</strong> a bien été modifié"
             );
-    
+
             return $this->redirectToRoute('admin_matches_index');
         }
-    
-        return $this->render("admin/matches/edit.html.twig",[
+
+        return $this->render("admin/matches/edit.html.twig", [
             "match" => $match,
             "myForm" => $form->createView()
         ]);
@@ -242,5 +247,6 @@ private function cancelTeamRanking(Team $team, int $oldGoalsFor, int $oldGoalsAg
     $manager->persist($ranking);
     $manager->flush();
 }
+
  
 }

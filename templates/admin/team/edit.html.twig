@@ -36,10 +36,10 @@
 				</div>
 				<div class="card-body">
 					{% set images = [
-                        { 'url': team.logo, 'type': 'logo', 'label': 'Logo' },
-                        { 'url': team.logoBackground, 'type': 'logoBackground', 'label': 'Arrière-plan' },
-                        { 'url': team.cover, 'type': 'cover', 'label': 'Couverture' },
-                        { 'url': team.newsPicture, 'type': 'newsPicture', 'label': 'Image d\'actualité' }
+                        { 'url': oldLogoPath, 'type': 'logo', 'label': 'Logo' },
+                        { 'url': oldLogoBackgroundPath, 'type': 'logoBackground', 'label': 'Arrière-plan' },
+                        { 'url': oldCoverPath, 'type': 'cover', 'label': 'Couverture' },
+                        { 'url': oldNewsPicturePath, 'type': 'newsPicture', 'label': 'Image d\'actualité' }
                     ] %}
                     {% for image in images %}
                         <div class="row align-items-center mb-3">

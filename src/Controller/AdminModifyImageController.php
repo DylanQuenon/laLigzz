@@ -23,6 +23,7 @@ class AdminModifyImageController extends AbstractController
     #[Route("/admin/teams/{slug}/imgModify", name:"TeamImgModify")]
     public function imgModify(Request $request, EntityManagerInterface $manager, Team $team): Response
     {
+        
         $type = $request->query->get('type');
         switch ($type) {
             case 'logo':
@@ -92,7 +93,25 @@ class AdminModifyImageController extends AbstractController
             'myForm' => $form->createView(),
             'teamName' => $team->getName(),
             'imageType' => $type,
+            'oldImagePath' => $this->getOldImagePath($team, $type), // Ajoutez cette ligne pour passer le chemin de l'ancienne image
         ]);
+        
+    }
+
+    private function getOldImagePath(Team $team, string $type): ?string
+    {
+        switch ($type) {
+            case 'logo':
+                return $team->getLogo();
+            case 'logoBackground':
+                return $team->getLogoBackground();
+            case 'cover':
+                return $team->getCover();
+            case 'newsPicture':
+                return $team->getNewsPicture();
+            default:
+                return null;
+        }
     }
 
 }

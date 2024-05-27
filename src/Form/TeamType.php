@@ -27,6 +27,7 @@ class TeamType extends ApplicationType
                 ])
             ->add('logo', FileType::class, $this->getConfiguration("Logo du club", "Choisissez le logo du club que vous insérez"))
             ->add('description',TextareaType::class, $this->getConfiguration('Description du club','Donnez une brève description du club'))
+            ->add('stadium',TextType::class,$this->getConfiguration('Stade du club','Quel est le stade du club'))
             ->add('devise',TextType::class, $this->getConfiguration('Devise','Quelle est la devise du club'))
             ->add('fondation', DateType::class, [
                 'widget' => 'single_text',

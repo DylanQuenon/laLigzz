@@ -18,7 +18,7 @@
     font-size: $text-font-size-lg;
     &:hover{
         background-color: $color-secondary;
-        color: $color-tertiary;
+        color: $color-tertiary !important;
     }
     &:focus{
         box-shadow: none;
@@ -35,14 +35,14 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s; /* Ajout de la transition */
-
 }
 
 .navigation .page-link:hover {
-    color: $color-tertiary;
+    color: $color-tertiary !important;
     background-color: $color-secondary;
     border-radius: $radius-full;
 }
+
 
 
 .pagination{
@@ -52,3 +52,10 @@
     margin-top: 20px;
 }
 
+i{
+    font-size: 16px;
+}
+
+.page-link:hover .extrem i{
+    color: $color-primary !important;
+}

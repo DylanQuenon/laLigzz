@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NewsController extends AbstractController
@@ -51,6 +52,8 @@ class NewsController extends AbstractController
             'pagination' => $pagination
         ]);
     }
+
+
 
 
     
@@ -184,7 +187,6 @@ class NewsController extends AbstractController
         return $this->redirectToRoute('news_index');
     }
  
-
     /**
      * Vue individuelle des news
      *
@@ -200,4 +202,5 @@ class NewsController extends AbstractController
         ]);
     }
 
+    
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\StatsService;
 use App\Repository\NewsRepository;
 use App\Repository\TeamRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,22 @@ class HomeController extends AbstractController
      * @return Response
      */
     #[Route('/', name: 'homepage')]
-    public function index(TeamRepository $team, NewsRepository $new): Response
+    public function index(TeamRepository $team, NewsRepository $new, StatsService $stats): Response
     {
         $teams = $team->findAll();
         $latestNews = $new->findBy([], ['id' => 'DESC'], 10); // récup les 10 dernières actualités pour le slider
+        $totalGoals= $stats->getAllGoals();
+        $totalGames= $stats->getAllGames();
+        $totalPoints= $stats->getAllPoints();
         return $this->render('home.html.twig', [
             'teams' => $teams,
-            'news'=>$latestNews
+            'news'=>$latestNews,
+            'stats' => [
+                'allGoals' => $totalGoals,
+                'allGames'=> $totalGames,
+                'allPoints'=> $totalPoints,
+          
+            ],
             
         ]);
     }
