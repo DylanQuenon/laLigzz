@@ -55,7 +55,7 @@ class TeamController extends AbstractController
         $lastMatches = $repo->createQueryBuilder('m')
         ->where('m.homeTeam = :team OR m.awayTeam = :team')
         ->setParameter('team', $team)
-        ->orderBy('m.date', 'DESC')
+        ->orderBy('m.date', 'ASC')
         ->setMaxResults(5)
         ->getQuery()
         ->getResult();
