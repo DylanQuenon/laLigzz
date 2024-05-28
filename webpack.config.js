@@ -32,8 +32,10 @@ Encore
     .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
     .addEntry('editProfileStyle', './assets/styles/pages/editProfile.scss')
     .addEntry('formStyle', './assets/styles/pages/formStyle.scss')
-    .addEntry('toastify', './node_modules/toastify-js/src/toastify.js')
-    .addStyleEntry('toastify-style', './node_modules/toastify-js/src/toastify.css')
+    .addEntry('rankingStyle', './assets/styles/pages/ranking.scss')
+    .addEntry('matchStyle', './assets/styles/pages/matchStyle.scss')
+    .addEntry('teamStyle', './assets/styles/pages/teamStyle.scss')
+
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

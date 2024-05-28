@@ -1,0 +1,68 @@
+@import "../variables/variables.scss";
+.cardsMatches{
+    border: solid 1px $color-secondary;
+    border-radius: $radius-2xl;
+   min-height: 300px;
+   padding: 20px;
+   box-sizing: border-box;
+    .rowTeams{
+       justify-content: space-between;
+       text-align: center;
+
+       .blockCenter{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-sm;
+        img{
+            height: 30px;
+        }
+       i{
+        color: $color-tertiary;
+       }
+       }
+       .teams{
+        width: 33%;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+        color: $color-secondary;
+        text-decoration: none;
+        p{
+            width: 100%;
+            text-align: center;
+        }
+        img{
+            object-fit: contain;
+        }
+       }
+    }
+    .rowScore{
+        justify-content: space-between;
+        align-items: center;
+        .score{
+            width: 33%;
+            text-align: center;
+        }
+        .stadium{
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
+            align-items: center;
+            text-align: center;
+            svg{
+                width: 30px;
+            }
+        }
+    }
+
+}
+img{
+    height: 80px;
+}
+.rect{
+    width: 30px;
+    height: 10px;
+    background-color: $color-tertiary;
+}

@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\Image;
+use App\Entity\Matches;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
+use App\Repository\MatchesRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,10 +50,18 @@ class TeamController extends AbstractController
      * @return Response
      */
     #[Route("/teams/{slug}", name:"teams_show")]
-    public function show(string $slug, Team $team): Response
+    public function show(string $slug, Team $team, MatchesRepository $repo): Response
     {
+        $lastMatches = $repo->createQueryBuilder('m')
+        ->where('m.homeTeam = :team OR m.awayTeam = :team')
+        ->setParameter('team', $team)
+        ->orderBy('m.date', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult();
         return $this->render("team/show.html.twig", [
             'team' => $team,
+            'lastMatches' => $lastMatches,
         ]);
     }
 }

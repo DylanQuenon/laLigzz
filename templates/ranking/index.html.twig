@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Classement{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('rankingStyle') }}
+{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="slide">
+<div class="wrapper">
     <h1>Classement</h1>
      <div class="filters mb-3">
         <!-- Liens pour les filtres -->
@@ -45,5 +49,7 @@
             {% endfor %}
         </tbody>
     </table>
+
+</div>
 </div>
 {% endblock %}

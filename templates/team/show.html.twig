@@ -1,21 +1,89 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ team.name }}
+	{{ team.name }}
+{% endblock %}
+{% block stylesheets %}
+	{{ encore_entry_link_tags('teamStyle') }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ team.name }}</h1>
-
-   <img src="/uploads/{{team.logoBackground}}" alt="{{team.logoBackground}}" width='100px'>
-   <img src="/uploads/{{team.cover}}" alt="{{team.cover}}"width='100px'>
-   <img src="/uploads/{{team.newsPicture}}" alt="{{team.cover}}"width='100px'>
-  
-
-    {# Autres informations sur l'équipe #}
-    <p>{{ team.devise }}</p>
-    <p>{{ team.coach }}</p>
-    <p>{{ team.goalscorer }}</p>
-    <p>{{ team.president }}</p>
-    <p>{{ team.fondation | date("d/m/Y") }}</p>
+	<div class="slide" id="team">
+		<img src="/uploads/{{team.logoBackground}}" class="logoBackground" alt="Logo en noir et blanc de l'équipe : {{team.name}}">
+		<div class="wrapper">
+			<div class="blockTeam col-md-12">
+            <div class="d-flex infos">
+				<div class="blockTeam_left col-md-6">
+					<div class="heading d-flex">
+						<div class="name d-flex">
+							<h3 class="display-2xl hero">{{team.name}}</h3>
+							<img src="/uploads/{{team.logo}}" class="logoTeam" alt="Logo de l'équipe {{team.name}}">
+						</div>
+						<div class="followButton">
+							<a href="#" class="text-md hero d-flex align-items-center justify-content-center"><svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e6e6e6"><path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>Suivre</a>
+						</div>
+					</div>
+					<div class="blockTeam_left_actions d-flex">
+						{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir les actus' } %}
+						<a href="#" class="hero games">Voir les matchs</a>
+					</div>
+					<p class="devise display-md hero text-uppercase">{{team.devise}}</p>
+					<div class="row pres">
+						<div class="col-md-5">
+							<p class="text-md hero fw-light">Fondation:
+								<span class="text-md hero fw-bold">{{team.fondation | date('d/m/Y')}}</span>
+							</p>
+							<p class="text-md hero fw-light">Coach:
+								<span class="text-md hero fw-bold">{{team.coach}}</span>
+							</p>
+							<p class="text-md hero fw-light">Stadium:
+								<span class="text-md hero fw-bold">{{team.stadium}}</span>
+							</p>
+						</div>
+						<div class="col-md-5">
+							<p class="text-md hero fw-light">Meilleur buteur:
+								<span class="text-md hero fw-bold">{{team.goalScorer}}</span>
+							</p>
+							<p class="text-md hero fw-light">Président:
+								<span class="text-md hero fw-bold">{{team.president}}</span>
+							</p>
+							<p class="text-md hero fw-light d-flex gap-2 align-items-center">Derniers résultats:
+                        
+								 {% for match in lastMatches %}
+                                        {% set resultClass = 'result' %}
+                                        {% if match.homeTeam == team %}
+                                            {% if match.homeTeamGoals > match.awayTeamGoals %}
+                                                {% set resultClass = 'result victory' %}
+                                            {% elseif match.homeTeamGoals < match.awayTeamGoals %}
+                                                {% set resultClass = 'result defeat' %}
+                                            {% else %}
+                                                {% set resultClass = 'result draw' %}
+                                            {% endif %}
+                                        {% else %}
+                                            {% if match.awayTeamGoals > match.homeTeamGoals %}
+                                                {% set resultClass = 'result victory' %}
+                                            {% elseif match.awayTeamGoals < match.homeTeamGoals %}
+                                                {% set resultClass = 'result defeat' %}
+                                            {% else %}
+                                                {% set resultClass = 'result draw' %}
+                                            {% endif %}
+                                        {% endif %}
+                                        <span class="{{ resultClass }}">
+                                           
+                                        </span>
+                                    {% endfor %}
+							</p>
+						</div>
+					</div>
+				</div>
+                <div class="blockTeam_right col-md-4 offset-md-2">
+                   <div class="circlePicture">
+                   </div>
+                   <img src="/uploads/{{team.cover}}" class="teamCover" alt="Image du joueur de l'équipe de {{team.name}}">
+                </div>
+            </div>
+                <div class="banneerStats"></div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

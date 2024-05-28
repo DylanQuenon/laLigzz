@@ -2,7 +2,7 @@
     {% set url = path('teams_show', {'slug':team.slug}) %}
 	<div class="team_card d-flex">
 		<div class="name_team">
-			<img src="{{team.logo}}" alt="Image de l'équipe : {{team.name}}" class="picTeam">
+			<img src="/uploads/{{team.logo}}" alt="Image de l'équipe : {{team.name}}" class="picTeam">
 			<p class="text-xl hero">{{team.name}}</p>
 		</div>
 

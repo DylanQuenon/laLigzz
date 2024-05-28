@@ -1,0 +1,132 @@
+@import "../variables/variables.scss";
+#team{
+    position: relative;
+    color: $color-secondary;
+    .logoBackground{
+        position: absolute;
+        bottom: 0;
+       height: 100vh;
+       opacity: 30%;
+    }
+    .wrapper{
+        padding: $spacing-9xl 0;
+    }
+    .logoTeam{
+        height: 80px;
+        object-fit: contain;
+    }
+    .blockTeam{
+        position: relative;
+        border-radius: 45px 45px 0 0;
+        background-color: rgba(130, 130, 130,0.40);
+        min-height: 500px;
+        align-items: center;
+       
+        .circlePicture{
+            border-radius: $radius-full;
+            background:$gradient-circle;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateX(6%);
+  position: absolute;
+          
+        
+        }
+        .teamCover{
+            position: absolute;
+            bottom: 0%;
+            right: -3%;
+            height: 100%;
+        }
+        .banneerStats{
+            width: 100%;
+            min-height: 80px;
+            background-color: rgb(159, 159, 159,0.43);
+            backdrop-filter: blur(25px);
+            position: absolute;
+            bottom: 0;
+            border-radius: 45px 45px 0 0;
+        }
+        
+    }
+  
+}
+.infos{
+   padding: 20px;
+}
+.blockTeam_left{
+    @include flexGap(column,$spacing-3xl);
+    .heading{
+        @include flexGap(row,$spacing-3xl);
+        align-items: center;
+        a{
+            display: flex;
+            padding: 8px 16px;
+            border-radius: $radius-full;
+            text-decoration: none;
+            background-color: rgba(230, 230, 230,0.5);
+            border: solid 1px $color-secondary;
+            color: $color-secondary;
+            display: block;
+            width: max-content;
+        }
+        .name{
+            @include flexGap(row,$spacing-md)
+            
+
+        }
+
+    }
+    .blockTeam_left_actions{
+        @include flexGap(row,$spacing-3xl);
+        a{
+            font-size: 14px !important;
+            font-family: $font-family-hero;
+            padding: 4px 15px;
+        }
+        .games{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: $radius-full;
+            text-decoration: none;
+            background-color: rgba(230, 230, 230,0.5);
+            border: solid 1px $color-secondary;
+            color: $color-secondary;
+            width: max-content;
+        }
+
+    }
+}
+.followButton{
+    a{
+        gap: $spacing-xxs;
+        svg{
+            width: 16px;
+            height: 16px;
+        }
+
+    }
+}
+
+/* teamStyle.css */
+.result {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+.victory {
+background-color: rgb(65, 245, 104);
+}
+
+.draw {
+    background-color: #e0da2d;
+}
+
+.defeat {
+    background-color: $color-tertiary;
+}

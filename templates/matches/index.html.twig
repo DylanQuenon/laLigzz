@@ -1,29 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Actualités
-{% endblock %}
+{% block title %}Matchs{% endblock %}
+
 
 {% block body %}
-	<div class="slide" id="teamsPage">
-		<div class="wrapper">
-			<div class="container_teamsPage">
-				<div class="title">
-					<h2 class="display-md kizard col-md-3">actualités</h2>
-				</div>
-				<div class="d-flex flex-wrap row_news">
-					{% for games in pagination.data() %}
-					
-                        <img src="{{'/uploads/' ~ games.homeTeam.logo }}" alt="" width="100px">
-                        {{games.homeTeamGoals}}
-                        <img src="{{'/uploads/' ~ games.awayTeam.logo }}" alt="" width="100px" class="object-fit-contain">
-                        {{games.awayTeamGoals}}
-					{% endfor %}
-				</div>
-				<div class="pagination">
-					{{ pagination.display() }}
-					{# Appelle le display de la pagination (configuré dans service yaml)#}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="slide" id="teamsPage">
+        <div class="wrapper">
+            <div class="container_teamsPage">
+                <div class="title">
+                    <h2 class="display-md kizard col-md-3">Matchs</h2>
+                </div>
+                {% for matchDay, matches in groupedMatches %}
+                    <div class="match-day">
+                        <h3 class="text-xl hero mb-2">Journée {{ matchDay }}</h3>
+                        <div class="d-flex flex-wrap gap-4 justify-content-start">
+                            {% for games in matches %}
+                            {% include "partials/_cardMatches.html.twig" %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="pagination">
+                    {{ pagination.display() }}
+                    {# Appelle le display de la pagination (configuré dans service yaml)#}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
