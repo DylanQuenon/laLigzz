@@ -1,116 +1,173 @@
 @import "../variables/variables.scss";
-#team{
+#team {
     position: relative;
     color: $color-secondary;
-    .logoBackground{
+    overflow: hidden;
+    .logoBackground {
         position: absolute;
         bottom: 0;
-       height: 100vh;
-       opacity: 30%;
+        height: 100vh;
+        opacity: 30%;
+        transform: rotate(-15deg);
+        @media all and (max-width: 768px) {
+           top: 0;
+           left: -30%;
+
+        }
     }
-    .wrapper{
+    .wrapper {
         padding: $spacing-9xl 0;
     }
-    .logoTeam{
+    .logoTeam {
         height: 80px;
         object-fit: contain;
     }
-    .blockTeam{
+    .blockTeam {
         position: relative;
         border-radius: 45px 45px 0 0;
-        background-color: rgba(130, 130, 130,0.40);
-        min-height: 500px;
-        align-items: center;
-       
-        .circlePicture{
+        background-color: rgba(130, 130, 130, 0.4);
+        min-height: 550px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .circlePicture {
             border-radius: $radius-full;
-            background:$gradient-circle;
+            background: $gradient-circle;
             width: 400px;
             height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transform: translateX(6%);
-  position: absolute;
-          
-        
+            transform: translateX(-10%);
+            position: absolute;
+            animation: rotate 2s infinite linear;
+            animation-direction: normal;
+            @media all and (max-width: 992px) {
+                display: none;
+            }
         }
-        .teamCover{
+        .teamCover {
             position: absolute;
             bottom: 0%;
-            right: -3%;
+            right: -5%;
             height: 100%;
+            @media all and (max-width: 992px) {
+                bottom: 0%;
+                right: -5%;
+                height: 60%;
+            }
+            @media all and (max-width: 768px) {
+                height: 17%;
+                right: -13.5%;
+                top: 48%;
+            }
+          
         }
-        .banneerStats{
+        .banneerStats {
             width: 100%;
-            min-height: 80px;
-            background-color: rgb(159, 159, 159,0.43);
+            padding: $spacing-3xl;
+            background-color: rgb(159, 159, 159, 0.43);
             backdrop-filter: blur(25px);
-            position: absolute;
-            bottom: 0;
+            text-transform: uppercase;
             border-radius: 45px 45px 0 0;
+            .stats{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 13px;
+                // border-right: solid 2px $color-tertiary;
+            
+            }
+            span{
+                text-transform: none;
+                color: $color-tertiary;
+            }
+            h4{
+                text-transform: uppercase;
+                font-size: 24px;
+                align-items: center;
+
+            }
         }
-        
     }
-  
 }
-.infos{
-   padding: 20px;
+.infos {
+    padding: 20px;
 }
-.blockTeam_left{
-    @include flexGap(column,$spacing-3xl);
-    .heading{
-        @include flexGap(row,$spacing-3xl);
-        align-items: center;
-        a{
+.blockTeam_left {
+    @include flexGap(column, $spacing-3xl);
+    .heading {
+        padding: 8px;
+        @include flexGap(row, $spacing-3xl);
+        @media all and (max-width: 768px) {
+            flex-direction: row;
+            align-items: start;
+        }
+        a {
             display: flex;
             padding: 8px 16px;
             border-radius: $radius-full;
             text-decoration: none;
-            background-color: rgba(230, 230, 230,0.5);
+            background-color: rgba(230, 230, 230, 0.5);
             border: solid 1px $color-secondary;
             color: $color-secondary;
             display: block;
             width: max-content;
         }
-        .name{
-            @include flexGap(row,$spacing-md)
-            
-
+        .name {
+            @include flexGap(row, $spacing-md);
+            @media all and (max-width: 768px) {
+                flex-direction: column;
+                align-items: start;
+                img {
+                    order: 1;
+                }
+                h3 {
+                    order: 2;
+                }
+            }
         }
-
     }
-    .blockTeam_left_actions{
-        @include flexGap(row,$spacing-3xl);
-        a{
+    .blockTeam_left_actions {
+        @include flexGap(row, $spacing-3xl);
+        a {
             font-size: 14px !important;
             font-family: $font-family-hero;
             padding: 4px 15px;
         }
-        .games{
+        .games,.followButton{
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: $radius-full;
             text-decoration: none;
-            background-color: rgba(230, 230, 230,0.5);
+            background-color: rgba(230, 230, 230, 0.5);
             border: solid 1px $color-secondary;
             color: $color-secondary;
             width: max-content;
         }
+        .games{
+            background-color: rgba(37, 37, 37, 0.5);
+            border: solid 1px $color-primary;
 
-    }
-}
-.followButton{
-    a{
-        gap: $spacing-xxs;
-        svg{
-            width: 16px;
-            height: 16px;
         }
-
+        .followButton {
+          
+                gap: $spacing-xxs;
+                padding: 8px 16px;
+                border: solid 1px #e0da2d;
+                background-color: rgba(224, 218, 45,0.5);
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        
     }
 }
+
 
 /* teamStyle.css */
 .result {
@@ -120,7 +177,7 @@
 }
 
 .victory {
-background-color: rgb(65, 245, 104);
+    background-color: rgb(65, 245, 104);
 }
 
 .draw {
@@ -129,4 +186,99 @@ background-color: rgb(65, 245, 104);
 
 .defeat {
     background-color: $color-tertiary;
+}
+.stats_row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+@media (max-width: 767px) {
+    .banneerStats .stats_row > .stats {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    h4{
+        width: 100%;
+    }
+}
+
+@keyframes rotate {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+
+}
+
+#result{
+    color: $color-secondary;
+    .wrapper{
+        padding: $spacing-9xl 0;
+        @include flexGap(column,$spacing-5xl)
+    }
+    .stroke-text{
+        -webkit-text-stroke: 2px $color-secondary;
+        color: transparent;
+    }
+}
+.swiper-games{
+    position: relative;
+    i{
+       font-size: 30px;
+     
+    }
+    .arrow_prev_games{
+ 
+    position: absolute;
+    top: 40%;
+        z-index: 5;
+  cursor: pointer;
+
+    }
+    .arrow_next_games{
+        position: absolute;
+        top: 40%;
+        right: 0;
+        z-index: 5;
+        @include flex(row);
+        cursor: pointer;
+   
+
+    }
+
+}
+.controls_slider_arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    transition: all 0.3s;
+    &:hover{
+        background-color: #913535;
+        border-radius:100%;
+    }
+ 
+}
+.slide{
+    color: $color-secondary;
+    overflow: hidden;
+}
+.baneerNews{
+   min-height: 300px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.bubble{
+    width: 50%;
+    min-height: 300px;
+    border-radius:  0 $radius-full $radius-full 0;
+    background-color: rgba(37, 37, 37,0.7);
+    display: flex;
+    align-items: center;
 }

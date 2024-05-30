@@ -23,6 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     // .addEntry('home', './assets/js/home.js')
     .addEntry('sliderTeam', './assets/js/sliderTeam.js')
+    .addEntry('sliderGames', './assets/js/_sliderGames.js')
     .addEntry('sliderNews', './assets/js/_sliderNews.js')
     .addEntry('showPassword', './assets/js/showPassword.js')
     .addEntry('cardNewsStyle', './assets/styles/partials/_cardNews.scss')

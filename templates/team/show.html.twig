@@ -3,87 +3,195 @@
 {% block title %}
 	{{ team.name }}
 {% endblock %}
+
 {% block stylesheets %}
 	{{ encore_entry_link_tags('teamStyle') }}
 {% endblock %}
 
 {% block body %}
+	{% set firstWord = team.name|split(' ', 2)[0] %}
+	{% set remainingWords = team.name|split(' ', 2)[1] %}
 	<div class="slide" id="team">
-		<img src="/uploads/{{team.logoBackground}}" class="logoBackground" alt="Logo en noir et blanc de l'équipe : {{team.name}}">
+		<img src="/uploads/{{ team.logoBackground }}" class="logoBackground" alt="Logo en noir et blanc de l'équipe : {{ team.name }}">
 		<div class="wrapper">
 			<div class="blockTeam col-md-12">
-            <div class="d-flex infos">
-				<div class="blockTeam_left col-md-6">
-					<div class="heading d-flex">
-						<div class="name d-flex">
-							<h3 class="display-2xl hero">{{team.name}}</h3>
-							<img src="/uploads/{{team.logo}}" class="logoTeam" alt="Logo de l'équipe {{team.name}}">
+				<div class="d-flex infos">
+					<div class="blockTeam_left col-md-6">
+						<div class="heading d-flex">
+							<div class="name d-flex">
+								<h3 class="display-2xl hero">
+									<span class="fw-light">{{ firstWord }}</span><br>{{ remainingWords }}
+								</h3>
+								<img src="/uploads/{{ team.logo }}" class="logoTeam" alt="Logo de l'équipe {{ team.name }}">
+							</div>
 						</div>
-						<div class="followButton">
-							<a href="#" class="text-md hero d-flex align-items-center justify-content-center"><svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#e6e6e6"><path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/></svg>Suivre</a>
+						<div class="blockTeam_left_actions d-flex flex-wrap">
+							{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir les actus' } %}
+							<a href="#" class="hero games">Voir les matchs
+								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="px" fill="#e6e6e6"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
+							</a>
+							<a href="#" class="text-md hero d-flex align-items-center justify-content-center followButton">
+								<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewbox="0 -960 960 960" width="14px" fill="#e6e6e6">
+									<path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
+								</svg>
+								Suivre
+							</a>
+						</div>
+						<p class="devise display-md hero text-uppercase">{{ team.devise }}</p>
+						<div class="row pres">
+							<div class="col-md-5">
+								<p class="text-md hero fw-light">Fondation:
+									<span class="text-md hero fw-bold">{{ team.fondation | date('d/m/Y') }}</span>
+								</p>
+								<p class="text-md hero fw-light">Coach:
+									<span class="text-md hero fw-bold">{{ team.coach }}</span>
+								</p>
+								<p class="text-md hero fw-light">Stadium:
+									<span class="text-md hero fw-bold">{{ team.stadium }}</span>
+								</p>
+							</div>
+							<div class="col-md-5">
+								<p class="text-md hero fw-light">Meilleur buteur:
+									<span class="text-md hero fw-bold">{{ team.goalScorer }}</span>
+								</p>
+								<p class="text-md hero fw-light">Président:
+									<span class="text-md hero fw-bold">{{ team.president }}</span>
+								</p>
+								<p class="text-md hero fw-light d-flex gap-2 align-items-center">Derniers résultats:
+									{% for match in lastMatches %}
+										{% set resultClass = 'result' %}
+										{% if match.homeTeam == team %}
+											{% if match.homeTeamGoals > match.awayTeamGoals %}
+												{% set resultClass = 'result victory' %}
+											{% elseif match.homeTeamGoals < match.awayTeamGoals %}
+												{% set resultClass = 'result defeat' %}
+											{% else %}
+												{% set resultClass = 'result draw' %}
+											{% endif %}
+										{% else %}
+											{% if match.awayTeamGoals > match.homeTeamGoals %}
+												{% set resultClass = 'result victory' %}
+											{% elseif match.awayTeamGoals < match.homeTeamGoals %}
+												{% set resultClass = 'result defeat' %}
+											{% else %}
+												{% set resultClass = 'result draw' %}
+											{% endif %}
+										{% endif %}
+										<span
+											class="{{ resultClass }}"><!-- Afficher le résultat du match -->
+										</span>
+									{% endfor %}
+								</p>
+							</div>
 						</div>
 					</div>
-					<div class="blockTeam_left_actions d-flex">
-						{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir les actus' } %}
-						<a href="#" class="hero games">Voir les matchs</a>
+					<div class="blockTeam_right col-md-4 offset-md-2">
+						<div class="circlePicture"></div>
+						<img src="/uploads/{{ team.cover }}" class="teamCover" alt="Image du joueur de l'équipe de {{ team.name }}">
 					</div>
-					<p class="devise display-md hero text-uppercase">{{team.devise}}</p>
-					<div class="row pres">
-						<div class="col-md-5">
-							<p class="text-md hero fw-light">Fondation:
-								<span class="text-md hero fw-bold">{{team.fondation | date('d/m/Y')}}</span>
-							</p>
-							<p class="text-md hero fw-light">Coach:
-								<span class="text-md hero fw-bold">{{team.coach}}</span>
-							</p>
-							<p class="text-md hero fw-light">Stadium:
-								<span class="text-md hero fw-bold">{{team.stadium}}</span>
-							</p>
+				</div>
+				<div class="banneerStats d-flex justify-content-between flex-wrap ">
+					<h4 class="display-md hero col-md-2 d-flex justify-content-center ">Statistiques</h4>
+					<br>
+					<div class="stats_row">
+						<div class="stats">
+							<p class="text-lg hero">Classement:</p>
+							{% if teamRank == 1 %}
+								<span class="display-xs hero bold fw-bold">1er</span>
+							{% else %}
+								<span class="display-xs hero bold fw-bold">{{ teamRank }}ème</span>
+							{% endif %}
 						</div>
-						<div class="col-md-5">
-							<p class="text-md hero fw-light">Meilleur buteur:
-								<span class="text-md hero fw-bold">{{team.goalScorer}}</span>
-							</p>
-							<p class="text-md hero fw-light">Président:
-								<span class="text-md hero fw-bold">{{team.president}}</span>
-							</p>
-							<p class="text-md hero fw-light d-flex gap-2 align-items-center">Derniers résultats:
-                        
-								 {% for match in lastMatches %}
-                                        {% set resultClass = 'result' %}
-                                        {% if match.homeTeam == team %}
-                                            {% if match.homeTeamGoals > match.awayTeamGoals %}
-                                                {% set resultClass = 'result victory' %}
-                                            {% elseif match.homeTeamGoals < match.awayTeamGoals %}
-                                                {% set resultClass = 'result defeat' %}
-                                            {% else %}
-                                                {% set resultClass = 'result draw' %}
-                                            {% endif %}
-                                        {% else %}
-                                            {% if match.awayTeamGoals > match.homeTeamGoals %}
-                                                {% set resultClass = 'result victory' %}
-                                            {% elseif match.awayTeamGoals < match.homeTeamGoals %}
-                                                {% set resultClass = 'result defeat' %}
-                                            {% else %}
-                                                {% set resultClass = 'result draw' %}
-                                            {% endif %}
-                                        {% endif %}
-                                        <span class="{{ resultClass }}">
-                                           
-                                        </span>
-                                    {% endfor %}
-							</p>
+
+						<div class="stats">
+							<p class="text-lg hero">Matchs joués:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.matchesPlayed }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Victoires:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.wins }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Nuls:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.draws }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Défaites:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.losses }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Buts Pour:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.goalsFor }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Buts Contre:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.goalsAgainst }}</span>
+						</div>
+						<div class="stats">
+							<p class="text-lg hero">Points:</p>
+							<span class="display-xs hero bold fw-bold">{{ ranking.points }}</span>
 						</div>
 					</div>
 				</div>
-                <div class="blockTeam_right col-md-4 offset-md-2">
-                   <div class="circlePicture">
-                   </div>
-                   <img src="/uploads/{{team.cover}}" class="teamCover" alt="Image du joueur de l'équipe de {{team.name}}">
-                </div>
-            </div>
-                <div class="banneerStats"></div>
 			</div>
 		</div>
 	</div>
-{% endblock %}
+	<div class="slide" id="result">
+		<div class="wrapper">
+			<h4 class="display-lg stratos text-uppercase text-center ">Les derniers matchs de
+				<br><span class=" my-2 text-uppercase stroke-text">{{team.name}}</span>
+			</h4>
+			<div class="swiper-games">
+
+				<div class="controls_slider_arrow arrow_prev_games">
+					<i class="fa-solid fa-chevron-left"></i>
+				</div>
+				<div class="controls_slider_arrow arrow_next_games">
+					<i class="fa-solid fa-chevron-right"></i>
+				</div>
+				<!-- Additional required wrapper -->
+				<div class="swiper-wrapper">
+
+					{% for games in lastMatches %}
+						{% if loop.index <= 3 %}
+							<div class="swiper-slide">
+								<div class="col-md-11">
+									{% include "partials/_cardMatches.html.twig" %}
+
+								</div>
+
+
+							</div>
+						{% endif %}
+					{% endfor %}
+
+				</div>
+
+
+			</div>
+		</div>
+    </div>
+    <div class="slide" id="lastNews">
+        <div class="baneerNews" style="background-image:url('/uploads/{{team.newsPicture}}');">
+            <div class="bubble">
+            <p class="display-md stratos text-uppercase wrapper">{{team.name}} en actus</p>
+            </div>
+        </div>
+
+        <div class="row">
+           {% for new in lastNews %}
+           	{% if loop.index <= 3 %}
+            <div class="col-md-4">
+            {% include "partials/_cardNews.html.twig" %}
+            </div>
+            {% endif %}
+            
+           {% endfor %}
+        </div>
+    </div>
+
+
+	{% endblock %}
+	{% block javascripts %}
+		{{encore_entry_script_tags('sliderGames')}}
+	{% endblock %}
