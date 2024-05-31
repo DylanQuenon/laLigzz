@@ -14,7 +14,7 @@
 	<div class="slide" id="team">
 		<img src="/uploads/{{ team.logoBackground }}" class="logoBackground" alt="Logo en noir et blanc de l'équipe : {{ team.name }}">
 		<div class="wrapper">
-			<div class="blockTeam col-md-12"data-aos="zoom-in-up" data-aos-duration="1000">
+			<div class="blockTeam col-md-12" data-aos="zoom-in-up" data-aos-duration="1000">
 				<div class="d-flex infos">
 					<div class="blockTeam_left col-md-6">
 						<div class="heading d-flex">
@@ -138,25 +138,25 @@
 	</div>
 	<div class="slide" id="result">
 		<div class="wrapper">
-			<h4 class="display-lg stratos text-uppercase text-center "data-aos="zoom-in"  data-aos-anchor-placement="top-center" data-aos-duration="1000">Les derniers matchs de
+			<h4 class="display-lg stratos text-uppercase text-center " data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="1000">Les derniers matchs de
 				<br><span class=" my-2 text-uppercase stroke-text">{{team.name}}</span>
 			</h4>
 			<div class="swiper-games">
 
-				<div class="controls_slider_arrow arrow_prev_games"data-aos="fade-right"  data-aos-duration="1000">
+				<div class="controls_slider_arrow arrow_prev_games" data-aos="fade-right" data-aos-duration="1000">
 					<i class="fa-solid fa-chevron-left"></i>
 				</div>
-				<div class="controls_slider_arrow arrow_next_games"data-aos="fade-left"   data-aos-duration="1000">
+				<div class="controls_slider_arrow arrow_next_games" data-aos="fade-left" data-aos-duration="1000">
 					<i class="fa-solid fa-chevron-right"></i>
 				</div>
 				<!-- Additional required wrapper -->
-				<div class="swiper-wrapper"data-aos="fade-up"  data-aos-anchor-placement="top-center" data-aos-duration="700">
+				<div class="swiper-wrapper" data-aos="fade-up" data-aos-anchor-placement="top-center" data-aos-duration="700">
 
 					{% for games in lastMatches %}
 						{% if loop.index <= 3 %}
 							<div class="swiper-slide">
-								
-									{% include "partials/_cardMatches.html.twig" %}
+
+								{% include "partials/_cardMatches.html.twig" %}
 							</div>
 						{% endif %}
 					{% endfor %}
@@ -166,33 +166,34 @@
 
 			</div>
 		</div>
-    </div>
-    <div class="slide" id="lastNews">
-        <div class="baneerNews" style="background-image:url('/uploads/{{team.newsPicture}}');"data-aos="zoom-out" data-aos-anchor-placement="top-center">
-            <div class="bubble">
-            <p class="display-md stratos text-uppercase wrapper">{{team.name}} en actus</p>
-            </div>
-        </div>
+	</div>
+	<div class="slide" id="lastNews">
+		<div class="baneerNews" style="background-image:url('/uploads/{{team.newsPicture}}');" data-aos="zoom-out" data-aos-anchor-placement="top-center">
+			<div class="bubble">
+				<p class="display-md stratos text-uppercase wrapper">{{team.name}}
+					en actus</p>
+			</div>
+		</div>
 		<div class="wrapper">
-        <div class="row">
-           {% for new in lastNews %}
-     
-				<div class="col-md-4"data-aos="flip-left" data-aos-duration="700" data-aos-anchor-placement="top-center">
-				{% include "partials/_cardNews.html.twig" %}
-				</div>
-    
-            
-           {% endfor %}
-        </div>
-		<div class="d-flex justify-content-center" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="200" >
-			{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir leurs actualités' } %}
-		</div>
-		
-		</div>
-    </div>
+			<div class="row">
+				{% for new in lastNews %}
+
+					<div class="col-md-4" data-aos="flip-left" data-aos-duration="700" data-aos-anchor-placement="top-center">
+						{% include "partials/_cardNews.html.twig" %}
+					</div>
 
 
-	{% endblock %}
-	{% block javascripts %}
-		{{encore_entry_script_tags('sliderGames')}}
-	{% endblock %}
+				{% endfor %}
+			</div>
+			<div class="d-flex justify-content-center" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="200">
+				{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir leurs actualités' } %}
+			</div>
+
+		</div>
+	</div>
+
+
+{% endblock %}
+{% block javascripts %}
+	{{encore_entry_script_tags('sliderGames')}}
+{% endblock %}

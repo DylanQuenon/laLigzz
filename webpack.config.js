@@ -28,6 +28,7 @@ Encore
     .addEntry('showPassword', './assets/js/showPassword.js')
     .addEntry('cardNewsStyle', './assets/styles/partials/_cardNews.scss')
     .addEntry('buttonLinkStyle', './assets/styles/partials/_buttonLinkStyle.scss')
+    .addEntry('lastGamesStyle', './assets/styles/partials/_lastGames.scss')
     .addEntry('paginationStyle', './assets/styles/partials/_pagination.scss')
     .addEntry('loginStyle', './assets/styles/pages/login.scss')
     .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
@@ -36,6 +37,7 @@ Encore
     .addEntry('rankingStyle', './assets/styles/pages/ranking.scss')
     .addEntry('matchStyle', './assets/styles/pages/matchStyle.scss')
     .addEntry('teamStyle', './assets/styles/pages/teamStyle.scss')
+    .addEntry('lastNewsStyle', './assets/styles/partials/_lastNews.scss')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

@@ -1,0 +1,9 @@
+@import "../variables/variables.scss";
+.spacing-container {
+    padding: $spacing-9xl 0;
+    @include flexGap(column, $spacing-4xl);
+    color: $color-secondary;
+}
+.row {
+    gap: $spacing-2xl;
+}

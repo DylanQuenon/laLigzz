@@ -1,0 +1,43 @@
+@import "../variables/variables.scss";
+.spacing-container {
+  padding: $spacing-9xl;
+  @include flexGap(column, $spacing-4xl);
+  color: $color-secondary;
+}
+.row {
+  padding: $spacing-4xl 0;
+  gap: 0;
+  @media all and (max-width: 768px) {
+    gap: $spacing-2xl;
+  }
+}
+.banneer {
+  min-height: 300px;
+  @include background("/public/images/backgroundB.webp");
+  background-position: top center;
+  .bubble {
+    min-height: 300px;
+    width: 50%;
+    background-color: rgba(37, 37, 37, 0.7);
+    border-radius: 0 $radius-full $radius-full 0;
+    display: flex;
+    align-items: center;
+    .bubbleText {
+      display: flex;
+      padding: 20px;
+      justify-content: center;
+      flex-direction: column;
+      gap: $spacing-md;
+      width: 85%;
+      margin: 0 auto;
+    }
+  }
+}
+@media all and (max-width: 768px) {
+  .bubble {
+    width: 85% !important;
+  }
+  .bubbleText {
+    width: 100% !important;
+  }
+}

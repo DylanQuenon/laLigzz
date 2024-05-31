@@ -1,55 +1,83 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Classement{% endblock %}
+{% block title %}Classement
+{% endblock %}
 {% block stylesheets %}
-    {{ encore_entry_link_tags('rankingStyle') }}
+	{{ encore_entry_link_tags('rankingStyle') }}
 {% endblock %}
 
 {% block body %}
-<div class="slide">
-<div class="wrapper">
-    <h1>Classement</h1>
-     <div class="filters mb-3">
-        <!-- Liens pour les filtres -->
-        <a href="{{ path('app_ranking', {'filter': 'best_attack'}) }}" class="btn btn-primary mr-2">Meilleure Attaque</a>
-        <a href="{{ path('app_ranking', {'filter': 'best_defense'}) }}" class="btn btn-primary mr-2">Meilleure Défense</a>
-        <a href="{{ path('app_ranking', {'filter': 'most_wins'}) }}" class="btn btn-primary mr-2">Plus de Victoires</a>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Équipe</th>
-                <th>Matchs Joués</th>
-                <th>Victoires</th>
-                <th>Nuls</th>
-                <th>Défaites</th>
-                <th>Buts marqués</th>
-                <th>Buts encaissés</th>
-                <th>Différence de buts</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for team in ranking %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                <td>
-            <img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-width: 50px;"> {{ team.getTeam().getName() }}
-        </td>
-                    <td>{{ team.getMatchesPlayed() }}</td>
-                    <td>{{ team.getWins() }}</td>
-                    <td>{{ team.getDraws() }}</td>
-                    <td>{{ team.getLosses() }}</td>
-                    <td>{{ team.getGoalsFor() }}</td>
-                    <td>{{ team.getGoalsAgainst() }}</td>
-                    <td>{{ team.getGoalsFor() - team.getGoalsAgainst() }}</td>
-                    <td>{{ team.getPoints() }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+	<div class="slide" id="ranking">
+		<div class="wrapper">
+			<h2 class="display-md stratos text-uppercase" data-aos="fade-down" data-aos-duration="700" data-aos-anchor-placement="top-center">Decouvrez le classement
+				<span>2023-2024</span>
+				de la liga</h2>
+			<table class="ranking-table">
+				<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
 
+					<tr>
+						<th class=""></th>
+						<th class=""></th>
+						<th class="criteres">MJ</th>
+						<th class="criteres">V</th>
+						<th class="criteres">N</th>
+						<th class="criteres">D</th>
+						<th class="hidden md:table-cell criteres">BP</th>
+						<th class="hidden md:table-cell criteres">BC</th>
+						<th class="criteres">DB</th>
+						<th class="criteres">Pts</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for team in ranking %}
+<tr class="result {% if loop.index <= 4 %}champions-league{% endif %}
+                    {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
+                    {% if loop.index == 7 %}conference-league{% endif %}
+                    {% if loop.index > 17 %}relegation{% endif %}" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+
+
+							<td>
+								<span class="position">{{ loop.index }}</span>
+							</td>
+							<td class="stats team">
+								<div class="teamPic">
+									<img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-height: 50px;">
+								</div>
+								<span>{{ team.getTeam().getName() }}</span>
+							</td>
+							<td class=" stats matchesPlayed">{{ team.matchesPlayed }}</td>
+							<td class="stats wins">{{ team.wins }}</td>
+							<td class="stats draws">{{ team.draws }}</td>
+							<td class="stats losses">{{ team.losses }}</td>
+							<td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
+							<td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
+							<td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
+							<td class="stats points">{{ team.points }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+<div class="block-leagues">
+    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
+        <span class="ligne blue"></span>
+        <span class="compet">Champions league</span>
+    </div>
+    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+        <span class="ligne orange"></span>
+        <span class="compet">Europa league</span>
+    </div>
+    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
+        <span class="ligne green"></span>
+        <span class="compet">Conference league</span>
+    </div>
+    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
+        <span class="ligne red"></span>
+        <span class="compet">Relégués</span>
+    </div>
 </div>
-</div>
+
+		</div>
+        {% include "partials/_lastGames.html.twig" %}
+        {% include "partials/_lastNews.html.twig" %}
+	</div>
 {% endblock %}

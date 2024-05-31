@@ -1,0 +1,161 @@
+@import "../variables/variables.scss";
+#ranking{
+    color: $color-secondary;
+    h2{
+        width: 47%;
+        span{
+            -webkit-text-stroke: 1px  $color-secondary;
+            color: transparent;
+        }
+    }
+    .wrapper{
+        padding: $spacing-9xl 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-4xl;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818;
+    color: #fff;
+}
+
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ranking-table th,
+.ranking-table td {
+    padding: 10px;
+    text-align: center;
+
+}
+
+thead .criteres{
+    border-bottom: solid 1px $color-secondary !important;
+    font-family: $font-family-stratos;
+    font-weight: lighter;
+    text-transform: uppercase;
+
+}
+.stats{
+    font-family: $font-family-hero;
+    font-weight: bold;
+    &.team{
+        text-align: start;
+        span{
+            text-transform: capitalize;
+
+        }
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        .teamPic{
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                height: 50px;
+            }
+        }
+      
+    }
+}
+
+.points{
+    color: $color-tertiary;
+}
+
+.ranking-table tr:hover {
+    background-color: #444;
+}
+
+.result{
+    border-bottom : solid 1px #444;
+    border-left: solid 2px transparent;
+   
+}
+.ranking-table .champions-league {
+    border-left: solid 2px #442BE1;
+}
+
+.ranking-table .europa-league {
+    border-left: solid 2px #FF900E;
+}
+
+.ranking-table .conference-league {
+    border-left: solid 2px #42FF00;
+}
+
+.ranking-table .relegation {
+    background-color: rgba(253, 90, 84, 0.1);
+    border-left: solid 1px $color-tertiary;
+}
+.position{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 75, 68,0.5);
+    border-radius: 100%;
+    font-family: $font-family-stratos;
+    border: solid 1px $color-tertiary;
+}
+@media all and (max-width: 768px) {
+    .ranking-table th.hidden,
+    .ranking-table td.hidden {
+        display: none;
+    }
+    .ranking-table td,th {
+        font-size: $text-font-size-md;
+    }
+    #ranking .wrapper{
+        width: 95% !important;
+    }
+    #ranking h2{
+        width: 100% !important;
+    }
+    .teamPic img{
+        height: 40px !important
+    }
+   
+}
+.block-leagues{
+    @include flexGap(column,$spacing-2xl);
+    .leagues{
+        @include flexGap(row,$spacing-2xl);
+        align-items: center;
+        .ligne{
+            width: 70px;
+            height: 2px;
+            border-radius: $radius-full;
+        }
+        .blue{
+            background-color: #442BE1;
+        }
+        .orange{
+            background-color: #FF900E;
+        }
+        .green{
+            background-color: #42FF00;
+        }
+        .red{
+            background-color: $color-tertiary;
+        }
+        span{
+            font-family: $font-family-hero;
+            font-size: $text-font-size-md;
+        }
+    }
+}
+.slide{
+    overflow: hidden;
+}

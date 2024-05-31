@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\NewsRepository;
+use App\Repository\MatchesRepository;
 use App\Repository\RankingRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,10 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RankingController extends AbstractController
 {
     #[Route('/ranking', name: 'app_ranking')]
-    public function index(RankingRepository $repo,Request $request): Response
+    public function index(RankingRepository $repo,Request $request, MatchesRepository $repoMatches, NewsRepository $newsRepo): Response
     {
         // Récupérer toutes les données brutes du classement depuis la base de données
         $ranking = $repo->findAll();
+        $lastMatches = $repoMatches->findBy([], ['date' => 'DESC'], 3);
+        $lastNews = $newsRepo->findBy([], ['createdAt' => 'DESC'], 3);
+        
 
         // Vérifier s'il y a un paramètre de filtre spécifié dans la requête
         $filter = $request->query->get('filter');
@@ -64,7 +69,9 @@ class RankingController extends AbstractController
 
         // Passer les données triées ou filtrées au modèle Twig pour affichage
         return $this->render('ranking/index.html.twig', [
-            'ranking' => $ranking
+            'ranking' => $ranking,
+            'lastMatches'=>$lastMatches,
+            'lastNews'=>$lastNews,
         ]);
     }
 }

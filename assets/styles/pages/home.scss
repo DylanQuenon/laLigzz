@@ -1,18 +1,18 @@
 @import "../variables/variables.scss";
 #home {
   position: relative;
-  .home_wave{
+  .home_wave {
     position: absolute;
     left: 0;
-    bottom: 0  }
+    bottom: 0;
+  }
   @include background("../../../public/images/background/backgroundHome.webp");
   .container_home {
     padding: $spacing-9xl 0;
     #row_home {
       .left {
         @include flexGap(column, $spacing-4xl);
-       
-        ;
+
         @media all and (max-width: 798px) {
           order: 2;
         }
@@ -37,7 +37,6 @@
         width: 100%;
         display: flex;
         justify-content: end;
-     
       }
     }
   }
@@ -92,7 +91,7 @@
 }
 
 //keyframes apparition
-.logo{
+.logo {
   width: 180px;
   display: flex;
   object-fit: cover;
@@ -103,12 +102,10 @@
   position: relative;
   border-bottom: solid 2px $color-secondary;
   @media all and (max-width: 798px) {
-
     display: none;
-
   }
 }
-.totop{
+.totop {
   display: flex;
   justify-content: center;
   width: 60px;
@@ -118,47 +115,45 @@
   z-index: 100;
   transition: all 0.3s;
   border: solid 1px $color-tertiary;
-  &:hover{
+  &:hover {
     background-color: $color-tertiary;
-    border:solid 1px $color-primary;
+    border: solid 1px $color-primary;
     svg {
       fill: $color-primary;
     }
   }
 
-  svg{
-      text-align: center;
-      z-index: 100;
-      fill: $color-tertiary;
-      width: 48px;
-      transition: all 0.5s;  
-      
+  svg {
+    text-align: center;
+    z-index: 100;
+    fill: $color-tertiary;
+    width: 48px;
+    transition: all 0.5s;
   }
 }
 //css slider team
-#slider_team{
+#slider_team {
   background-color: $color-secondary;
   min-height: auto;
   padding-bottom: $spacing-6xl !important;
 }
 
 //slider TEAM
-.slider_container{
+.slider_container {
   @include flex(row);
   justify-content: space-between;
   align-items: start;
   flex-wrap: wrap;
-  .slider_container_heading{
+  .slider_container_heading {
     @include flexGap(column, $spacing-2xl);
-    h2{
+    h2 {
       color: $color-tertiary;
       padding: 2px 0;
-      border-bottom: solid 2px $color-tertiary ;
+      border-bottom: solid 2px $color-tertiary;
     }
-  
   }
 }
-.button_teams{
+.button_teams {
   background-color: $color-primary;
   padding: 10px 20px;
   color: $color-secondary;
@@ -170,33 +165,31 @@
   border-radius: $radius-full;
   border: solid 2px $color-tertiary;
   transition: all 0.3s ease-in;
-  &:hover{
-    i{
+  &:hover {
+    i {
       transform: translateX(50%) translateY(0);
     }
   }
-  i{
+  i {
     color: $color-tertiary;
     transition: all 0.3s;
   }
 }
 
 //bannière
-#banneer{
+#banneer {
   padding: $spacing-6xl 0;
   background-color: $color-tertiary;
   width: 100%;
-  .col-md-4{
-    @include flexGap(column,$spacing-4xl)
+  .col-md-4 {
+    @include flexGap(column, $spacing-4xl);
   }
-  h3{
+  h3 {
     text-transform: uppercase;
     -webkit-text-stroke: 2px $color-secondary;
     color: transparent;
-   
-
   }
-  a{
+  a {
     padding: 10px 20px;
     display: block;
     background-color: $color-secondary;
@@ -208,51 +201,49 @@
     display: flex;
     gap: $spacing-sm;
     align-items: center;
-
   }
-  span{
+  span {
     color: $color-secondary;
     font-style: normal;
   }
 }
 
-#presentation{
+#presentation {
   color: $color-secondary;
   display: flex;
+  flex-direction: column;
   padding: $spacing-9xl 0;
-  .presentation_text{
-    @include flexGap(column,$spacing-2xl)
+  .presentation_text {
+    @include flexGap(column, $spacing-2xl);
   }
-  .wrapper{
-    @include flexGap(column,$spacing-10xl);
-    padding:$spacing-9xl 0;
+  .wrapper {
+    @include flexGap(column, $spacing-10xl);
+    padding: $spacing-9xl 0;
   }
-  img{
+  .trophy {
     filter: grayscale(1);
     transition: all 0.3s;
     animation: infinite colors 2s alternate-reverse;
     position: relative;
   }
-
-  
 }
 @keyframes colors {
-  from{
+  from {
     filter: grayscale(1);
   }
-  to{
+  to {
     filter: grayscale(0);
   }
 }
-#presentation_pic{
+#presentation_pic {
   position: relative;
-  .first-letter{
+  .first-letter {
     position: absolute;
     top: -50%;
     z-index: 10;
     font-size: 15rem;
     color: $color-tertiary;
-    span{
+    span {
       position: absolute;
       top: 0%;
       left: 18% !important;
@@ -262,42 +253,39 @@
     }
   }
 }
-.presentation_stats{
+.presentation_stats {
   padding: $spacing-8xl 0;
-  @include flexGap(column,$spacing-6xl);
-  h3 span{
+  @include flexGap(column, $spacing-6xl);
+  h3 span {
     color: transparent;
     -webkit-text-stroke: 1px $color-secondary;
   }
-  .row .col-md-4,.numbers_stats{
-
+  .row .col-md-4,
+  .numbers_stats {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: $spacing-2xl;
-
   }
-  .numbers_stats{
+  .numbers_stats {
     gap: $spacing-md;
     text-transform: uppercase;
-    span{
+    span {
       color: transparent;
       -webkit-text-stroke: 1px $color-secondary;
       font-size: 1.5rem;
-
     }
   }
-  .presentation_icon{
+  .presentation_icon {
     padding: 20px;
-    background-color:transparent;
+    background-color: transparent;
     border: solid 1px $color-tertiary;
     border-radius: $radius-full;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .last_matchs{
+  .last_matchs {
     padding: $spacing-9xl 0;
   }
-
 }

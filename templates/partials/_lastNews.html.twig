@@ -1,0 +1,26 @@
+{% block stylesheets %}
+{{encore_entry_link_tags('lastNewsStyle')}}
+{% endblock %}
+<div class="banneer"data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center" >
+    <div class="bubble" data-aos="fade-right "data-aos-duration="700"  data-aos-delay="700">
+    <div class="bubbleText">
+        <h3 class="display-md stratos text-uppercase"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="1400">Decouvrez les dernieres actus</h3>
+        <p class="text-md hero"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="2100">Découvrez les dernières actualités et ne manquez aucune mise à jour importante. Restez informé avec nos nouvelles les plus récentes.
+        </p>
+    
+    </div>
+    </div>
+</div>
+<div class="wrapper spacing-container">
+    <div class="row">
+    {% for new in lastNews %}
+        <div class="col-md-4"data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="{{loop.index}}00">
+        {% include "partials/_cardNews.html.twig" %}
+        </div>
+    {% endfor %}
+    </div>
+       <div class="d-flex justify-content-center"data-aos="fade-up-left" data-aos-duration="700" >
+        {% include "partials/_buttonLink.html.twig" with { 'url': path('news_index'), text: 'Voir toutes les actualités' } %}
+    
+    </div>
+</div>

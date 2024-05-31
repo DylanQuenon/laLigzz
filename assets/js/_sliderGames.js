@@ -6,6 +6,7 @@ const swiper = new Swiper('.swiper-games', {
     // Optional parameters
     direction: 'horizontal',
     loop: true,
+    speed:700,
   
   
     // Navigation arrows
@@ -15,10 +16,13 @@ const swiper = new Swiper('.swiper-games', {
     },
     breakpoints: {
         // Lorsque la largeur de l'écran est inférieure à 768px
-     
-        768: {
+        767: {
             slidesPerView: 1,
-            spaceBetween: 30
+    
+        },
+        768: {
+            slidesPerView: 2,
+            spaceBetween: 20
         },
       
         1024: {
