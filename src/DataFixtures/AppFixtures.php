@@ -109,7 +109,7 @@ class AppFixtures extends Fixture
                 ->setSubtitle($faker->sentence(2))
                 ->setText('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
                 ->setStatus($faker->randomElement($status))
-                ->setCover('https://picsum.photos/id/1'.$i.'/200/300')
+                ->setCover('')
                 ->setAuthor($users[rand(0, count($users) - 1)]);
             
                 // Génération aléatoire du nombre d'équipes associées à cette news

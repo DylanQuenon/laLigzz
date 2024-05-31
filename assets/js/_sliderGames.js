@@ -15,13 +15,10 @@ const swiper = new Swiper('.swiper-games', {
     },
     breakpoints: {
         // Lorsque la largeur de l'écran est inférieure à 768px
-        767: {
-            slidesPerView: 1,
-    
-        },
+     
         768: {
-            slidesPerView: 2,
-            spaceBetween: 20
+            slidesPerView: 1,
+            spaceBetween: 30
         },
       
         1024: {

@@ -35,7 +35,16 @@ class TeamController extends AbstractController
     #[Route("/teams/{slug}", name: "teams_show")]
     public function show(string $slug, Team $team, MatchesRepository $repo, RankingRepository $rankRepo, NewsRepository $newsRepo): Response
     {
-        $lastNews = $team->getNews();
+        $lastNews = $newsRepo->createQueryBuilder('n')
+        ->leftJoin('n.team', 't')
+        ->where('t = :team')
+        ->setParameter('team', $team)
+        ->orderBy('n.createdAt', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult();
+
+
         $lastMatches = $repo->createQueryBuilder('m')
             ->where('m.homeTeam = :team OR m.awayTeam = :team')
             ->setParameter('team', $team)

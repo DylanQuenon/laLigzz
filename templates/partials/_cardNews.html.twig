@@ -5,7 +5,12 @@
 {% set n = new.team %}
     {% set url = path('news_show', {'slug':new.slug}) %}
 <div class="cardNews">
-	<img src="/uploads/{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
+	{% if new.cover is defined %}
+		<img src="/uploads/{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
+		{% else %}
+		<img src="/images/default.jpg" alt="Image de l'actualité : '{{new.title}}'">
+	{% endif %}
+	
 	<div class="card-content">
 		<div class="card-header">
 			<span class="card-title badge badge_news text-uppercase {{ new.status == 'officiel' ? 'red' : 'green' }}">
