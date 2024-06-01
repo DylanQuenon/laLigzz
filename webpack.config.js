@@ -37,6 +37,7 @@ Encore
     .addEntry('rankingStyle', './assets/styles/pages/ranking.scss')
     .addEntry('matchStyle', './assets/styles/pages/matchStyle.scss')
     .addEntry('teamStyle', './assets/styles/pages/teamStyle.scss')
+    .addEntry('newStyle', './assets/styles/pages/new.scss')
     .addEntry('lastNewsStyle', './assets/styles/partials/_lastNews.scss')
 
 

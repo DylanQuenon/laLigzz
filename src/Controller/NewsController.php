@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NewsController extends AbstractController
@@ -195,10 +196,17 @@ class NewsController extends AbstractController
      * @return Response
      */
     #[Route("/news/{slug}", name:"news_show")]
-    public function show(string $slug, News $news): Response
+    public function show(string $slug, News $news, NewsRepository $newsRepository, Request $request): Response
     {
+     
+    
+        $previousNews = $newsRepository->findPreviousNews($news->getId());
+        $nextNews = $newsRepository->findNextNews($news->getId());
+    
         return $this->render("news/show.html.twig", [
             'news' => $news,
+            'previousNews' => $previousNews,
+            'nextNews' => $nextNews,
         ]);
     }
 

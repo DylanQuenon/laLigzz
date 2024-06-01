@@ -217,8 +217,8 @@
     @include flexGap(column, $spacing-2xl);
   }
   .wrapper {
-    @include flexGap(column, $spacing-10xl);
-    padding: $spacing-9xl 0;
+    @include flexGap(column, $spacing-2xl);
+ 
   }
   .trophy {
     filter: grayscale(1);

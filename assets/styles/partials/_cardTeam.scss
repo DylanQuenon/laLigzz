@@ -3,10 +3,11 @@
     border: solid 3px $color-tertiary;
     border-radius: 0 25px 0 25px;
     padding:  $spacing-2xl;
+    height: 200px;
     margin: $spacing-2xl 0;
     @include flexGap(row,$spacing-2xl);
     align-items: center;
-    &:nth-child(2n){
+    &:nth-child(even){
         border-radius: 25px 0 25px 0px !important;
     }
     .name_team{

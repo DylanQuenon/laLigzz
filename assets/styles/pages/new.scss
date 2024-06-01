@@ -1,0 +1,119 @@
+@import "../variables/variables.scss";
+.heading{
+   min-height: 320px;
+    position: relative;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    .heading_title{
+        padding: 0 20px;
+        width: 50%;
+        background-color: rgba(200, 67, 61,0.69);
+        min-height: 320px;
+        @include flex(column);
+        border-radius: 0 $radius-2xl $radius-2xl 0;
+        align-items: start;
+        gap: $spacing-2xl;
+        @media all and (max-width:760px) {
+            width: 80%;
+            font-size: $text-font-size-lg !important;
+            
+        }
+        h5{
+            width: 85%;
+            margin: 0 auto;
+            color: $color-tertiary;
+            @media all and (max-width:760px) {
+                width: 90%;
+   
+                
+            }
+        }
+        h3{
+            color: $color-secondary;
+            text-shadow:  0 0 2px $color-primary;
+            width: 85%;
+            margin: 0 auto;
+            @media all and (max-width:760px) {
+                width: 90%;
+                
+                
+            }
+        }
+    }
+}
+
+#wrapperNews{
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-9xl 0;
+    color: $color-secondary;
+    .content_text{
+        line-height: 1.5rem
+    }
+    #blockNews{
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2xl;
+        @media all and (max-width:760px) {
+           
+            order: 2;
+    
+            
+        }
+       
+    }
+    #blockNews .content_news{
+        @include flexGap(column,$spacing-4xl);
+
+        .author{
+            display:flex;
+            justify-content: end;
+            a{
+                font-weight: bold;
+                color: $color-secondary;
+            }
+        }
+    }
+}
+.logoTeam{
+    width: 75%;
+    margin-bottom: 20px;
+    position: relative;
+    bottom: 10%;
+    transform: rotate(7deg);
+    opacity: 0.5;
+    @media all and (max-width:760px) {
+        bottom: 0%;
+        order: 1;
+
+        
+    }
+}
+.actionsNews{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    a{
+        padding: 8px 16px;
+        display: flex;
+        gap: $spacing-xxs;
+        text-decoration: none;
+        color: $color-secondary;
+        align-items: center;
+        border-radius: $radius-full;
+        border:  solid 1px;
+    }
+    .previousNews{
+        border-color: $color-secondary;
+        background-color: $color-primary;
+        transition: all 0.3s;
+        &:hover{
+            background-color: rgba(119, 119, 119, 0.5)
+        }
+    }
+    .nextNews{
+        @include button-primary();
+    }
+}

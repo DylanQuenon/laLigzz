@@ -41,6 +41,26 @@ class NewsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-
+    public function findPreviousNews(int $id):?News
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.id < :id')
+            ->setParameter('id', $id)
+            ->orderBy('n.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+    
+    public function findNextNews(int $id):?News
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.id > :id')
+            ->setParameter('id', $id)
+            ->orderBy('n.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
 }

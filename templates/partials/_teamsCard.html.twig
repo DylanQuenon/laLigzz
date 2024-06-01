@@ -3,7 +3,7 @@
 	<div class="team_card d-flex">
 		<div class="name_team">
 		{% if team.logo %}
-			<img src="/uploads/{{team.logo}}" alt="Image de l'équipe : {{team.name}}" class="picTeam">
+			<img src="/uploads/{{team.logo}}" alt="Image de l'équipe : {{team.name}}" class="picTeam object-fit-contain">
 		{% else %}
 			<img src="/images/defaultTeam.png" alt="Image de l'équipe : {{team.name}}" class="picTeam">
 		{% endif %}

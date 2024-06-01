@@ -32,9 +32,7 @@ const swiper = new Swiper('.swiper', {
     
     },
     autoplay:true,
-    autoplay: {
-        delay: 3000, // Durée entre chaque changement de slide en millisecondes
-    }
+
  
   });
   

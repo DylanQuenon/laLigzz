@@ -1,18 +1,56 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{encore_entry_link_tags('newStyle')}}
+{% endblock %}
+
 {% block title %}
-    {{ news.title }}
+	{{ news.title }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ news.title }}</h1>
-    <h1>{{ news.subtitle }}</h1>
+	<div class="slide" id="news">
+		<div class="heading" style="background-image:url('/uploads/{{news.cover}}')">
+			<div class="heading_title">
+				<h5 class="display-xl text-uppercase stratos">{{news.status}}
+					:</h5>
+				<h3 class="display-xl text-uppercase stratos">{{news.title}}</h3>
+			</div>
+		</div>
+		<div class="wrapper" id="wrapperNews">
+			<div class="row">
+				<div class="col-md-6" id="blockNews">
+					<div class="content_news">
+						<p class="text-xl stratos text-uppercase">{{news.subtitle}}</p>
+						<p class="content_text text-md hero">{{ news.text | striptags | nl2br | raw }}</p>
+						<div class="author">
+							<p class="text-md hero text-white">Écrit par
+								<a href="#" class="">{{ news.author.fullName}}</a>
+								le
+								{{ news.createdAt | date('d/m/Y') }}</p>
+						</div>
+					</div>
 
-    <img src="/uploads/{{ news.cover }}" alt="" style="width:400px">
-    <p class="article">{{ news.text }}</p>
-    <p>Écrit par {{ news.author.fullName }}</p>
+					<div class="actionsNews">
+						<!-- templates/news/show.html.twig -->
 
-    {% set wordCount = news.text|length %}
-    {% set readingTime = (wordCount / 1000)|round(0, 'ceil') %}
-    <p>Temps de lecture estimé : {{ readingTime }} minute(s)</p>
+						{% if previousNews %}
+							<a href="{{ path('news_show', {slug: previousNews.slug}) }}" class="previousNews text-md hero"><i class="fa-solid fa-arrow-left"></i> Aller à l'article précédent</a>
+						{% endif %}
+
+						{% if nextNews %}
+							<a href="{{ path('news_show', {slug: nextNews.slug}) }}"class="nextNews text-md hero">Aller à l'article suivant<i class="fa-solid fa-arrow-right"></i></a>
+						{% endif %}
+
+					</div>
+				</div>
+				<div class="col-md-6 d-flex  justify-content-center align-items-start">
+					{% for team in news.team %}
+						<img src="/uploads/{{ team.logoBackground}}" alt="Logo de l'équipe {{ team.name }}" class=" d-block img-fluid logoTeam">
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
