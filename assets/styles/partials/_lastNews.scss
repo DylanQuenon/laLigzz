@@ -3,6 +3,8 @@
 
   @include flexGap(column, $spacing-4xl);
   color: $color-secondary;
+  overflow: hidden;
+
 }
 .row {
   padding: $spacing-4xl 0;

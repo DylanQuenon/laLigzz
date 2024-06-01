@@ -189,7 +189,7 @@
     -webkit-text-stroke: 2px $color-secondary;
     color: transparent;
   }
-  a {
+  .discover {
     padding: 10px 20px;
     display: block;
     background-color: $color-secondary;
@@ -288,4 +288,84 @@
   .last_matchs {
     padding: $spacing-9xl 0;
   }
+}
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 10px;
+  text-align: center;
+
+}
+
+thead .criteres{
+  border-bottom: solid 1px $color-secondary !important;
+  font-family: $font-family-stratos;
+  font-weight: lighter;
+  text-transform: uppercase;
+  color: $color-secondary;
+
+}
+.stats{
+  font-family: $font-family-hero;
+  font-weight: bold;
+  color: $color-secondary;
+  text-transform: capitalize;
+  a{
+    text-decoration: none;
+    color: $color-secondary;
+  }
+
+  &.team{
+      text-align: start;
+      span{
+          text-transform: capitalize;
+
+      }
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+      .teamPic{
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img{
+              height: 50px;
+          }
+      }
+    
+  }
+}
+
+.points{
+  color: $color-primary;
+}
+
+.ranking-table tr:hover {
+  background-color: #444;
+}
+.ranking-table tr{
+  transition: all 0.3s;
+}
+
+.result{
+  border-bottom : solid 1px #ca2621b0;
+  border-left: solid 2px transparent;
+ 
+}
+.position{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  background-color: #621111;
+  border: solid 2px $color-secondary;
 }

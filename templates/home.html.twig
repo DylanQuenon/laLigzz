@@ -94,21 +94,45 @@
 					<h3 class="title display-2xl stratos italic">Decouvrez
 						<br><span>le classement</span>
 						de la liga</h3>
-					<a href="{{path('app_ranking')}}" class="text-lg hero">Voir tout le classement<i class="fa-solid fa-arrow-right-long"></i>
+					<a href="{{path('app_ranking')}}" class="text-lg hero discover">Voir tout le classement<i class="fa-solid fa-arrow-right-long"></i>
 					</a>
 				</div>
-		<div class="col-md-8">
-    {% for team in ranking|slice(0, 5) %}
-        <div class="list-group-item d-flex align-items-center" style="background-color: #c00; color: #fff; margin-bottom: 10px;">
-            <span class="team-rank" style="font-weight: bold; margin-right: 15px;">{{ loop.index }}</span>
-            <img src="{{ asset('/uploads/' ~ team.team.logo) }}" alt="{{ team.team.name }}" style="width: 30px; height: 30px; margin-right: 10px;">
-            <span class="team-name" style="flex: 1;">{{ team.team.name }}</span>
-            <span class="team-stats">
-                {{ team.matchesPlayed }} {{ team.wins }} {{ team.draws }} {{ team.losses }} | {{ team.goalsFor }} | {{ team.goalsAgainst }} |  | {{ team.points }} pts
-            </span>
-        </div>
-    {% endfor %}
-</div>
+				<div class="col-md-7 offset-md-1" >
+				<table class="ranking-table">
+					<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" > 
+						<tr>
+							<th class=""></th>
+							<th class=""></th>
+							<th class="criteres">MJ</th>
+							<th class="criteres">DB</th>
+							<th class="criteres">Pts</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for rank in ranking|slice(0, 5) %}
+						<tr class="result"data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+							<td>
+								<span class="position">{{ loop.index }}</span>
+							</td>
+							<td class="stats team">
+								<div class="teamPic">
+									<img src="{{ '/uploads/' ~ rank.team.logo }}" alt="" style="max-height: 50px;">
+								</div>
+								<a href="{{ path('teams_show', { 'slug': rank.team.slug }) }}">{{ rank.team.name }}</a>
+
+								</td>
+							</td>
+							<td class=" stats matchesPlayed">{{ rank.matchesPlayed }}</td>
+							<td class="stats goalDifference">{{ rank.goalsFor - rank.goalsAgainst }}</td>
+							<td class="stats points">{{ rank.points}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+					
+					
+					
+				</div>
 
 			</div>
 
@@ -183,8 +207,6 @@
 
 		</div>
 		{% include "partials/_lastGames.html.twig" %}
-
-
 		{% include "partials/_lastNews.html.twig" %}
 
 	</div>
@@ -192,8 +214,5 @@
 
 {% endblock %}
 {% block javascripts %}
-
 	{{encore_entry_script_tags('sliderTeam')}}
-
-
 {% endblock %}
