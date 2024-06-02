@@ -12,6 +12,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MatchesController extends AbstractController
 {
+    /**
+     * Affiche tous les matchs
+     *
+     * @param MatchesRepository $repo
+     * @param PaginationService $pagination
+     * @param integer $page
+     * @return Response
+     */
     #[Route('/matches/{page<\d+>?1}', name: 'matches_index')]
     public function index(MatchesRepository $repo, PaginationService $pagination, int $page): Response
     {

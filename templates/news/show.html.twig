@@ -21,11 +21,17 @@
 			<div class="row">
 				<div class="col-md-6" id="blockNews">
 					<div class="content_news">
+					    {% if (app.user and app.user == news.author) or is_granted('ROLE_ADMIN') %}
+						<div class="d-flex">
+							<a href="{{path('news_edit', {'slug':news.slug})}}" class="btn btn-warning m-2">Modification de l'annonce</a>
+								<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer la news</button>
+						</div>
+            {% endif %}
 						<p class="text-xl stratos text-uppercase">{{news.subtitle}}</p>
 						<p class="content_text text-md hero">{{ news.text | striptags | nl2br | raw }}</p>
 						<div class="author">
 							<p class="text-md hero text-white">Écrit par
-								<a href="#" class="">{{ news.author.fullName}}</a>
+								<a href="{{ path('user_show', {'slug': news.author.slug}) }}" class="">{{ news.author.fullName}}</a>
 								le
 								{{ news.createdAt | date('d/m/Y') }}</p>
 						</div>
@@ -49,6 +55,24 @@
 						<img src="/uploads/{{ team.logoBackground}}" alt="Logo de l'équipe {{ team.name }}" class=" d-block img-fluid logoTeam">
 					{% endfor %}
 
+				</div>
+			</div>
+		</div>
+	</div>
+		<!-- Modal de suppression -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Supprimer la news</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Êtes-vous sûr de vouloir supprimer cette news ?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<a href="{{ path('news_delete', {'slug': news.slug}) }}" class="btn btn-danger">Supprimer</a>
 				</div>
 			</div>
 		</div>

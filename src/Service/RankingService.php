@@ -6,6 +6,8 @@ class RankingService
 {
     public function calculateRanking(array $ranking, ?string $filter): array
     {
+
+        
         if (!$filter) {
             // Trier les équipes en fonction de leurs points et de leur différence de buts en cas d'égalité de points
             usort($ranking, function($a, $b) {

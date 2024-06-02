@@ -212,6 +212,8 @@
   color: $color-secondary;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+
   padding: $spacing-9xl 0;
   .presentation_text {
     @include flexGap(column, $spacing-2xl);
@@ -347,11 +349,12 @@ thead .criteres{
   color: $color-primary;
 }
 
-.ranking-table tr:hover {
-  background-color: #444;
+#banneer .ranking-table tr:hover {
+  background-color:#ca2621b0;
 }
-.ranking-table tr{
+#banneer .ranking-table tr{
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .result{
@@ -368,4 +371,12 @@ thead .criteres{
   border-radius: $radius-full;
   background-color: #621111;
   border: solid 2px $color-secondary;
+}
+.lastGames,.lastNews{
+  .cardNews{
+    width: 100% !important;
+  }
+  .cardsMatches{
+    width: 99% !important;
+  }
 }

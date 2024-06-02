@@ -94,7 +94,15 @@ class AdminTeamController extends AbstractController
             'myForm' => $form->createView()
         ]);
     }
-
+    /**
+     * Permet d'optimiser pour l'upload
+     *
+     * @param [type] $form
+     * @param [type] $team
+     * @param [type] $field
+     * @param [type] $fileUploader
+     * @return void
+     */
     private function handleFileUpload($form, $team, $field, $fileUploader)
     {
         $file = $form[$field]->getData();

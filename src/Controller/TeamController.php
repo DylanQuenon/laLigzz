@@ -3,17 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Service\RankingService;
 use App\Repository\NewsRepository;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
 use App\Repository\MatchesRepository;
 use App\Repository\RankingRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
+    /**
+     * Récupère toutes les équipess
+     *
+     * @param TeamRepository $repo
+     * @param [type] $page
+     * @param PaginationService $pagination
+     * @return Response
+     */
     #[Route('/teams/{page<\d+>?1}', name: 'team_index')]
     public function index(TeamRepository $repo, $page, PaginationService $pagination): Response
     {
@@ -32,8 +42,20 @@ class TeamController extends AbstractController
         ]);
     }
 
+    /**
+     * Récupère l'équipe individuellement
+     *
+     * @param string $slug
+     * @param Team $team
+     * @param MatchesRepository $repo
+     * @param RankingRepository $rankRepo
+     * @param NewsRepository $newsRepo
+     * @param RankingService $rankingService
+     * @param Request $request
+     * @return Response
+     */
     #[Route("/teams/{slug}", name: "teams_show")]
-    public function show(string $slug, Team $team, MatchesRepository $repo, RankingRepository $rankRepo, NewsRepository $newsRepo): Response
+    public function show(string $slug, Team $team, MatchesRepository $repo, RankingRepository $rankRepo, NewsRepository $newsRepo,RankingService $rankingService, Request $request): Response
     {
         $lastNews = $newsRepo->createQueryBuilder('n')
         ->leftJoin('n.team', 't')
@@ -53,12 +75,15 @@ class TeamController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $ranking = $rankRepo->findBy([], ['points' => 'DESC']);
+        $ranking = $rankRepo->findAll();
         $classement = $rankRepo->findOneBy(['team' => $team]);
-        $teamRank = null;
-        foreach ($ranking as $index => $rankedTeam) {
+        $filter = $request->query->get('filter', '');
+        $sortedRanking = $rankingService->calculateRanking($ranking,$filter);
+
+        $teamPosition = null;
+        foreach ($sortedRanking as $index => $rankedTeam) {
             if ($rankedTeam->getTeam() === $team) {
-                $teamRank = $index + 1;
+                $teamPosition = $index + 1; // Les index commencent à 0, donc on ajoute 1 pour avoir la position réelle
                 break;
             }
         }
@@ -66,7 +91,7 @@ class TeamController extends AbstractController
         return $this->render("team/show.html.twig", [
             'team' => $team,
             'lastMatches' => $lastMatches,
-            'teamRank' => $teamRank,
+            'teamRank' => $teamPosition,
             'ranking'=>$classement,
             'lastNews' => $lastNews,
         ]);

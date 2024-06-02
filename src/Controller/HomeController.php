@@ -38,13 +38,6 @@ class HomeController extends AbstractController
         $filter = $request->query->get('filter', '');
         $sortedRanking = $rankingService->calculateRanking($ranking,$filter);
 
-        // Vérifier s'il y a un paramètre de filtre spécifié dans la requête
-     
-            // Trier les équipes en fonction de leurs points et de leur différence de buts en cas d'égalité de points
-      
-
-       
-
         return $this->render('home.html.twig', [
             'teams' => $teams,
             'lastNews' => $lastNews,

@@ -110,7 +110,7 @@
 					</thead>
 					<tbody>
 						{% for rank in ranking|slice(0, 5) %}
-						<tr class="result"data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+						<tr class="result"data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00"   onclick="window.location.href='{{ path('teams_show', {'slug': rank.team.slug}) }}'">
 							<td>
 								<span class="position">{{ loop.index }}</span>
 							</td>
@@ -206,8 +206,13 @@
 
 
 		</div>
-		{% include "partials/_lastGames.html.twig" %}
+		<div class="lastGames">
+			{% include "partials/_lastGames.html.twig" %}
+		</div>
+		<div class="lastNews">
 		{% include "partials/_lastNews.html.twig" %}
+		
+		</div>
 
 	</div>
 

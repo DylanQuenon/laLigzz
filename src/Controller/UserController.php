@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
@@ -29,6 +30,7 @@ class UserController extends AbstractController
      * @return Response
      */
     #[Route("/account", name:"account_index")]
+    #[IsGranted('ROLE_USER')]
     public function myAccount(): Response
     {
         return $this->render('user/index.html.twig', [

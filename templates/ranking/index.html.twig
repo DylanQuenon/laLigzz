@@ -29,55 +29,60 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for team in ranking %}
-<tr class="result {% if loop.index <= 4 %}champions-league{% endif %}
-                    {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
-                    {% if loop.index == 7 %}conference-league{% endif %}
-                    {% if loop.index > 17 %}relegation{% endif %}" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+    {% for team in ranking %}
+    <tr class="cursor-pointer result 
+               {% if loop.index <= 4 %}champions-league{% endif %}
+               {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
+               {% if loop.index == 7 %}conference-league{% endif %}
+               {% if loop.index > 17 %}relegation{% endif %}"
+        data-aos="fade-left"
+        data-aos-anchor-placement="top-center"
+        data-aos-duration="800"
+        data-aos-delay="{{ loop.index }}00"
+        onclick="window.location.href='{{ path('teams_show', {'slug': team.team.slug}) }}'">
+        <td>
+            <span class="position">{{ loop.index }}</span>
+        </td>
+        <td class="stats team">
+            <div class="teamPic">
+                <img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-height: 50px;">
+            </div>
+            <span>{{ team.getTeam().getName() }}</span>
+        </td>
+        <td class="stats matchesPlayed">{{ team.matchesPlayed }}</td>
+        <td class="stats wins">{{ team.wins }}</td>
+        <td class="stats draws">{{ team.draws }}</td>
+        <td class="stats losses">{{ team.losses }}</td>
+        <td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
+        <td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
+        <td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
+        <td class="stats points">{{ team.points }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
 
-
-							<td>
-								<span class="position">{{ loop.index }}</span>
-							</td>
-							<td class="stats team">
-								<div class="teamPic">
-									<img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-height: 50px;">
-								</div>
-								<span>{{ team.getTeam().getName() }}</span>
-							</td>
-							<td class=" stats matchesPlayed">{{ team.matchesPlayed }}</td>
-							<td class="stats wins">{{ team.wins }}</td>
-							<td class="stats draws">{{ team.draws }}</td>
-							<td class="stats losses">{{ team.losses }}</td>
-							<td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
-							<td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
-							<td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
-							<td class="stats points">{{ team.points }}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
 			</table>
-<div class="block-leagues">
-    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
-        <span class="ligne blue"></span>
-        <span class="compet">Champions league</span>
-    </div>
-    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
-        <span class="ligne orange"></span>
-        <span class="compet">Europa league</span>
-    </div>
-    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
-        <span class="ligne green"></span>
-        <span class="compet">Conference league</span>
-    </div>
-    <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
-        <span class="ligne red"></span>
-        <span class="compet">Relégués</span>
-    </div>
-</div>
+			<div class="block-leagues">
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
+					<span class="ligne blue"></span>
+					<span class="compet">Champions league</span>
+				</div>
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+					<span class="ligne orange"></span>
+					<span class="compet">Europa league</span>
+				</div>
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
+					<span class="ligne green"></span>
+					<span class="compet">Conference league</span>
+				</div>
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
+					<span class="ligne red"></span>
+					<span class="compet">Relégués</span>
+				</div>
+			</div>
 
 		</div>
-        {% include "partials/_lastGames.html.twig" %}
-        {% include "partials/_lastNews.html.twig" %}
+		{% include "partials/_lastGames.html.twig" %}
+		{% include "partials/_lastNews.html.twig" %}
 	</div>
 {% endblock %}

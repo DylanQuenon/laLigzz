@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -54,10 +56,6 @@ class NewsController extends AbstractController
         ]);
     }
 
-
-
-
-    
     /**
      * Ajoute une actualité
      *
@@ -67,6 +65,7 @@ class NewsController extends AbstractController
      * @return Response
      */
     #[Route("/news/add", name:"news_create")]
+    #[IsGranted('ROLE_USER')]
     public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
     {
         $news = new News();
@@ -101,7 +100,20 @@ class NewsController extends AbstractController
         ]);
     }
   
+    /**
+     * Modifier une news
+     *
+     * @param News $news
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route("/news/{slug}/edit", name: "news_edit")]
+    #[IsGranted(
+        attribute: new Expression('(user === subject and is_granted("ROLE_USER")) or is_granted("ROLE_ADMIN")'),
+        subject: new Expression('args["news"].getAuthor()'),
+        message: "Cette actualité ne vous appartient pas, vous ne pouvez pas la modifier"
+    )]
     public function edit(News $news, Request $request, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(NewsEditType::class, $news);
@@ -126,6 +138,15 @@ class NewsController extends AbstractController
             "myForm" => $form->createView()
         ]);
     }
+    /**
+     * Modifier la cover de l'image
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param News $news
+     * @param FileUploaderService $fileUploader
+     * @return Response
+     */
     #[Route("/news/{slug}/imgmodify", name:"news_img")]
     public function imgModify(Request $request, EntityManagerInterface $manager, News $news, FileUploaderService $fileUploader): Response
     {
@@ -170,7 +191,19 @@ class NewsController extends AbstractController
             
         ]);
     }
+    /**
+     * Efface les news
+     *
+     * @param News $news
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route("/news/{slug}/delete", name: "news_delete")]
+    #[IsGranted(
+        attribute: new Expression('(user === subject and is_granted("ROLE_USER")) or is_granted("ROLE_ADMIN")'),
+        subject: new Expression('args["news"].getAuthor()'),
+        message: "Cette annonce ne vous appartient pas, vous ne pouvez pas la supprimer"
+    )]
     public function delete(News $news, EntityManagerInterface $manager): Response
     {
         if(!empty($news->getCover()))

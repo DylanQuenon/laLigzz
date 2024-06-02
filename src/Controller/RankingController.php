@@ -12,6 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RankingController extends AbstractController
 {
+    /**
+     * Récupère le classement
+     *
+     * @param RankingRepository $repo
+     * @param Request $request
+     * @param MatchesRepository $repoMatches
+     * @param NewsRepository $newsRepo
+     * @return Response
+     */
     #[Route('/ranking', name: 'app_ranking')]
     public function index(RankingRepository $repo,Request $request, MatchesRepository $repoMatches, NewsRepository $newsRepo): Response
     {
