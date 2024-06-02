@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accès refusé{% endblock %}
+
+{% block body %}
+   <div class="slide d-flex align-items-center justify-content-center" id="page404">
+        <div class="section-404 text-white d-flex flex-column align-items-center">
+        <div class="error-wrapper d-flex align-items-center justify-content-center display-2xl hero" style="font-size:80px;">
+            <div class="big-score">4</div>
+            <img src="/images/ball.png" alt="Ballon de La Liga 2023 - 2024" class="img-fluid bouncing-ball"width="66px" height="66px" style="margin:0 16px">
+            <div class="big-score">3</div>
+        </div>
+        <p class="display-lg hero text404">Accès refusé</p>
+
+        <div class="actions d-flex gap-5">
+            {% set previous_url = app.request.headers.get('referer') %}
+            {% if previous_url %}
+                <a href="{{ previous_url }}" class="text-lg hero button404 back d-flex align-items-center"><i class="fa-solid fa-arrow-left"></i>Retour</a>
+            {% endif %}
+            
+            <a href="{{'homepage'}}" class="text-lg hero button404 home d-flex align-items-center"><i class="fa-solid fa-house"></i>Accueil</a>
+        </div>
+        
+        </div>
+   </div>
+{% endblock %}

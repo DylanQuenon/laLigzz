@@ -48,3 +48,66 @@ html,body{
 #userPage{
     padding: $spacing-9xl 0;
 }
+
+#page404 .bouncing-ball {
+    animation: bounce 2.8s infinite ease-in-out;
+    transform-origin: center center;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(-360deg);
+    }
+
+    40% {
+        transform: translateY(-80px) rotate(360deg);
+
+    }
+
+    60% {
+        transform: translateY(-40px) rotate(360deg);
+    }
+}
+#page404{
+  
+    .text404{
+        color: #e6e6e6af ;
+    }
+}
+.section-404{
+    width: 85%;
+    margin: 0 auto;
+    gap: $spacing-2xl;
+}
+.error500{
+    color: $color-secondary;
+    gap: $spacing-2xl;
+    .cadre500{
+        padding: $spacing-4xl;
+        border-radius: 20px;
+        border: solid 1px $color-tertiary;
+    }
+}
+.button404{
+    gap: $spacing-sm;
+    text-decoration: none;
+    color: $color-secondary;
+    padding: 8px 24px;
+    border-radius: $radius-full;
+    transition: all 0.3s;
+
+    &.home{
+        background-color: #ff4a44aa;
+        border: solid 1px $color-tertiary;
+        &:hover{
+        background-color: #ff4a44;
+        }
+    }
+    &.back{
+        background-color: rgba(75, 75, 75, 0.5);
+        border: solid 1px $color-secondary;
+        &:hover{
+            background-color: rgba(75, 75, 75, 1);
+            }
+    }
+}

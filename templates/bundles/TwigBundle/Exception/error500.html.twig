@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Erreur Interne du Serveur{% endblock %}
+
+{% block body %}
+    <div class="slide error500 d-flex justify-content-center align-items-center flex-column">
+        <h1>Erreur Interne du Serveur</h1>
+        <div class="cadre500 text-lg hero">
+            <p>Une erreur interne du serveur s'est produite. Nous nous excusons pour la gêne occasionnée.</p>
+            <p>Notre équipe technique a été informée de ce problème et travaille à le résoudre.</p>
+            <p>Vous pouvez essayer de rafraîchir la page ou revenir plus tard.</p>
+            <p>Si le problème persiste, veuillez contacter le support technique.</p>
+        </div>
+        <div class="mt-3">
+            <a href="{{ path('homepage') }}" class="text-lg hero button404 home">Retour à la Page d'Accueil</a>
+            <button onclick="location.reload()" class="text-lg hero button404 back">Rafraîchir la Page</button>
+        </div>
+    </div>
+{% endblock %}
