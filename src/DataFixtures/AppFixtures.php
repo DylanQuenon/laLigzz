@@ -7,6 +7,7 @@ use App\Entity\News;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Entity\Image;
+use App\Entity\Comment;
 use Cocur\Slugify\Slugify;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -118,6 +119,15 @@ class AppFixtures extends Fixture
                     $news->addTeam($teams[rand(0, count($teams) - 1)]);
     
                 }
+
+                    //gestion des commentaires 
+                    $comment = new Comment();
+                    $comment->setContent($faker->paragraph())
+                        ->setRating(rand(1,5))
+                        ->setAuthor($users[rand(0, count($users) - 1)])
+                        ->setNews($news);
+    
+                    $manager->persist($comment);
             $manager->persist($news);
         
         }

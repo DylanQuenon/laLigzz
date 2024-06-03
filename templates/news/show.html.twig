@@ -57,8 +57,42 @@
 
 				</div>
 			</div>
+			<div class="container_comment">
+				<h2 class="display-xl kizard">Commentaires</h2>
+				  <hr>
+                {% if news.comments | length > 0 %}
+                {% for comment in news.comments %}
+				<div class="cardComments col-md-7 my-3">
+					<div class="headingComment d-flex justify-content-between align-items-center">
+						<p class="text-md hero fw-bold  align-items-center">{{comment.author.fullName}} <span class="fw-normal"> a dit le <span class="fw-bold">{{comment.createdAt | date('d-m-Y')}}</span></span></p>
+						{% include "partials/rating.html.twig" with {'rating': comment.rating} %}  
+					</div>
+					<div class="contentCard d-flex gap-5 text-md hero">
+						{{comment.content | nl2br | raw}}
+						{% if comment.author.picture %}
+						<img src="/uploads/{{comment.author.picture}}" alt="Photo de profil de {{comment.author.fullName}}" class="img-fluid newsPP"width="50px" height="50px">
+						{% endif %}
+						
+					</div>                      
+
+
+				</div>
+                    
+                {% endfor %}
+                {% else %}
+                    <h2>Cette annonce n'a pas encore reçu de commentaire...</h2>
+                {% endif %}
+
+			  {# gestion des commentaire #}
+			</div>
+
+
+              
 		</div>
+		
 	</div>
+
+	
 		<!-- Modal de suppression -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

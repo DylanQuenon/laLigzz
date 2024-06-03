@@ -5,11 +5,18 @@
 {% set n = new.team %}
     {% set url = path('news_show', {'slug':new.slug}) %}
 <div class="cardNews">
-	{% if new.cover is defined %}
+	{% if new.cover is not empty %}
 		<img src="/uploads/{{new.cover}}" alt="Image de l'actualité : '{{new.title}}'">
 		{% else %}
-		<img src="/images/default.jpg" alt="Image de l'actualité : '{{new.title}}'">
+		<img src="/images/default.png" alt="Image de l'actualité : '{{new.title}}'" class="object-fit-contain" >
 	{% endif %}
+	 {% if new.comments | length > 0 %}
+	 <div class="ratingCard">
+                {% include "partials/rating.html.twig" with {'rating': new.avgRatings} %} 
+	 
+	 </div>
+                 
+            {% endif %}
 	
 	<div class="card-content">
 		<div class="card-header">

@@ -116,3 +116,11 @@ margin: 6px 0;
   width: 100%;
   display: flex;
 }
+
+.ratingCard{
+  position: absolute;
+  right: 2%;
+  display: flex;
+  top: 5%;
+  z-index: 100;
+}

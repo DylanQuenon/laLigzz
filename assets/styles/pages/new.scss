@@ -117,3 +117,39 @@
         @include button-primary();
     }
 }
+.container_comment{
+    padding: $spacing-9xl 0;
+
+}
+.cardComments{
+    border-radius: 45px;
+    // border: solid 2px $color-tertiary;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xl;
+    height: 200px;
+    border: solid 3px $color-tertiary;
+    overflow: hidden;
+    .headingComment{
+        background-color: $color-tertiary;
+        color: $color-primary;
+        padding: 20px;
+        overflow: hidden;
+        width: 100%;
+      
+        height: 30%;
+        p{
+            margin-bottom: 0rem !important;
+            @media all and (max-width:768px) {
+                font-size: 12px;
+                
+            }
+        }
+    }
+    .contentCard{
+        padding: 20px;
+    }
+    .newsPP{
+        object-fit: cover;
+    }
+}
