@@ -289,7 +289,7 @@ class NewsController extends AbstractController
         $manager->remove($comment);
         $manager->flush();
     
-        $this->addFlash('success', "The comment has been successfully deleted.");
+        $this->addFlash('success', "Le commentaire a été effacé avec succès");
 
         return $this->redirectToRoute('account_index');
     }

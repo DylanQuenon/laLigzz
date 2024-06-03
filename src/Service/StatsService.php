@@ -29,6 +29,15 @@ class  StatsService{
         return $this->manager->createQuery("SELECT COUNT(a) FROM App\Entity\Team a")->getSingleScalarResult();
     }
     /**
+     * Permet de récup le nombre d'équipes
+     *
+     * @return integer|null
+     */
+    public function getNewsCount(): ?int
+    {
+        return $this->manager->createQuery("SELECT COUNT(n) FROM App\Entity\News n")->getSingleScalarResult();
+    }
+    /**
      * Récupère le nombre total de buts marqués sur la saison
      *
      * @return integer|null

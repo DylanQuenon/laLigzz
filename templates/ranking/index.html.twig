@@ -1,89 +1,113 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Classement
-{% endblock %}
+{% block title %}Classement{% endblock %}
+
 {% block stylesheets %}
-	{{ encore_entry_link_tags('rankingStyle') }}
+    {{ encore_entry_link_tags('rankingStyle') }}
 {% endblock %}
 
 {% block body %}
-	<div class="slide" id="ranking">
-		<div class="wrapper">
-		
-			<h2 class="display-md stratos text-uppercase" data-aos="fade-down" data-aos-duration="700" data-aos-anchor-placement="top-center">Decouvrez le classement
-				<span>2023-2024</span>
-				de la liga</h2>
-			<table class="ranking-table">
-				<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
-
-					<tr>
-						<th class=""></th>
-						<th class=""></th>
-						<th class="criteres">MJ</th>
-						<th class="criteres">V</th>
-						<th class="criteres">N</th>
-						<th class="criteres">D</th>
-						<th class="hidden md:table-cell criteres">BP</th>
-						<th class="hidden md:table-cell criteres">BC</th>
-						<th class="criteres">DB</th>
-						<th class="criteres">Pts</th>
-					</tr>
-				</thead>
-				<tbody>
-    {% for team in ranking %}
-    <tr class="cursor-pointer result 
-               {% if loop.index <= 4 %}champions-league{% endif %}
-               {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
-               {% if loop.index == 7 %}conference-league{% endif %}
-               {% if loop.index > 17 %}relegation{% endif %}"
-        data-aos="fade-left"
-        data-aos-anchor-placement="top-center"
-        data-aos-duration="800"
-        data-aos-delay="{{ loop.index }}00"
-        onclick="window.location.href='{{ path('teams_show', {'slug': team.team.slug}) }}'">
-        <td>
-            <span class="position">{{ loop.index }}</span>
-        </td>
-        <td class="stats team">
-            <div class="teamPic">
-                <img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-height: 50px;">
+<div class="slide" id="ranking">
+    <div class="wrapper">
+        <h2 class="display-md stratos text-uppercase" data-aos="fade-down" data-aos-duration="700" data-aos-anchor-placement="top-center">
+            Decouvrez le classement <span>2023-2024</span> de la liga
+        </h2>
+        <table class="ranking-table">
+            <thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+                <tr>
+                    <th class=""></th>
+                    <th class=""></th>
+                    <th class="criteres">MJ</th>
+                    <th class="criteres">V</th>
+                    <th class="criteres">N</th>
+                    <th class="criteres">D</th>
+                    <th class="hidden md:table-cell criteres">BP</th>
+                    <th class="hidden md:table-cell criteres">BC</th>
+                    <th class="criteres">DB</th>
+                    <th class="criteres">Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in ranking %}
+                <tr class="cursor-pointer result 
+                           {% if loop.index <= 4 %}champions-league{% endif %}
+                           {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
+                           {% if loop.index == 7 %}conference-league{% endif %}
+                           {% if loop.index > 17 %}relegation{% endif %}"
+                    data-aos="fade-left"
+                    data-aos-anchor-placement="top-center"
+                    data-aos-duration="800"
+                    data-aos-delay="{{ loop.index }}00"
+                    onclick="window.location.href='{{ path('teams_show', {'slug': team.team.slug}) }}'">
+                    <td><span class="position">{{ loop.index }}</span></td>
+                    <td class="stats team">
+                        <div class="teamPic">
+                            <img src="{{ '/uploads/' ~ team.getTeam().getLogo() }}" alt="" style="max-height: 50px;">
+                        </div>
+                        <span>{{ team.getTeam().getName() }}</span>
+                    </td>
+                    <td class="stats matchesPlayed">{{ team.matchesPlayed }}</td>
+                    <td class="stats wins">{{ team.wins }}</td>
+                    <td class="stats draws">{{ team.draws }}</td>
+                    <td class="stats losses">{{ team.losses }}</td>
+                    <td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
+                    <td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
+                    <td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
+                    <td class="stats points">{{ team.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="block-leagues">
+            <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
+                <span class="ligne blue"></span>
+                <span class="compet">Champions league</span>
             </div>
-            <span>{{ team.getTeam().getName() }}</span>
-        </td>
-        <td class="stats matchesPlayed">{{ team.matchesPlayed }}</td>
-        <td class="stats wins">{{ team.wins }}</td>
-        <td class="stats draws">{{ team.draws }}</td>
-        <td class="stats losses">{{ team.losses }}</td>
-        <td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
-        <td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
-        <td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
-        <td class="stats points">{{ team.points }}</td>
-    </tr>
-    {% endfor %}
-</tbody>
+            <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+                <span class="ligne orange"></span>
+                <span class="compet">Europa league</span>
+            </div>
+            <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
+                <span class="ligne green"></span>
+                <span class="compet">Conference league</span>
+            </div>
+            <div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
+                <span class="ligne red"></span>
+                <span class="compet">Relégués</span>
+            </div>
+        </div>
+        <canvas id="goals-chart" width="800" height="300"></canvas>
+        {% include "partials/_lastGames.html.twig" %}
+        {% include "partials/_lastNews.html.twig" %}
+    </div>
+</div>
+{% endblock %}
 
-			</table>
-			<div class="block-leagues">
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
-					<span class="ligne blue"></span>
-					<span class="compet">Champions league</span>
-				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
-					<span class="ligne orange"></span>
-					<span class="compet">Europa league</span>
-				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
-					<span class="ligne green"></span>
-					<span class="compet">Conference league</span>
-				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
-					<span class="ligne red"></span>
-					<span class="compet">Relégués</span>
-				</div>
-			</div>
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const goalsByMatchday = {{ goalsByMatchday|json_encode|raw }};
 
-		</div>
-		{% include "partials/_lastGames.html.twig" %}
-		{% include "partials/_lastNews.html.twig" %}
-	</div>
+    const ctx = document.getElementById('goals-chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Object.keys(goalsByMatchday),
+            datasets: [{
+                label: 'Buts par journée',
+                data: Object.values(goalsByMatchday),
+                backgroundColor: '#FF4B44',
+                borderColor: '#FF4B44',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

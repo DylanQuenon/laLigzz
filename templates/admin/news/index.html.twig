@@ -1,0 +1,61 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des actualités
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid full">
+		<h1 class="my-2">Gestion des actualités</h1>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Titre</th>
+					<th>Image</th>
+					<th class="text-center">Description</th>
+					<th class="text-center">Date</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for news in pagination.data %}
+					<tr>
+						<td>{{news.id}}</td>
+						<td>{{news.title}}</td>
+						<td><img src="/uploads/{{news.cover}}" alt="" style="max-width: 30px;"></td>
+						<td>{{ news.text|length > 50 ? news.text|slice(0, 50) ~ '...' : news.text }}</td>
+						<td class="text-center">{{news.createdAt | date("d-m-Y")}}</td>
+
+						<td class="text-center">
+							<a href="#deleteModal{{ news.slug }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ news.slug }}">
+								<i class="fas fa-trash"></i>
+							</a>
+							{# fais la confirmation de suppresion #}
+							<div class="modal fade" id="deleteModal{{ news.slug }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ news.slug }}" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="deleteModalLabel{{ news.id }}">Supprimer l'actualité</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											Êtes-vous sûr de vouloir supprimer cette actualité ?
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
+											<a href="{{ path('admin_news_delete', {'slug': news.slug}) }}" class="btn btn-danger">Supprimer</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{# pagination #}
+		{{pagination.display()}}
+
+	</div>
+{% endblock %}

@@ -1,47 +1,89 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Tableau de bord administration{% endblock %}
 
 {% block body %}
-    <div class="container-fluid slide">
-        {# {{dump(stats)}}
-        {{dump(bestAds)}} #}
+    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-
-            <div class="col">
-                <div class="card bg-primary text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <div class="card-title">{{stats.teams}} équipes</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                <h1 class="h2">Tableau de bord administration</h1>
+                <p>Bienvenue sur le tableau de bord de l'administration!</p>
             </div>
-         
-            <div class="col">
-                <div class="card bg-primary text-white mb-3 text-center">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <div class="col-8">
-                                <div class="card-title">{{stats.users}} utilisateurs</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-         
-       
         </div>
-
-
-
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre d'utilisateurs</h5>
+                        <p class="card-text">{{ stats.users }} utilisateurs</p>
+                        <i class="fas fa-users fa-3x text-primary"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre d'équipes</h5>
+                        <p class="card-text">{{ stats.teams }} équipes</p>
+                        <i class="fas fa-users fa-3x text-success"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre d'actualités</h5>
+                        <p class="card-text">{{ stats.news }} actualités</p>
+                        <i class="fas fa-newspaper fa-3x text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Graphique des statistiques</h5>
+                        <canvas id="stats-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
     </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('stats-chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Utilisateurs', 'Équipes', 'Actualités'],
+                datasets: [{
+                    label: 'Statistiques',
+                    data: [{{ stats.users }}, {{ stats.teams }}, {{ stats.news }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}
