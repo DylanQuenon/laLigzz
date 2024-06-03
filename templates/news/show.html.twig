@@ -21,12 +21,12 @@
 			<div class="row">
 				<div class="col-md-6" id="blockNews">
 					<div class="content_news">
-					    {% if (app.user and app.user == news.author) or is_granted('ROLE_ADMIN') %}
-						<div class="d-flex">
-							<a href="{{path('news_edit', {'slug':news.slug})}}" class="btn btn-warning m-2">Modification de l'annonce</a>
+						{% if (app.user and app.user == news.author) or is_granted('ROLE_ADMIN') %}
+							<div class="d-flex">
+								<a href="{{path('news_edit', {'slug':news.slug})}}" class="btn btn-warning m-2">Modification de la news</a>
 								<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer la news</button>
-						</div>
-            {% endif %}
+							</div>
+						{% endif %}
 						<p class="text-xl stratos text-uppercase">{{news.subtitle}}</p>
 						<p class="content_text text-md hero">{{ news.text | striptags | nl2br | raw }}</p>
 						<div class="author">
@@ -37,15 +37,19 @@
 						</div>
 					</div>
 
-					<div class="actionsNews">
+					<div
+						class="actionsNews">
 						<!-- templates/news/show.html.twig -->
 
 						{% if previousNews %}
-							<a href="{{ path('news_show', {slug: previousNews.slug}) }}" class="previousNews text-md hero"><i class="fa-solid fa-arrow-left"></i> Aller à l'article précédent</a>
+							<a href="{{ path('news_show', {slug: previousNews.slug}) }}" class="previousNews text-md hero">
+								<i class="fa-solid fa-arrow-left"></i>
+								Aller à l'article précédent</a>
 						{% endif %}
 
 						{% if nextNews %}
-							<a href="{{ path('news_show', {slug: nextNews.slug}) }}"class="nextNews text-md hero">Aller à l'article suivant<i class="fa-solid fa-arrow-right"></i></a>
+							<a href="{{ path('news_show', {slug: nextNews.slug}) }}" class="nextNews text-md hero">Aller à l'article suivant<i class="fa-solid fa-arrow-right"></i>
+							</a>
 						{% endif %}
 
 					</div>
@@ -58,42 +62,98 @@
 				</div>
 			</div>
 			<div class="container_comment">
-				<h2 class="display-xl kizard">Commentaires</h2>
-				  <hr>
-                {% if news.comments | length > 0 %}
-                {% for comment in news.comments %}
-				<div class="cardComments col-md-7 my-3">
-					<div class="headingComment d-flex justify-content-between align-items-center">
-						<p class="text-md hero fw-bold  align-items-center">{{comment.author.fullName}} <span class="fw-normal"> a dit le <span class="fw-bold">{{comment.createdAt | date('d-m-Y')}}</span></span></p>
-						{% include "partials/rating.html.twig" with {'rating': comment.rating} %}  
-					</div>
-					<div class="contentCard d-flex gap-5 text-md hero">
-						{{comment.content | nl2br | raw}}
-						{% if comment.author.picture %}
-						<img src="/uploads/{{comment.author.picture}}" alt="Photo de profil de {{comment.author.fullName}}" class="img-fluid newsPP"width="50px" height="50px">
-						{% endif %}
-						
-					</div>                      
+				<h2 class="display-xl kizard">Commentaires ({{news.comments | length}})
+					<br><span class="text-xl hero">Note globale (
+						{{ news.getAvgRatings() }}
+						/ 5 )</span>
+				</h2>
+				<hr>
+				{% if news.comments | length > 0 %}
+					{% for comment in news.comments %}
+						<div class="cardComments col-md-7 my-5">
+							<div class="headingComment d-flex justify-content-between align-items-center">
+								<p class="text-md hero fw-bold  align-items-center">{{comment.author.fullName}}
+									<span class="fw-normal">
+										a dit le
+										<span class="fw-bold">{{comment.createdAt | date('d-m-Y')}}</span>
+									</span>
+								</p>
+								{% include "partials/rating.html.twig" with {'rating': comment.rating} %}
+							</div>
+							<div class="contentCard d-flex gap-5 text-md hero">
+								{{comment.content | nl2br | raw}}
+								{% if comment.author.picture %}
+									<img src="/uploads/{{comment.author.picture}}" alt="Photo de profil de {{comment.author.fullName}}" class="img-fluid newsPP" width="50px" height="50px">
+								{% endif %}
+								{% if app.user and (app.user == comment.author or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR')) %}
+									<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModalComment">Supprimer le commentaire</button>
+								{% endif %}
+							</div>
 
+
+						</div>
+							<div class="modal fade" id="deleteModalComment" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="deleteModalLabel">Supprimer la news</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					Êtes-vous sûr de vouloir supprimer votre commentaire ?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+					<a href="{{path('comment_delete', {'id': comment.id}) }}" class="btn btn-danger">Supprimer</a>
+				</div>
+			</div>
+		</div>
+	</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-md hero">Cette actualité n'a pas encore reçu de commentaire...</p>
+				{% endif %}
+
+				<div class="formComment">
+
+					<div class="col-lg-4">
+						<h4 class="mt-3 display-sm">Vous voulez ajouter un commentaire
+						</h4>
+						{% if app.user %}
+							<!-- Formulaire pour ajouter un commentaire -->
+							{{ form_start(myForm) }}
+
+							<div class="form-group">
+								<label for="rating">Note</label>
+								<div class="rating" id="rating">
+									{% for i in 1..5 %}
+										<i class="far fa-star" data-value="{{ i }}"></i>
+									{% endfor %}
+								</div>
+								{{ form_widget(myForm.rating) }}
+							</div>
+
+							{{ form_widget(myForm.content) }}
+							<button type="submit" class="btn btn-danger mt-2">Ajouter le commentaire</button>
+
+							{{ form_end(myForm) }}
+						{% else %}
+							<p class="alert alert-danger">Pour ajouter un commentaire, vous devez être connecté. Vous pouvez vous connecter en
+								<a href="{{ path('account_login') }}">cliquant ici</a>
+							</p>
+						{% endif %}
+					</div>
 
 				</div>
-                    
-                {% endfor %}
-                {% else %}
-                    <h2>Cette annonce n'a pas encore reçu de commentaire...</h2>
-                {% endif %}
-
-			  {# gestion des commentaire #}
 			</div>
 
 
-              
 		</div>
-		
+
 	</div>
 
-	
-		<!-- Modal de suppression -->
+
+	<!-- Modal de suppression -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -111,4 +171,32 @@
 			</div>
 		</div>
 	</div>
+
+{% endblock %}
+{% block javascripts %}
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+const stars = document.querySelectorAll('.rating i');
+const ratingInput = document.querySelector('.rating-input');
+
+stars.forEach(star => {
+star.addEventListener('click', () => {
+const ratingValue = star.getAttribute('data-value');
+ratingInput.value = ratingValue;
+
+// Met à jour l'affichage des étoiles
+stars.forEach(s => {
+if (s.getAttribute('data-value') <= ratingValue) {
+s.classList.remove('far');
+s.classList.add('fas');
+} else {
+s.classList.remove('fas');
+s.classList.add('far');
+}
+});
+});
+});
+});
+	</script>
 {% endblock %}

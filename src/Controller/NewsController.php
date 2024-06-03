@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\News;
 use App\Form\NewsType;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Form\NewsEditType;
 use App\Entity\UserImgModify;
 use App\Form\ImgUserModifyType;
@@ -229,8 +231,38 @@ class NewsController extends AbstractController
      * @return Response
      */
     #[Route("/news/{slug}", name:"news_show")]
-    public function show(string $slug, News $news, NewsRepository $newsRepository, Request $request): Response
+    public function show(string $slug, News $news, NewsRepository $newsRepository, Request $request,EntityManagerInterface $manager ): Response
     {
+        $comment = new Comment(); //créé un nouveau commentaire
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Vérifie si l'utilisateur essaie de commenter sa propre news
+            if ($this->getUser() === $news->getAuthor()) {
+                $this->addFlash(
+                    'warning',
+                    'Vous pouvez pas commenter votre propre actualité'
+                );
+                return $this->redirectToRoute('news_show', ['slug' => $news->getSlug()]);
+            }
+    
+    
+            $comment->setNews($news) //récupère l'actualité  commentée
+                    ->setAuthor($this->getUser());//récupère l'auteur qui a commenté
+    
+            // Persiste le commentaire
+            $manager->persist($comment);
+            $manager->flush();
+    
+            $this->addFlash(
+                'success',
+                "Votre commentaire a été pris en compte"
+            );
+    
+            // Redirige vers la même page pour réinitialiser le formulaire
+            return $this->redirectToRoute('news_show', ['slug' => $news->getSlug()]);
+        }
      
     
         $previousNews = $newsRepository->findPreviousNews($news->getId());
@@ -240,7 +272,26 @@ class NewsController extends AbstractController
             'news' => $news,
             'previousNews' => $previousNews,
             'nextNews' => $nextNews,
+            'myForm' => $form->createView(),
         ]);
+    }
+
+    #[Route("/comment/{id}/delete", name: "comment_delete")]
+    #[IsGranted(
+        attribute: new Expression('(user === subject and is_granted("ROLE_USER")) or is_granted("ROLE_ADMIN") or is_granted("ROLE_MODERATEUR")'),
+        subject: new Expression('args["comment"].getAuthor()'),
+        message: "Le commentaire ne vous appartient pas, vous ne pouvez pas l'effacer"
+    )]
+    public function deleteComment(Comment $comment, EntityManagerInterface $manager): Response
+    {
+        // Vérifier si l'utilisateur connecté est l'auteur du commentaire
+      
+        $manager->remove($comment);
+        $manager->flush();
+    
+        $this->addFlash('success', "The comment has been successfully deleted.");
+
+        return $this->redirectToRoute('account_index');
     }
 
     
