@@ -533,6 +533,19 @@ thead .criteres{
     }
   }
 }
+.countdownSaison{
+  @include flexGap(column,$spacing-4xl);
+  padding: $spacing-4xl 0;
+  justify-content: center;
+  align-items: center;
+  h3{
+  
+    .stroke{
+      color: transparent;
+      -webkit-text-stroke: 1px $color-secondary;
+    }
+  }
+}
 
 
 

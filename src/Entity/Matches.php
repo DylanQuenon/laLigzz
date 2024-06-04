@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MatchesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MatchesRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -31,6 +32,12 @@ class Matches
     private ?string $stadium = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\Range(
+    min : "2023-08-01",
+    max : "2024-06-30",
+    notInRangeMessage :"La date doit être postérieure au 1er août 2023 et inférieure au 30 juin 2024",
+)]
+
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column]
@@ -139,4 +146,5 @@ class Matches
 
         return $this;
     }
+    
 }

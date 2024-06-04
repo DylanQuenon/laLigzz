@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="slide" id="news">
 		<div class="heading" style="background-image:url('/uploads/{{news.cover}}')">
 			<div class="heading_title">
@@ -27,7 +28,15 @@
 								<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer la news</button>
 							</div>
 						{% endif %}
-						<p class="text-xl stratos text-uppercase">{{news.subtitle}}</p>
+						<div>
+							<p class="text-xl stratos text-uppercase">{{news.subtitle}}
+							</p>
+							<p class="text-sm hero  text-decoration-underline link-offset-3">Temps de lecture estimé :
+								<span class="text-sm hero fw-bold">{{ (news.text | split(' ') | length / 200) | round(0, 'common') }}
+									minutes</span>
+							</p>
+
+						</div>
 						<p class="content_text text-md hero">{{ news.text | striptags | nl2br | raw }}</p>
 						<div class="author">
 							<p class="text-md hero text-white">Écrit par
@@ -92,26 +101,15 @@
 
 
 						</div>
-						<div class="modal fade" id="deleteModalComment" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="deleteModalLabel">Supprimer la news</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										Êtes-vous sûr de vouloir supprimer votre commentaire ?
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-										<a href="{{path('comment_delete', {'id': comment.id}) }}" class="btn btn-danger">Supprimer</a>
-									</div>
-								</div>
-							</div>
-						</div>
+						{% include 'partials/_delete_modal.html.twig' with {
+							'modalId': 'deleteCommentModal' ~ comment.id,
+							'modalTitle': 'Supprimer le commentaire',
+							'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+							'modalAction': path('comment_delete', {'id': comment.id})
+						} %}
 					{% endfor %}
 				{% else %}
-					<p class="text-md hero">Cette actualité n'a pas encore reçu de commentaire...</p>
+					<p class="text-md hero my-5">Cette actualité n'a pas encore reçu de commentaire...Soyez le premier !</p>
 				{% endif %}
 
 				<div class="formComment">
@@ -134,11 +132,11 @@
 							</div>
 
 							{{ form_widget(myForm.content) }}
-							<button type="submit" class="btn btn-danger mt-4">Ajouter le commentaire</button>
+							<button type="submit" class="btn mt-4">Ajouter le commentaire</button>
 
 							{{ form_end(myForm) }}
 						{% else %}
-							<p class="alert alert-danger">Pour ajouter un commentaire, vous devez être connecté. Vous pouvez vous connecter en
+							<p class="text-lg hero">Pour ajouter un commentaire, vous devez être connecté. Vous pouvez vous connecter en
 								<a href="{{ path('account_login') }}">cliquant ici</a>
 							</p>
 						{% endif %}
@@ -154,47 +152,37 @@
 
 
 	<!-- Modal de suppression -->
-	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="deleteModalLabel">Supprimer la news</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Êtes-vous sûr de vouloir supprimer cette news ?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-					<a href="{{ path('news_delete', {'slug': news.slug}) }}" class="btn btn-danger">Supprimer</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	{% include 'partials/_delete_modal.html.twig' with {
+			'modalId': 'deleteModal',
+			'modalTitle': 'Supprimer la news',
+			'modalMessage': 'Êtes-vous sûr de vouloir supprimer cette news ?',
+			'modalAction': path('news_delete', {'slug': news.slug})
+		} 
+	%}
 
 {% endblock %}
 {% block javascripts %}
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-	const stars = document.querySelectorAll('.rating i');
-	const ratingInput = document.querySelector('.rating-input');
-	stars.forEach(star => {
-		star.addEventListener('click', () => {
-			const ratingValue = star.getAttribute('data-value');
-			ratingInput.value = ratingValue;
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+const stars = document.querySelectorAll('.rating i');
+const ratingInput = document.querySelector('.rating-input');
+stars.forEach(star => {
+star.addEventListener('click', () => {
+const ratingValue = star.getAttribute('data-value');
+ratingInput.value = ratingValue;
 
-			// Met à jour l'affichage des étoiles
-			stars.forEach(s => {
-				if (s.getAttribute('data-value') <= ratingValue) {
-				s.classList.remove('far');
-				s.classList.add('fas');
-				} else {
-				s.classList.remove('fas');
-				s.classList.add('far');
-				}
-			});
-		});
-	});
-});	
-</script>
+// Met à jour l'affichage des étoiles
+stars.forEach(s => {
+if (s.getAttribute('data-value') <= ratingValue) {
+s.classList.remove('far');
+s.classList.add('fas');
+} else {
+s.classList.remove('fas');
+s.classList.add('far');
+}
+});
+});
+});
+});
+	</script>
 {% endblock %}

@@ -37,13 +37,7 @@ html,body{
     max-width: 24px;
     max-height: 24px;
 }
-.alert {
-    background-color: $color-primary;
-    border: solid 1px $color-tertiary;
-    color: $color-secondary;
-    outline: none;
-    border-radius: $radius-xl;
-}
+
 
 #userPage{
     padding: $spacing-9xl 0;
@@ -113,4 +107,54 @@ html,body{
 }
 .rating i{
     color: goldenrod;
+}
+
+
+.flash-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1050;
+    &.fade-out {
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 1s ease-out, opacity 1s ease-out;
+
+    }
+    
+}
+
+.flash-container .alert {
+    margin: 10px auto;
+    max-width: 90%;
+    text-align: center;
+    border: solid 1px $color-tertiary !important;
+    outline: none !important;
+    border-radius: $radius-xl !important;
+    font-size: $font-family-hero !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    p{
+        margin-bottom: 0 !important;
+    }
+
+    .success{
+        background-color: rgb(60, 200, 60);
+        color: $color-primary;
+    }
+    .warning{
+        background-color: rgb(250, 225, 83);
+        color: $color-primary;
+    }
+    .danger{
+        background-color: $color-tertiary;
+        color: $color-primary;
+    }
+}
+
+.loginAdmin{
+    background-color: $color-primary;
+    width: 100%;
+
 }

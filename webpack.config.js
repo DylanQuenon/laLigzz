@@ -21,7 +21,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-    // .addEntry('home', './assets/js/home.js')
+    .addEntry('home', './assets/js/home.js')
     .addEntry('sliderTeam', './assets/js/sliderTeam.js')
     .addEntry('sliderGames', './assets/js/_sliderGames.js')
     .addEntry('sliderNews', './assets/js/_sliderNews.js')
@@ -34,6 +34,7 @@ Encore
     .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
     .addEntry('editProfileStyle', './assets/styles/pages/editProfile.scss')
     .addEntry('formStyle', './assets/styles/pages/formStyle.scss')
+    .addEntry('homeStyle', './assets/styles/pages/home.scss')
     .addEntry('rankingStyle', './assets/styles/pages/ranking.scss')
     .addEntry('matchStyle', './assets/styles/pages/matchStyle.scss')
     .addEntry('teamStyle', './assets/styles/pages/teamStyle.scss')

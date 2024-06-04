@@ -52,6 +52,18 @@ class AdminMatchesController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             // je persiste mon objet match
+
+            if ($match->getHomeTeam() === $match->getAwayTeam()) {
+                $this->addFlash('danger', 'Les équipes ne peuvent pas être les mêmes.');
+                return $this->redirectToRoute('admin_matches_index');
+            }
+
+            // Vérifier si les équipes ne se sont pas déjà affrontées deux fois cette saison
+            $seasonMatches = $this->getDoctrine()->getRepository(Matches::class)->findSeasonMatches($match->getHomeTeam(), $match->getAwayTeam(), '2023-08-01', '2024-06-30');
+            if (count($seasonMatches) >= 2) {
+                $this->addFlash('danger', 'Ces équipes se sont déjà affrontées deux fois cette saison.');
+                return $this->redirectToRoute('admin_matches_index');
+            }
             $homeTeam = $match->getHomeTeam();
             $awayTeam = $match->getAwayTeam();
             $homeTeamGoals = $match->getHomeTeamGoals();
@@ -82,6 +94,15 @@ class AdminMatchesController extends AbstractController
             'myForm' => $form->createView()
         ]);
     }
+
+
+    /**
+     * Récupère le logo des équipes choisies
+     *
+     * @param [type] $id
+     * @param Team $team
+     * @return JsonResponse
+     */
     #[Route('/admin/teams/json/{id}', name: 'team_logo')]
     public function getTeamLogo($id, Team $team): JsonResponse
     {

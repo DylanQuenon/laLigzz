@@ -4,8 +4,8 @@
 <div class="banneer"data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center" >
     <div class="bubble" data-aos="fade-right "data-aos-duration="700"  data-aos-delay="700">
     <div class="bubbleText">
-        <h3 class="display-md stratos text-uppercase"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="1400">Decouvrez les dernieres actus</h3>
-        <p class="text-md hero"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="2100">Découvrez les dernières actualités et ne manquez aucune mise à jour importante. Restez informé avec nos nouvelles les plus récentes.
+        <h3 class="display-md stratos text-uppercase"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="700">Decouvrez les dernieres actus</h3>
+        <p class="text-md hero"data-aos="fade-right" data-aos-duration="700"  data-aos-delay="900">Découvrez les dernières actualités et ne manquez aucune mise à jour importante. Restez informé avec nos nouvelles les plus récentes.
         </p>
     
     </div>
@@ -14,7 +14,7 @@
 <div class="wrapper spacing-container">
     <div class="row">
     {% for new in lastNews %}
-        <div class="col-md-4"data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="{{loop.index}}00">
+        <div class="col-md-4"data-aos="zoom-in" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="{{loop.index}}00">
         {% include "partials/_cardNews.html.twig" %}
         </div>
     {% endfor %}

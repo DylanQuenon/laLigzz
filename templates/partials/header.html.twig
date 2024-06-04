@@ -14,11 +14,6 @@
 		<li class="nav-item dropdown">
 			<a
 				href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" id="accountDropdownLink">
-				{# {% if app.user.picture %}
-				    <img src="/uploads/{{app.user.picture }}" alt="Photo de profil" class="rounded-circle mx-" style="width: 40px; height: 40px; object-fit: contain;">
-				{% else %}
-				    <img src="{{ asset('uploads/user.webp') }}" alt="Photo de profil par défaut" class="rounded-circle mx-" style="width: 40px; height: 40px; object-fit: contain;">
-				{% endif %} #}
 				{{app.user.fullName}}
 			</a>
 
@@ -69,3 +64,36 @@
 
 		</div>
 	</div>
+
+{% for label, messages in app.flashes %}
+    <div class="flash-container">
+        <div class='alert alert-{{label}}'>
+            {% for message in messages %}
+                <p class="text-md hero">{{message | raw}}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+    
+        const flashContainers = document.querySelectorAll('.flash-container');
+
+        const flashDelay = 5000;
+
+
+        flashContainers.forEach(container => {
+            setTimeout(() => {
+                container.classList.add('fade-out');
+            }, flashDelay);
+
+
+            setTimeout(() => {
+                container.remove();
+            }, flashDelay + 1000); 
+        });
+    });
+</script>
+
+{% endblock %}

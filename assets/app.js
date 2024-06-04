@@ -19,6 +19,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 // import './js/sliderTeam.js'
 import './js/home.js'
 import './js/_sliderNews.js'
+import './js/burger.js'
 
 import 'gsap'
 

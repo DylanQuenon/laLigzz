@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $introduction = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\Length(min: 50, minMessage:"Votre description doit faire plus de 100 caractères")]
+    #[Assert\Length(min: 50, minMessage:"Votre description doit faire plus de 50 caractères")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -226,6 +226,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function setPicture(?string $picture): static
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+    public function getOldPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setOldPicture(?string $picture): static
     {
         $this->picture = $picture;
 

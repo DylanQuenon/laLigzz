@@ -3,12 +3,15 @@
 {% block title %}Accueil
 {% endblock %}
 
+{% block stylesheets %}
+{{encore_entry_link_tags('homeStyle')}}
+{% endblock %}
+
 {% block body %}
-	<div
-		class="slide" id="home">
+	<div class="slide" id="home">
 		{# JUMBOTRON AVEC CERCLES D IMAGES#}
 		<div class="wrapper">
-			<div class="container_home" id="">
+			<div class="container_home">
 				<div
 					class="row" id="row_home">
 					{# JUMBOTRON AVEC PARTIE GAUCHE#}
@@ -38,7 +41,7 @@
 			</div>
 
 		</div>
-		<svg xmlns="http://www.w3.org/2000/svg" class="" viewbox="0 0 1440 320">
+		<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1440 320">
 			<path fill="#e1e1e1" fill-opacity="1" d="M0,160L80,170.7C160,181,320,203,480,192C640,181,800,139,960,128C1120,117,1280,139,1360,149.3L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
 		</svg>
 	</div>
@@ -59,8 +62,7 @@
 			</div>
 
 		</div>
-		<div
-			class="swiper " data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="500">
+		<div class="swiper "data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-duration="500" >
 			<!-- Additional required wrapper -->
 			<div class="swiper-wrapper">
 				{% for team in teams %}
@@ -70,7 +72,7 @@
 				{% endfor %}
 			</div>
 		</div>
-		<div></div>
+
 		<div class="wrapper">
 
 			<div class="controls_slider d-flex" data-aos="fade-left" data-aos-duration="500" data-aos-delay="500">
@@ -212,164 +214,71 @@
 		<div class="lastNews">
 		{% include "partials/_lastNews.html.twig" %}
 		</div>
-	
-	<h3 class="display-xl stratos text-uppercase text-center my-5">La saison <span class="test">2024-2025</span> demarre dans </h3>
-	<div class="container-countdown ">
-		<section class="countdown-block">
-			<span class="days time-element">
-				<span class="top">00</span>
-				<span class="top-back">
-					<span>00</span>
-				</span>
-				<span class="bottom">00</span>
-				<span class="bottom-back">
-					<span>00</span>
-				</span>
-			</span>
-			<h2 class="subtitle">Jours</h2>
-		</section>
-		<section class="countdown-block">
-			<span class="hours time-element">
-				<span class="top">00</span>
-				<span class="top-back">
-					<span>00</span>
-				</span>
-				<span class="bottom">00</span>
-				<span class="bottom-back">
-					<span>00</span>
-				</span>
-			</span>
-			<h2 class="subtitle">Heures</h2>
-		</section>
-		<section class="countdown-block">
-			<span class="minutes time-element">
-				<span class="top">00</span>
-				<span class="top-back">
-					<span>00</span>
-				</span>
-				<span class="bottom">00</span>
-				<span class="bottom-back">
-					<span>00</span>
-				</span>
-			</span>
-			<h2 class="subtitle">Minutes</h2>
-		</section>
-		<section class="countdown-block">
-			<span class="seconds time-element">
-				<span class="top">00</span>
-				<span class="top-back">
-					<span>00</span>
-				</span>
-				<span class="bottom">00</span>
-				<span class="bottom-back">
-					<span>00</span>
-				</span>
-			</span>
-			<h2 class="subtitle">Secondes</h2>
-		</section>
-	</div>
+		<div class="countdownSaison">
+			<h3 class="display-lg stratos text-uppercase text-center my-5" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">La saison <span class="stroke">2024-2025 <br></span> debute dans </h3>
+			<div class="container-countdown ">
+				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">
+					<span class="days time-element">
+						<span class="top">00</span>
+						<span class="top-back">
+							<span>00</span>
+						</span>
+						<span class="bottom">00</span>
+						<span class="bottom-back">
+							<span>00</span>
+						</span>
+					</span>
+					<h2 class="subtitle">Jours</h2>
+				</section>
 
-
-
+				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="300">
+					<span class="hours time-element">
+						<span class="top">00</span>
+						<span class="top-back">
+							<span>00</span>
+						</span>
+						<span class="bottom">00</span>
+						<span class="bottom-back">
+							<span>00</span>
+						</span>
+					</span>
+					<h2 class="subtitle">Heures</h2>
+				</section>
+				
+				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="400">
+					<span class="minutes time-element">
+						<span class="top">00</span>
+						<span class="top-back">
+							<span>00</span>
+						</span>
+						<span class="bottom">00</span>
+						<span class="bottom-back">
+							<span>00</span>
+						</span>
+					</span>
+					<h2 class="subtitle">Minutes</h2>
+				</section>
+				
+				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="500">
+					<span class="seconds time-element">
+						<span class="top">00</span>
+						<span class="top-back">
+							<span>00</span>
+						</span>
+						<span class="bottom">00</span>
+						<span class="bottom-back">
+							<span>00</span>
+						</span>
+					</span>
+					<h2 class="subtitle">Secondes</h2>
+				</section>
+			</div>
+		</div>
 	</div>
 
 
 {% endblock %}
 {% block javascripts %}
 	{{encore_entry_script_tags('sliderTeam')}}
-	<script>
-	window.addEventListener("load", () => {
-	const elDays = document.querySelector(".days");
-	const elHours = document.querySelector(".hours");
-	const elMinutes = document.querySelector(".minutes");
-	const elSeconds = document.querySelector(".seconds");
-
-	let timeLeft = {
-		days: 0,
-		hours: 0,
-		minutes: 0,
-		seconds: 0
-	};
-
-	let totalSeconds = 0;
-
-	let futureDate = new Date("Augustus 16 21:00:00 2024");
-
-	function init() {
-		totalSeconds = Math.floor((futureDate - new Date()) / 1000);
-		setTimeLeft();
-		let interval = setInterval(() => {
-			if (totalSeconds < 0) {
-				clearInterval(interval);
-			}
-			countTime();
-		}, 1000);
-	}
-
-	function countTime() {
-		if (totalSeconds > 0) {
-			--timeLeft.seconds;
-			if (timeLeft.minutes >= 0 && timeLeft.seconds < 0) {
-				timeLeft.seconds = 59;
-				--timeLeft.minutes;
-				if (timeLeft.hours >= 0 && timeLeft.minutes < 0) {
-					timeLeft.minutes = 59;
-					--timeLeft.hours;
-					if (timeLeft.days >= 0 && timeLeft.hours < 0) {
-						timeLeft.hours = 23;
-						--timeLeft.days;
-					}
-				}
-			}
-		}
-		--totalSeconds;
-		printTime();
-	}
-
-	function printTime() {
-		animateFlip(elDays, timeLeft.days);
-		animateFlip(elHours, timeLeft.hours);
-		animateFlip(elMinutes, timeLeft.minutes);
-		animateFlip(elSeconds, timeLeft.seconds);
-	}
-
-	function animateFlip(element, value) {
-		const valueInDom = element.querySelector(".bottom-back").innerText;
-		const currentValue = value < 10 ? "0" + value : "" + value;
-
-		if (valueInDom === currentValue) return;
-
-		element.querySelector(".top-back span").innerText = currentValue;
-		element.querySelector(".bottom-back span").innerText = currentValue;
-
-		gsap.to(element.querySelector(".top"), 0.2, {
-			rotationX: "-180deg",
-			transformPerspective: 300,
-			ease: Quart.easeOut,
-			onComplete: function () {
-				element.querySelector(".top").innerText = currentValue;
-				element.querySelector(".bottom").innerText = currentValue;
-				gsap.set(element.querySelector(".top"), { rotationX: 0 });
-			}
-		});
-
-		gsap.to(element.querySelector(".top-back"), 0.7, {
-			rotationX: 0,
-			transformPerspective: 300,
-			ease: Quart.easeOut,
-			clearProps: "all"
-		});
-	}
-
-	function setTimeLeft() {
-		timeLeft.days = Math.floor(totalSeconds / (60 * 60 * 24));
-		timeLeft.hours = Math.floor((totalSeconds / (60 * 60)) % 24);
-		timeLeft.minutes = Math.floor((totalSeconds / 60) % 60);
-		timeLeft.seconds = Math.floor(totalSeconds % 60);
-	}
-
-	init();
-});
-
-	</script>
+	{{encore_entry_script_tags('home')}}
 {% endblock %}

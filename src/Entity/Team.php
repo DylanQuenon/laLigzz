@@ -22,7 +22,7 @@ class Team
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min: 10, max: 255, minMessage:"Le nom doit faire plus de 10 caractères", maxMessage: "Le nom ne doit pas faire plus de 255 caractères")]
+    #[Assert\Length(min: 5, max: 255, minMessage:"Le nom doit faire plus de 5 caractères", maxMessage: "Le nom ne doit pas faire plus de 255 caractères")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]

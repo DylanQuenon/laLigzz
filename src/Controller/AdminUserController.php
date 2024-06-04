@@ -52,7 +52,8 @@ class AdminUserController extends AbstractController
             'choices' => [
                 'Utilisateur' => 'ROLE_USER',
                 'Administrateur' => 'ROLE_ADMIN',
-                'Rédacteur'=> 'ROLE_REDACTEUR'
+                'Rédacteur'=> 'ROLE_REDACTEUR',
+                'Modérateur'=> 'ROLE_MODERATEUR',
             ],
             'multiple' => true,
             'expanded' => true

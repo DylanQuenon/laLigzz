@@ -121,6 +121,30 @@
     padding: $spacing-9xl 0;
 
 }
+.formComment{
+   border-radius: 45px;
+   border: solid 1px $color-tertiary;
+    padding: $spacing-2xl $spacing-2xl;
+    font-family: $font-family-hero;
+    button[type="submit"]{
+        @include button-primary();
+    }
+    #rating{
+        margin: 10px 0;
+        i{
+            font-size: 20px;
+        }
+    
+    }
+    textarea{
+        resize: none !important;
+        min-height: 200px;
+        width: 100%;
+        &:focus{
+            outline: none;
+        }
+    }
+}
 .cardComments{
     border-radius: 45px;
     // border: solid 2px $color-tertiary;
@@ -152,4 +176,7 @@
     .newsPP{
         object-fit: cover;
     }
+}
+.btn{
+    font-family: $font-family-hero
 }

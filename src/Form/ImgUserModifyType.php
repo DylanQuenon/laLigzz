@@ -14,8 +14,8 @@ class ImgUserModifyType extends AbstractType
         $builder
             ->add('newPicture', FileType::class, [
                 'label' => 'Image(jpg, png, gif,webp)'
-            ])
-        ;
+            ]);
+    
     }
 
     public function configureOptions(OptionsResolver $resolver): void

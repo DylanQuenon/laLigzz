@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -22,12 +23,15 @@ class News
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5, max: 255, minMessage:"Le titre doit faire plus de 5 caractères", maxMessage: "Le titre ne doit pas faire plus de 255 caractères")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5, max: 255, minMessage:"Le sous-titre doit faire plus de 5 caractères", maxMessage: "Le sous-titre ne doit pas faire plus de 255 caractères")]
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 50, minMessage:"Votre description doit faire plus de 50 caractères")]
     private ?string $text = null;
 
     #[ORM\Column]

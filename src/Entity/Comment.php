@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -19,9 +20,11 @@ class Comment
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 5, notInRangeMessage:"Vous devez choisir un chiffre entre 1 et 5")]
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min:10, minMessage:"Votre commentaire doit faire au moins 10 caractères")]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

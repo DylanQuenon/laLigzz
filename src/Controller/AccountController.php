@@ -70,7 +70,6 @@ class AccountController extends AbstractController
      * @return Response
      */
     #[Route("/register", name:"account_register")]
-    #[IsGranted('ROLE_USER')]
     public function register(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher,FileUploaderService $fileUploader): Response
     {
         $user = new User();
@@ -116,7 +115,7 @@ class AccountController extends AbstractController
     {
         $user = $this->getUser(); // permet de récup l'utilisateur connecté
 
-        // pour la validation des images (plus tard validation groups)
+        
         $fileName = $user->getPicture();
         if(!empty($fileName)){
             $user->setPicture(

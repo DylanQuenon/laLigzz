@@ -13,6 +13,7 @@ use App\Repository\NewsRepository;
 use App\Service\PaginationService;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -67,7 +68,10 @@ class NewsController extends AbstractController
      * @return Response
      */
     #[Route("/news/add", name:"news_create")]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(
+        attribute: new Expression('(is_granted("ROLE_REDACTEUR")) or is_granted("ROLE_ADMIN")'),
+        message: "Vous n'avez pas l'autorisation de poster des actualités"
+    )]
     public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
     {
         $news = new News();
@@ -112,7 +116,7 @@ class NewsController extends AbstractController
      */
     #[Route("/news/{slug}/edit", name: "news_edit")]
     #[IsGranted(
-        attribute: new Expression('(user === subject and is_granted("ROLE_USER")) or is_granted("ROLE_ADMIN")'),
+        attribute: new Expression('(user === subject and is_granted("ROLE_USER")) or is_granted("ROLE_ADMIN") or is_granted("ROLE_REDACTEUR")'),
         subject: new Expression('args["news"].getAuthor()'),
         message: "Cette actualité ne vous appartient pas, vous ne pouvez pas la modifier"
     )]
