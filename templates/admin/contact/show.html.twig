@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails du Message{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-4">Détails du Message</h1>
+        <div class="card">
+            <div class="card-header">
+                Message envoyé le {{ contact.sendAt|date('d/m/Y') }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Sujet : {{ contact.subject }}</h5>
+                <p class="card-text">
+                    <strong>Nom :</strong> {{ contact.name }}<br>
+                    <strong>Prénom :</strong> {{ contact.firstName }}<br>
+                    <strong>Email :</strong> {{ contact.email }}<br>
+                    <strong>Contenu :</strong> {{ contact.content }}
+                </p>
+                 <a href="#deleteModal{{ contact.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ contact.id }}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            {# Confirmation de suppression #}
+                            {% include 'partials/_delete_modal.html.twig' with {
+                                'modalId': 'deleteModal' ~ contact.id,
+                                'modalTitle': 'Supprimer le contact',
+                                'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce contact ?',
+                                'modalAction': path('admin_contacts_delete', {'id': contact.id})
+                                } 
+                            %}
+                <a href="{{ path('admin_contact_index') }}" class="btn btn-secondary">Retour</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

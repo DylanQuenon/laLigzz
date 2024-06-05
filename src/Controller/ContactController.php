@@ -1,46 +1,37 @@
 <?php
 
-// src/Controller/ContactController.php
 namespace App\Controller;
 
-use Symfony\Component\Mime\Email;
+use App\Entity\Contact;
+use App\Form\ContactType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'contact')]
-    public function contact(Request $request, MailerInterface $mailer): Response
+    public function index(Request $request,EntityManagerInterface $manager): Response
     {
-        if ($request->isMethod('POST')) {
-            $firstName = $request->request->get('firstName');
-            $name = $request->request->get('name');
-            $email = $request->request->get('mail');
-            $message = $request->request->get('message');
+        $contact= new Contact();
+        $form = $this->createForm(ContactType::class, $contact);     
+        $form->handleRequest($request);
 
-            // Utilisation de renderView() pour obtenir une chaîne de caractères HTML
-            $htmlContent = $this->renderView('email/contact_email.html.twig', [
-                'firstName' => $firstName,
-                'name' => $name,
-                'email' => $email,
-                'message' => $message,
-            ]);
-
-            $emailMessage = (new Email())
-                ->from($email)
-                ->to('dylan.quenon.04@gmail.com') // Remplacez par votre adresse email
-                ->subject('Contact Form Submission')
-                ->html($htmlContent);
-
-            $mailer->send($emailMessage);
-
-            $this->addFlash('success', 'Votre message a été envoyé avec succès.');
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($contact);
+            $manager->flush();
+            $this->addFlash('success', 'Votre message a bien été envoyé');
             return $this->redirectToRoute('contact');
         }
-
-        return $this->render('contact/index.html.twig');
+        return $this->render('contact/index.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
+    
+
+
+    
 }

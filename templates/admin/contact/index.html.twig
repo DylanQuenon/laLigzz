@@ -1,0 +1,54 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des contacts{% endblock %}
+
+{% block body %}
+    <div class="container-fluid full">
+        <h1 class="my-2">Gestion des contacts</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Sujet</th>
+                    <th>Contenu</th>
+                    <th>Date d'envoi</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in pagination.data() %}
+                    <tr>
+                        <td>{{ contact.id }}</td>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.firstName }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.subject }}</td>
+                        <td>{{ contact.content }}</td>
+                        <td>{{ contact.sendAt|date("d-m-Y H:i:s") }}</td>
+                        <td>
+                            <a href="{{ path('admin_contacts_show', {'id': contact.id}) }}" class="btn btn-warning">
+                            Voir le message <i class="fas fa-eye"></i> 
+                            </a>
+                            <a href="#deleteModal{{ contact.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ contact.id }}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            {# Confirmation de suppression #}
+                            {% include 'partials/_delete_modal.html.twig' with {
+                                'modalId': 'deleteModal' ~ contact.id,
+                                'modalTitle': 'Supprimer le contact',
+                                'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce contact ?',
+                                'modalAction': path('admin_contacts_delete', {'id': contact.id})
+                                } 
+                            %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {# Pagination #}
+        {{ pagination.display() }}
+    </div>
+{% endblock %}

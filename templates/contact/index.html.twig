@@ -1,45 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact
-{% endblock %}
+{% block title %}Contact{% endblock %}
+
 {% block stylesheets %}
-	{{encore_entry_link_tags('contactStyle')}}
+    {{ encore_entry_link_tags('contactStyle') }}
 {% endblock %}
 
 {% block body %}
 
-	<div class="slide" id="contact">
-		<div class="row">
-			<div class="col-md-6" id="background">
-				<div class="wrapper">
-					<div class="container_contactForm">
-						<h2 class="display-xl kizard">Une question ? Contactez-nous</h2>
-					 <form action="{{ path('contact') }}" method="POST">
-							<div class="d-flex flex-wrap">
-								<div class="form-group col-md-5">
-									<label for="firstName">Prénom :</label>
-									<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Entrez votre prénom" required>
-								</div>
-								<div class="form-group col-md-5 offset-md-1">
-									<label for="name">Nom :</label>
-									<input type="text" class="form-control" id="name" name="name" placeholder="Entrez votre nom" required>
-								</div>
-							</div>
-							<div class="form-group col-md-11">
-								<label for="mail">Adresse mail :</label>
-								<input type="email" class="form-control" id="mail" name="mail" placeholder="Entrez votre adresse mail" required>
-							</div>
-							<div class="form-group col-md-11">
-								<label for="message">Message :</label>
-								<textarea class="form-control" id="message" name="message" rows="4" placeholder="Écrivez votre message ici" required></textarea>
-							</div>
-							<button type="submit" class="text-md hero col-md-11">Envoyer</button>
-						</form>
+<div class="slide" id="contact">
+    <div class="row">
+        <div class="col-md-6" id="background">
+            <div class="wrapper">
+                <div class="container_contactForm">
+                    <h2 class="display-xl kizard">Une question ? Contactez-nous</h2>
+                    <form action="{{ path('contact') }}" method="POST">
+                        {{ form_start(form) }}
+                        <div class="d-flex flex-wrap">
+                            <div class="form-group col-md-5">
+                                {{ form_label(form.firstName, 'Prénom :') }}
+                                {{ form_widget(form.firstName, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre prénom', 'required': true}}) }}
+                            </div>
+                            <div class="form-group col-md-5 offset-md-1">
+                                {{ form_label(form.name, 'Nom :') }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom', 'required': true}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-11">
+                            {{ form_label(form.email, 'Adresse mail :') }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse mail', 'required': true}}) }}
+                        </div>
+                        <div class="form-group col-md-11">
+                            {{ form_label(form.subject, 'Sujet :') }}
+                            {{ form_widget(form.subject, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le sujet', 'required': true}}) }}
+                        </div>
+                        <div class="form-group col-md-11">
+                            {{ form_label(form.content, 'Message :') }}
+                            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Écrivez votre message ici', 'required': true}}) }}
+                        </div>
+                        <button type="submit" class="text-md hero col-md-11">Envoyer</button>
+                        {{ form_end(form) }}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 backgroundContact"></div>
+    </div>
+</div>
 
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6 backgroundContact"></div>
-		</div>
-	</div>
 {% endblock %}
