@@ -30,6 +30,7 @@ Encore
     .addEntry('buttonLinkStyle', './assets/styles/partials/_buttonLinkStyle.scss')
     .addEntry('lastGamesStyle', './assets/styles/partials/_lastGames.scss')
     .addEntry('paginationStyle', './assets/styles/partials/_pagination.scss')
+    .addEntry('contactStyle', './assets/styles/pages/contactStyle.scss')
     .addEntry('loginStyle', './assets/styles/pages/login.scss')
     .addEntry('registrationStyle', './assets/styles/pages/registration.scss')
     .addEntry('editProfileStyle', './assets/styles/pages/editProfile.scss')

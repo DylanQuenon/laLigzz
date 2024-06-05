@@ -1,0 +1,77 @@
+@import "../variables/variables.scss";
+#contact{
+    color: $color-secondary;
+    .wrapper{
+        padding: $spacing-8xl 0;
+    }
+    .row{
+        --bs-gutter-x:0 !important;
+    }
+    .backgroundContact{
+        background-image: url('/public/images/title2024.jpg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+       min-height: 100vh;
+    }
+    .container_contactForm{
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2xl;
+    }
+    .form-group{
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+        font-family: $font-family-hero;
+        font-size: $text-font-size-md;
+        input,textarea{
+            background-color: transparent;
+            border: solid 1px $color-tertiary;
+            resize: none;
+            box-shadow: none;
+            color: $color-secondary;
+            border-radius: $radius-xl;
+            &::placeholder{
+                color: #c4c2c2;
+                font-size: $text-font-size-sm
+            }
+        }
+    }
+}
+button[type="submit"]{
+    @include button-primary();
+    margin: $spacing-xl 0;
+}
+@media all and (max-width:768px) {
+    #contact .d-flex{
+        flex-direction: column;
+        gap: $spacing-2xl;
+        #name,#firstname{
+            width: 100%;
+        }
+    }
+    #background{
+        @include background('/public/images/title2024.jpg');
+    }
+    .container_contactForm{
+        background-color: rgba(37, 37, 37,0.5);
+        backdrop-filter: brightness(0.25) ;
+        border-radius: 45px;
+        border: solid 1px $color-tertiary;
+        width: 100%;
+        padding: $spacing-4xl;
+        h2{
+            font-size: $text-font-size-2xl
+        }
+    }
+    .backgroundContact{
+        display: none;
+    }
+    
+}

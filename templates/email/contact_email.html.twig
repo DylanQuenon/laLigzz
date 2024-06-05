@@ -1,0 +1,64 @@
+<!-- templates/email/contact_email.html.twig -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form Submission</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .email-header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .email-body {
+            line-height: 1.6;
+            color: #333;
+        }
+        .email-body p {
+            margin: 0 0 10px;
+        }
+        .email-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h2>Nouvelle soumission de formulaire de contact</h2>
+        </div>
+        <div class="email-body">
+            <p><strong>Prénom :</strong> {{ firstName }}</p>
+            <p><strong>Nom :</strong> {{ name }}</p>
+            <p><strong>Email :</strong> {{ email }}</p>
+            <p><strong>Message :</strong></p>
+            <p>{{ message }}</p>
+        </div>
+        <div class="email-footer">
+            <p>© 2024 Votre Entreprise. Tous droits réservés.</p>
+        </div>
+    </div>
+</body>
+</html>
