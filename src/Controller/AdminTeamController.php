@@ -11,6 +11,7 @@ use App\Form\TeamEditType;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
 use App\Service\FileUploaderService;
+use App\Repository\RankingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,8 +51,21 @@ class AdminTeamController extends AbstractController
      * @return Response
      */
     #[Route("/admin/teams/new", name:"admin_teams_create")]
-    public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader): Response
+    public function create(Request $request, EntityManagerInterface $manager, FileUploaderService $fileUploader,RankingRepository $rankingRepository): Response
     {
+        // Compte le nombre d'équipes dans le classement
+        $teamsCount = $rankingRepository->count([]);
+
+        // Vérifie si le nombre d'équipes est supérieur ou égal à 20
+        if ($teamsCount >= 20) {
+            $this->addFlash(
+                'danger', 
+                "Le nombre maximum d'équipes (20) a été atteint. Vous ne pouvez pas ajouter une nouvelle équipe."
+            );
+
+            return $this->redirectToRoute('admin_teams_index'); // Rediriger vers la liste des équipes ou une autre page appropriée
+        }
+
         $team = new Team();
         $form = $this->createForm(TeamType::class, $team);     
         $form->handleRequest($request);

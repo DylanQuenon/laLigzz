@@ -46,23 +46,14 @@
 								<i class="fas fa-trash"></i>
 							</a>
 							{# fais la confirmation de suppresion #}
-							<div class="modal fade" id="deleteModal{{ team.slug }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ team.slug }}" aria-hidden="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="deleteModalLabel{{ team.id }}">Supprimer l'équipe</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											Êtes-vous sûr de vouloir supprimer cette équipe ?
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
-											<a href="{{ path('admin_teams_delete', {'slug': team.slug}) }}" class="btn btn-danger">Supprimer</a>
-										</div>
-									</div>
-								</div>
-							</div>
+							{% include 'partials/_delete_modal.html.twig' with {
+									'modalId': 'deleteModal' ~ team.slug,
+									'modalTitle': 'Supprimer cette équipe',
+									'modalMessage': 'Êtes-vous sûr de vouloir supprimer cette équipe ?',
+									'modalAction': path('admin_teams_delete', {'slug': team.slug})
+								} 
+							%}
+
 
 						</td>
 					</tr>

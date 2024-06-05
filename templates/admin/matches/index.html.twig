@@ -41,24 +41,15 @@
                             <a href="#deleteModal{{ match.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ match.id }}">
                                 <i class="fas fa-trash"></i>
                             </a>
-                            {# Confirmation de suppression #}
-                            <div class="modal fade" id="deleteModal{{ match.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ match.id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel{{ match.id }}">Supprimer le match</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Êtes-vous sûr de vouloir supprimer ce match ?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annuler</button>
-                                            <a href="{{ path('admin_matches_delete', {'id': match.id}) }}" class="btn btn-danger">Supprimer</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                    {# Confirmation de suppression #}
+                            {% include 'partials/_delete_modal.html.twig' with {
+                                'modalId': 'deleteModal' ~ match.id,
+                                'modalTitle': 'Supprimer le match',
+                                'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce match ?',
+                                'modalAction': path('admin_matches_delete', {'id': match.id})
+                                } 
+                            %}
+
                         </td>
                     </tr>
                 {% endfor %}
