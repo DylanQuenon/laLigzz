@@ -269,5 +269,73 @@ class AccountController extends AbstractController
         ]);
     }
 
+    #[Route("/account/followed-news", name:"account_followed_news")]
+    #[IsGranted('ROLE_USER')]
+    public function followedNews(Request $request, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $followedTeams = $user->getFollowedTeams();
+        $followedNews = [];
+        $displayedNews = []; // Tableau pour suivre les actualités déjà affichées
+    
+        foreach($followedTeams as $followedTeam)
+        {
+            foreach($followedTeam->getNews() as $news)
+            {
+                // Vérifier si l'actualité a déjà été affichée
+                $newsId = $news->getId();
+                if (!isset($displayedNews[$newsId])) {
+                    $followedNews[] = $news;
+                    // Marquer l'actualité comme déjà affichée
+                    $displayedNews[$newsId] = true;
+                }
+            }
+        }
+            // Trier les actualités du plus récent au plus ancien
+        usort($followedNews, function($a, $b) {
+            return $b->getCreatedAt()->getTimestamp() - $a->getCreatedAt()->getTimestamp();
+        });
+    
+        return $this->render("account/followedNews.html.twig", [
+            'followedNews' => $followedNews,
+            'user' => $user
+        ]);
+    }
+    
+    #[Route("/account/followed-matches", name:"account_followed_matches")]
+    #[IsGranted('ROLE_USER')]
+    public function followedMatches(Request $request, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+        $followedTeams = $user->getFollowedTeams();
+        $followedMatches = [];
+        $displayedMatches = []; // Tableau pour suivre les matchs déjà affichés
+    
+        foreach($followedTeams as $followedTeam)
+        {
+            foreach($followedTeam->getMatches() as $match)
+            {
+                // Vérifier si le match a déjà été affiché
+                $opponentTeamId = $match->getOpponentTeam()->getId();
+                if (!isset($displayedMatches[$opponentTeamId])) {
+                    $followedMatches[] = $match;
+                    // Marquer le match comme déjà affiché
+                    $displayedMatches[$opponentTeamId] = true;
+                }
+            }
+        }
+
+               // Trier les actualités du plus récent au plus ancien
+               usort($followedMatches, function($a, $b) {
+                return $b->getDate()->getTimestamp() - $a->getDate()->getTimestamp();
+            });
+    
+        return $this->render("account/followedMatches.html.twig", [
+            'followedMatches' => $followedMatches,
+            'user' => $user
+        ]);
+    }
+    
+
 
 }

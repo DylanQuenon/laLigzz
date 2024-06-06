@@ -33,12 +33,21 @@
 							<a href="{{path('matches_team_show', {'slug': team.slug})}}" class="hero games">Voir les matchs
 								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="px" fill="#e6e6e6"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
 							</a>
-							<a href="#" class="text-md hero d-flex align-items-center justify-content-center followButton">
-								<svg xmlns="http://www.w3.org/2000/svg" height="14px" viewbox="0 -960 960 960" width="14px" fill="#e6e6e6">
-									<path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
-								</svg>
-								Suivre
-							</a>
+						{% if app.user.followedTeams.contains(team) %}
+    <a href="{{ path('remove_team_from_followed', {'slug': team.slug}) }}" class="text-md hero d-flex align-items-center justify-content-center followButton">
+        Ne plus suivre
+        <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewbox="0 -960 960 960" width="14px" fill="#e6e6e6">
+            <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
+        </svg>
+    </a>
+{% else %}
+    <a href="{{ path('add_team_to_followed', {'slug': team.slug}) }}" class="text-md hero d-flex align-items-center justify-content-center followButton">
+        Suivre
+        <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewbox="0 -960 960 960" width="14px" fill="#e6e6e6">
+            <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z"/>
+        </svg>
+    </a>
+{% endif %}
 						</div>
 						<p class="devise display-md hero text-uppercase">{{ team.devise }}</p>
 						<div class="row pres">

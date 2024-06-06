@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.fullName }} - Actualités Suivies{% endblock %}
+
+{% block body %}
+    <div class="slide">
+        <div class="wrapper wrapperContainerTeam">
+            <h2 class="display-xl kizard">Les actualités pour {{user.fullName}}</h2>
+            <div class="row">
+                {% if followedNews is empty %}
+                    <p class="text-lg text-center hero">Aucune actualité disponible pour vous.</p>
+                {% else %}
+                    {% for new in followedNews %}
+                        <div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center">
+                            {% include "partials/_cardNews.html.twig" %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+{% endblock %}

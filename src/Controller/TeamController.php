@@ -10,13 +10,17 @@ use App\Repository\TeamRepository;
 use App\Service\PaginationService;
 use App\Repository\MatchesRepository;
 use App\Repository\RankingRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
+
+ 
     /**
      * Récupère toutes les équipess
      *
@@ -118,4 +122,34 @@ class TeamController extends AbstractController
             'lastNews' => $lastNews,
         ]);
     }
+    #[Route('/teams/{slug}/add-team-to-followed', name: 'add_team_to_followed')]
+    #[IsGranted('ROLE_USER')]
+    public function addTeamToFollowed(Request $request, EntityManagerInterface $manager, Team $team, TeamRepository $teamRepository): Response
+    {
+        $user = $this->getUser();
+        $team = $request->get('slug');
+        if ($team) {
+            $team = $teamRepository->findOneBy(['slug' => $team]);
+            $user->addFollowedTeam($team);
+            $manager->persist($user);
+            $manager->flush();
+        }
+        return $this->redirectToRoute('teams_show', ['slug' => $team->getSlug()]);
+    }
+    #[Route('/teams/{slug}/remove-team-from-followed', name: 'remove_team_from_followed')]
+    #[IsGranted('ROLE_USER')]
+    public function RemoveTeamFromFollowed(Request $request, EntityManagerInterface $manager, Team $team, TeamRepository $teamRepository): Response
+    {
+        $user = $this->getUser();
+        $team = $request->get('slug');
+        if ($team) {
+            $team = $teamRepository->findOneBy(['slug' => $team]);
+            $user->removeFollowedTeam($team);
+            $manager->persist($user);
+            $manager->flush();
+        }
+        return $this->redirectToRoute('teams_show', ['slug' => $team->getSlug()]);
+    }
+
+  
 }

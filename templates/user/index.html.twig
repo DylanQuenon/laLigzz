@@ -1,50 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}page de {{user.fullName}}{% endblock %}
+{% block title %}Page de {{ user.fullName }}{% endblock %}
 
 {% block body %}
-  <div class="slide text-white" id="userPage">
-  <div class="wrapper">
-    <div class="row align-items-center">
-        <div class="col-3 text-center">
-            {% if user.picture %}
-                <img src="/uploads/{{user.picture}}" alt="Avatar de {{user.fullName}}" class="avatar mb-3" style="width:80px; height:80px; object-fit:cover; border-radius:$radius-full;">
-            {% else %}
-                <img src="http://placehold.it/300x300" alt="Avatar de {{user.fullName}}" class="avatar mb-3">        
-            {% endif %}
-            {# <button type="button" class="btn btn-primary">
-                Annonce(s) <span class="badge badge-secondary">{{user.ads | length}}</span>
-            </button> #}
+<div class="slide text-white" id="userPage">
+    <div class="wrapper">
+
+        <!-- Profil de l'utilisateur -->
+        <div class="row align-items-center">
+            <div class="col-3 text-center">
+                {% if user.picture %}
+                    <img src="/uploads/{{ user.picture }}" alt="Avatar de {{ user.fullName }}" class="avatar mb-3" style="width:80px; height:80px; object-fit:cover; border-radius:$radius-full;">
+                {% else %}
+                    <img src="http://placehold.it/300x300" alt="Avatar de {{ user.fullName }}" class="avatar mb-3">        
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <h1>{{ user.fullName }}</h1>
+                {% if user is same as (app.user) %}
+                    <div class="mt-3">
+                        <a href="{{ path('account_profile') }}" class="btn btn-primary me-2 mb-2">Modifier mes informations</a>
+                        <a href="{{ path('account_password') }}" class="btn btn-primary me-2 mb-2">Modifier mon mot de passe</a>
+                        <a href="{{ path('account_modifimg') }}" class="btn btn-primary me-2 mb-2">Modifier mon avatar</a>
+                        <a href="{{ path('account_delimg') }}" class="btn btn-danger me-2 mb-2">Supprimer mon avatar</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-9">
-            <h1>{{user.fullName}}</h1>
-            {# test si le user de la page est égal au user connecté #}
-            {% if user is same as (app.user)%}
-                <div class="mt-3">
-                    <a href="{{path('account_profile')}}" class="btn btn-primary me-2 mb-2">Modifier mes informations</a>
-                    <a href="{{path('account_password')}}" class="btn btn-primary me-2 mb-2">Modifier mon mot de passe</a>
-                    <a href="{{path('account_modifimg')}}" class="btn btn-primary me-2 mb-2">Modifier mon avatar</a>
-                    <a href="{{path('account_delimg')}}" class="btn btn-danger me-2 mb-2">Supprimer mon avatar</a>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    {{user.description | raw | nl2br }}
-    <hr>
-  
-  </div>
-    {# <h2>Les équieps de {{user.fullName}}</h2>
-    {% if user.ads | length > 0 %}
+        {{ user.description | raw | nl2br }}
+        <hr>
+
+        <!-- Équipes suivies -->
+        <h2 class="mt-5">Équipes suivies</h2>
         <div class="row">
-            {% for ad in user.ads %}
-                {% include 'ad/_ad.html.twig' %}
+            {% for team in teamsFollow %}
+                <div class="col-3 text-center my-4">
+                    {% if team.logo %}
+                        <img src="/uploads/{{ team.logo }}" alt="{{ team.name }}" class="img-fluid" style="max-width: 100px;">
+                    {% else %}
+                        <img src="/images/defaultTeam.png" alt="Logo de {{ team.name }}" class="img-fluid" style="max-width: 100px;">
+                    {% endif %}
+                    <p class="text-md hero mt-2">{{ team.name }}</p>
+                    {% if user is same as (app.user)  %}
+                    <a href="{{ path('remove_team_from_followed_user', {'slug': team.slug}) }}" class="text-md hero btn btn-warning">Retirer des équipes suivies</a>
+                    {% endif %}
+                    
+                </div>
+            {% else %}
+                <div class="col-3 text-center mb-4">
+                    <p class="text-md mt-2">Cet utilisateur ne suit aucune équipe</p>
+                </div>
+                <!-- Ajoutez autant de logos par défaut que nécessaire -->
             {% endfor %}
         </div>
-    {% else %}
-        <div class="alert alert-warning">
-            <p><strong>{{user.fullName}}</strong> n'a pas encore d'annonce sur le site</p>
-        </div>
 
-    {% endif %} #}
-  </div>
+    </div>
+</div>
 {% endblock %}

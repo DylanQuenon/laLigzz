@@ -20,6 +20,8 @@
 			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink">
 				<a href="{{path('account_index')}}" class="dropdown-item">Mon compte</a>
 				<a href="{{path('account_profile')}}" class="dropdown-item">Modifier mon profil</a>
+				<a href="{{path('account_followed_news')}}" class="dropdown-item">Voir mes actus suivies</a>
+				<a href="{{path('account_followed_matches')}}" class="dropdown-item">Voir mes matchs suivis</a>
 				{% if is_granted('ROLE_REDACTEUR') or is_granted('ROLE_ADMIN') %}
         			<a href="{{ path('news_create') }}" class="dropdown-item">Ajouter un article</a>
     			{% endif %}

@@ -168,6 +168,13 @@ class PaginationService{
                     ->findBy([], $this->order, $this->limit, $offset);
     }
 
+    // fais la fonction setData pour pouvoir modifier ce que je pagine
+    public function setData(array $data): self
+    {
+        $this->data = $data;
+        return $this;
+    }
+
     /**
      * Permet de récupérer le nombre de page qui existe sur une entité particulière
      * @throws Exception si la propriété $entityClass n'est pas configurée
