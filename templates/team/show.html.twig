@@ -26,8 +26,11 @@
 							</div>
 						</div>
 						<div class="blockTeam_left_actions d-flex flex-wrap">
-							{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir les actus' } %}
-							<a href="#" class="hero games">Voir les matchs
+							{% include 'partials/_buttonLink.html.twig' with {
+								'url': path('news_team_show', {'slug': team.slug}),
+								'text': 'Voir les actus'
+							} %}
+							<a href="{{path('matches_team_show', {'slug': team.slug})}}" class="hero games">Voir les matchs
 								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="px" fill="#e6e6e6"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></svg>
 							</a>
 							<a href="#" class="text-md hero d-flex align-items-center justify-content-center followButton">
@@ -77,9 +80,7 @@
 												{% set resultClass = 'result draw' %}
 											{% endif %}
 										{% endif %}
-										<span
-											class="{{ resultClass }}"><!-- Afficher le résultat du match -->
-										</span>
+										<span class="{{ resultClass }}"><!-- Afficher le résultat du match --></span>
 									{% endfor %}
 								</p>
 							</div>
@@ -105,31 +106,31 @@
 
 						<div class="stats">
 							<p class="text-lg hero">Matchs joués:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.matchesPlayed }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.matchesPlayed | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Victoires:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.wins }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.wins | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Nuls:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.draws }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.draws | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Défaites:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.losses }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.losses | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Buts Pour:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.goalsFor }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.goalsFor | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Buts Contre:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.goalsAgainst }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.goalsAgainst | default(0) }}</span>
 						</div>
 						<div class="stats">
 							<p class="text-lg hero">Points:</p>
-							<span class="display-xs hero bold fw-bold">{{ ranking.points }}</span>
+							<span class="display-xs hero bold fw-bold">{{ ranking.points | default(0) }}</span>
 						</div>
 					</div>
 				</div>
@@ -155,15 +156,12 @@
 					{% for games in lastMatches %}
 						{% if loop.index <= 3 %}
 							<div class="swiper-slide">
-
 								{% include "partials/_cardMatches.html.twig" %}
 							</div>
 						{% endif %}
 					{% endfor %}
 
 				</div>
-
-
 			</div>
 		</div>
 	</div>
@@ -177,23 +175,18 @@
 		<div class="wrapper">
 			<div class="row">
 				{% for new in lastNews %}
-
 					<div class="col-md-4" data-aos="flip-left" data-aos-duration="700" data-aos-anchor-placement="top-center">
 						{% include "partials/_cardNews.html.twig" %}
 					</div>
-
-
 				{% endfor %}
 			</div>
 			<div class="d-flex justify-content-center" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="200">
 				{% include 'partials/_buttonLink.html.twig' with { 'url': '#', 'text': 'Voir leurs actualités' } %}
 			</div>
-
 		</div>
 	</div>
-
-
 {% endblock %}
+
 {% block javascripts %}
 	{{encore_entry_script_tags('sliderGames')}}
 {% endblock %}

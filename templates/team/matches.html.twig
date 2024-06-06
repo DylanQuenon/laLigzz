@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ team.name }} - Matches{% endblock %}
+
+{% block body %}
+    <div class="slide">
+        <div class="wrapper wrapperContainerTeam">
+            <h2 class="display-xl kizard">Les matches de {{team.name}}</h2>
+            <div class="row">
+                {% if games is empty %}
+                    <p class="text-lg text-center hero">Aucun match disponible pour cette équipe.</p>
+                {% else %}
+                    {% for match in games %}
+                        <div class="col-md-4">
+                            {% include "partials/_cardMatches.html.twig" %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

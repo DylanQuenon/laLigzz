@@ -158,3 +158,19 @@ html,body{
     width: 100%;
 
 }
+
+.wrapperContainerTeam{
+    padding: $spacing-9xl 0;
+    color: $color-secondary;
+    .row{
+    --bs-gutter-x: 0rem !important;
+    .col-md-4{
+        margin: 20px 0
+    }
+}
+    @include flexGap(column,$spacing-2xl);
+    h2{
+        color: $color-secondary;
+    }
+
+}

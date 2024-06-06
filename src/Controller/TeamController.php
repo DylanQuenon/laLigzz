@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\News;
 use App\Entity\Team;
 use App\Service\RankingService;
 use App\Repository\NewsRepository;
@@ -42,6 +43,27 @@ class TeamController extends AbstractController
         ]);
     }
 
+
+    #[Route("/teams/{slug}/news", name: "news_team_show")]
+    public function teamNews(Team $team, NewsRepository $news, TeamRepository $teamRepository): Response
+    {
+        $newsTeam= $team->getNews();
+
+        return $this->render("team/news.html.twig", [
+           'news'=>$newsTeam,
+           'team'=>$team
+        ]);
+    }
+    #[Route("/teams/{slug}/matches", name: "matches_team_show")]
+    public function teamMatches(Team $team, NewsRepository $news, TeamRepository $teamRepository): Response
+    {
+        $matchesTeam= $team->getMatches();
+
+        return $this->render("team/matches.html.twig", [
+           'games'=>$matchesTeam,
+           'team'=>$team
+        ]);
+    }
     /**
      * Récupère l'équipe individuellement
      *

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Repository\NewsRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,8 +60,4 @@ class AdminNewsController extends AbstractController
         
         return $this->redirectToRoute('admin_news_index');
     }
- 
-
-    
-    
 }
