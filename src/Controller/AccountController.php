@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\DeleteType;
 use App\Form\AccountType;
 use App\Entity\UserImgModify;
 use App\Entity\PasswordUpdate;
@@ -20,6 +21,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 
 class AccountController extends AbstractController
@@ -333,6 +335,82 @@ class AccountController extends AbstractController
         return $this->render("account/followedMatches.html.twig", [
             'followedMatches' => $followedMatches,
             'user' => $user
+        ]);
+    }
+
+     /**
+     * Delete account
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $hasher
+     * @param EntityManagerInterface $manager
+     * @param TokenStorageInterface $tokenStorage
+     * @return Response
+     */
+    #[Route("/account/delete", name: "account_delete")]
+    #[IsGranted('ROLE_USER')]
+    public function deleteAccount(Request $request, UserPasswordHasherInterface $hasher, EntityManagerInterface $manager, TokenStorageInterface $tokenStorage): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(DeleteType::class);
+
+        //if user not logged in -> redirect to login page
+        if (!$user) {
+
+            $this->addFlash(
+                'danger',
+                'Vous devez être connecté.'
+            );
+            return $this->redirectToRoute('account_login');
+        }
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $submittedEmail = $data['email'];
+            $submittedPassword = $data['password'];
+
+            //email address in db?
+            if ($user->getEmail() === $submittedEmail) {
+                $isPasswordValid = $hasher->isPasswordValid($user, $submittedPassword);
+
+                //password verify
+                if ($isPasswordValid) {
+
+                    $avatarFilename = $user->getPicture();
+
+                    //avatar deleted
+                    if ($avatarFilename) {
+                        $avatarFilePath = $this->getParameter('uploads_directory') . '/' . $avatarFilename;
+                        if (file_exists($avatarFilePath)) {
+                            unlink($avatarFilePath);
+                        }
+                    }
+
+                    //set connexion token to null
+                    $tokenStorage->setToken(null);
+                    //remove
+                    $manager->remove($user);
+                    $manager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        'Compte supprimé avec succès'
+                    );
+
+                    return $this->redirectToRoute('homepage');
+                }
+            }
+
+            $this->addFlash(
+                'danger',
+                'Email ou mot de passe incorrect'
+            );
+        }
+
+        return $this->render('account/delete.html.twig', [
+            'myForm' => $form->createView()
         ]);
     }
     
