@@ -174,3 +174,13 @@ html,body{
     }
 
 }
+
+#legalsMentions{
+    .wrapper{
+        padding: $spacing-9xl 0;
+        font-family: $font-family-hero;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2xl;
+    }
+}

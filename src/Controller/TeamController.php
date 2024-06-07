@@ -151,5 +151,29 @@ class TeamController extends AbstractController
         return $this->redirectToRoute('teams_show', ['slug' => $team->getSlug()]);
     }
 
+    #[Route('/teams/search/ajax', name: 'teams_search_ajax', methods: ['GET'])]
+    public function searchAjax(Request $request, TeamRepository $teamRepo): JsonResponse
+    {
+        $query = $request->query->get('query', '');
+
+        if (empty($query)) {
+            return new JsonResponse([]); // Renvoie un tableau vide si aucun terme
+        }
+
+        $results = $teamRepo->findByTitle($query)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        $jsonResults = array_map(function ($team) {
+            return [
+                'title' => $team->getName(),
+                'slug' => $team->getSlug(),
+            ];
+        }, $results);
+
+        return new JsonResponse($jsonResults);
+    }
+
   
 }

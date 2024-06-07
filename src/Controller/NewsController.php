@@ -25,6 +25,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NewsController extends AbstractController
 {
+
+    #[Route('/news/search/ajax', name: 'news_search_ajax', methods: ['GET'])]
+    public function searchAjax(Request $request, NewsRepository $newsRepo): JsonResponse
+    {
+        $query = $request->query->get('query', '');
+
+        if (empty($query)) {
+            return new JsonResponse([]); // Renvoie un tableau vide si aucun terme
+        }
+
+        $results = $newsRepo->findByNewsTitle($query)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
+        $jsonResults = array_map(function ($news) {
+            return [
+                'title' => $news->getTitle(),
+                'author' => $news->getAuthor()->getFullName(),
+                'slug' => $news->getSlug(),
+            ];
+        }, $results);
+
+        return new JsonResponse($jsonResults);
+    }
     /**
      * Affiche toutes les news
      *
@@ -297,6 +322,8 @@ class NewsController extends AbstractController
 
         return $this->redirectToRoute('account_index');
     }
+
+ 
 
     
 }

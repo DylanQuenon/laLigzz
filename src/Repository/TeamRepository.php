@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Team;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Team>
@@ -40,4 +41,11 @@ class TeamRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByTitle(string $term): QueryBuilder
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.name LIKE :term')
+            ->setParameter('term', '%' . $term . '%');
+    }
 }

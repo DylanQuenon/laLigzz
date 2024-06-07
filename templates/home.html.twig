@@ -4,11 +4,12 @@
 {% endblock %}
 
 {% block stylesheets %}
-{{encore_entry_link_tags('homeStyle')}}
+	{{encore_entry_link_tags('homeStyle')}}
 {% endblock %}
 
 {% block body %}
-	<div class="slide" id="home">
+	<div
+		class="slide" id="home">
 		{# JUMBOTRON AVEC CERCLES D IMAGES#}
 		<div class="wrapper">
 			<div class="container_home">
@@ -55,14 +56,25 @@
 					</p>
 				</div>
 
-				<a href="{{path('team_index')}}" class="text-md button_teams hero" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="500">Découvrez toutes les équipes
-					<i class="fa-solid fa-arrow-right-long"></i>
-				</a>
+				<div class="search-bar">
+					<form class="d-flex" id="search-form">
+						<div class="dropdown">
+							<input class="form-control" type="text" id="search-input" placeholder="Chercher des équipes..." data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center">
+							<i class="fa-solid fa-magnifying-glass"data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center"></i>
+							<div class="dropdown-menu" id="search-results" style="display: none;">
+								<ul class="list-unstyled p-3"></ul>
+							</div>
+						</div>
+					</form>
+				</div>
+
 
 			</div>
 
+
 		</div>
-		<div class="swiper "data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-duration="500" >
+		<div
+			class="swiper " data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-duration="500">
 			<!-- Additional required wrapper -->
 			<div class="swiper-wrapper">
 				{% for team in teams %}
@@ -72,9 +84,7 @@
 				{% endfor %}
 			</div>
 		</div>
-
 		<div class="wrapper">
-
 			<div class="controls_slider d-flex" data-aos="fade-left" data-aos-duration="500" data-aos-delay="500">
 				<div class="controls_slider_arrow arrow_prev">
 					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
@@ -82,10 +92,15 @@
 				<div class="controls_slider_arrow arrow_next">
 					<svg xmlns="http://www.w3.org/2000/svg" height="26px" viewbox="0 -960 960 960" width="26px" fill="#FF4B44"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
 				</div>
+			</div>
+			<div class="w-100 d-flex justify-content-center">
+				<a href="{{path('team_index')}}" style="width:max-content" class="text-md button_teams hero" data-aos="fade-left" data-aos-duration="500">Découvrez toutes les équipes
+					<i class="fa-solid fa-arrow-right-long"></i>
+				</a>
 
 			</div>
-
 		</div>
+
 	</div>
 
 	{# Bannière du classement#}
@@ -99,280 +114,303 @@
 					<a href="{{path('app_ranking')}}" class="text-lg hero discover">Voir tout le classement<i class="fa-solid fa-arrow-right-long"></i>
 					</a>
 				</div>
-				<div class="col-md-7 offset-md-1" >
-				<table class="ranking-table">
-					<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" > 
-						<tr>
-							<th class=""></th>
-							<th class=""></th>
-							<th class="criteres">MJ</th>
-							<th class="criteres">DB</th>
-							<th class="criteres">Pts</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for rank in ranking|slice(0, 5) %}
-						<tr class="result"data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
-							<td>
-								<span class="position">{{ loop.index }}</span>
-							</td>
-							<td class="stats team">
-								<div class="teamPic">
-									<img src="{{ '/uploads/' ~ rank.team.logo }}" alt="" style="max-height: 50px;">
-								</div>
-								<a href="{{ path('teams_show', { 'slug': rank.team.slug }) }}">{{ rank.team.name }}</a>
-
-								</td>
+				<div class="col-md-7 offset-md-1">
+					<table class="ranking-table">
+						<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center">
+							<tr>
+								<th class=""></th>
+								<th class=""></th>
+								<th class="criteres">MJ</th>
+								<th class="criteres">DB</th>
+								<th class="criteres">Pts</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for rank in ranking|slice(0, 5) %}
+								<tr class="result" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+									<td>
+										<span class="position">{{ loop.index }}</span>
+									</td>
+									<td class="stats team">
+										<div class="teamPic">
+											<img src="{{ '/uploads/' ~ rank.team.logo }}" alt="" style="max-height: 50px;">
+										</div>
+										<a href="{{ path('teams_show', { 'slug': rank.team.slug }) }}">{{ rank.team.name }}</a>
+									</td>
+								</tr>
 							</td>
 							<td class=" stats matchesPlayed">{{ rank.matchesPlayed }}</td>
 							<td class="stats goalDifference">{{ rank.goalsFor - rank.goalsAgainst }}</td>
 							<td class="stats points">{{ rank.points}}</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-					
-					
-					
-				</div>
+						</tbody>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-			</div>
 
+	</div>
+
+</div></div></div><div class="slide" id="presentation"><div class="wrapper">
+<div class="row">
+	<div class="col-md-5" id="presentation_pic" data-aos="flip-right" data-aos-anchor-placement="top-center">
+		<img src="/images/trophy.jpeg" alt="Célébration du titre de la liga 2022-2023" class="img-fluid trophy">
+		<p class="first-letter stratos">B
+			<span class="cloned stratos">B</span>
+		</p>
+	</div>
+	<div class="col-md-5 offset-md-1">
+		<div class="presentation_text" data-aos="fade-up-left" data-aos-anchor-placement="top-center" data-aos-duration="500">
+			<h3 class="display-2xl stratos text-uppercase">La Liga</h3>
+			<p class="text-lg hero">La Liga, symbole du football espagnol, attire les foules avec ses équipes emblématiques telles que le FC Barcelone et le Real Madrid. Chaque saison, ces géants du football s'affrontent dans des duels électrisants, offrant aux fans des moments de pur plaisir. Que vous soyez un fervent supporter ou simplement un amateur de beau jeu, La Liga vous promet des matchs palpitants où se mêlent talent, passion et suspense.</p>
 		</div>
 	</div>
 
-	<div class="slide" id="presentation">
-		<div class="wrapper">
-			<div class="row">
-				<div class="col-md-5" id="presentation_pic" data-aos="flip-right" data-aos-anchor-placement="top-center">
-					<img src="/images/trophy.jpeg" alt="Célébration du titre de la liga 2022-2023" class="img-fluid trophy">
-					<p class="first-letter stratos">B
-						<span class="cloned stratos">B</span>
-					</p>
-				</div>
-				<div class="col-md-5 offset-md-1">
-					<div class="presentation_text" data-aos="fade-up-left" data-aos-anchor-placement="top-center" data-aos-duration="500">
-						<h3 class="display-2xl stratos text-uppercase">La Liga</h3>
-						<p class="text-lg hero">La Liga, symbole du football espagnol, attire les foules avec ses équipes emblématiques telles que le FC Barcelone et le Real Madrid. Chaque saison, ces géants du football s'affrontent dans des duels électrisants, offrant aux fans des moments de pur plaisir. Que vous soyez un fervent supporter ou simplement un amateur de beau jeu, La Liga vous promet des matchs palpitants où se mêlent talent, passion et suspense.</p>
-					</div>
-				</div>
+</div>
 
+<div class="presentation_stats">
+	<div class="d-flex justify-content-center w-100">
+		<h3 class="display-xl stratos text-uppercase col-md-4 text-center" data-aos="zoom-in" data-aos-anchor-placement="center-center">la saison
+			<span>2023-2024</span>
+			en chiffres</h3>
+	</div>
+	<div class="row place-items-center">
+		<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500">
+			<div class="presentation_icon">
+				<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
 			</div>
-
-			<div class="presentation_stats">
-				<div class="d-flex justify-content-center w-100">
-					<h3 class="display-xl stratos text-uppercase col-md-4 text-center" data-aos="zoom-in" data-aos-anchor-placement="center-center">la saison
-						<span>2023-2024</span>
-						en chiffres</h3>
-				</div>
-				<div class="row place-items-center">
-					<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500">
-						<div class="presentation_icon">
-							<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
-						</div>
-						<div
-							class="numbers_stats display-xs stratos italic">
-							{# nombres de buts marqués#}
-							{{stats.allGoals is empty ? 0 : stats.allGoals}}
-							<span class="display-xs stratos italic">
-								Buts marques
-							</span>
-						</div>
-					</div>
-					<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="100">
-						<div class="presentation_icon">
-							<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
-						</div>
-						<div class="numbers_stats display-xs stratos italic">
-							{{stats.allGames is empty ? 0 : stats.allGames}}
-							<span class="display-xs stratos italic">
-								Matchs joues
-							</span>
-						</div>
-					</div>
-					<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">
-						<div class="presentation_icon">
-							<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
-						</div>
-						<div
-							class="numbers_stats display-xs stratos italic">
-							{# nombres de points marqués#}
-							{{stats.allPoints is empty ? 0 : stats.allPoints}}
-							<span class="display-xs stratos italic">
-								Points Marques
-							</span>
-						</div>
-					</div>
-				</div>
+			<div
+				class="numbers_stats display-xs stratos italic">
+				{# nombres de buts marqués#}
+				{{stats.allGoals is empty ? 0 : stats.allGoals}}
+				<span class="display-xs stratos italic">
+					Buts marques
+				</span>
 			</div>
-
-
 		</div>
-		<div class="lastGames">
-		{% include "partials/_lastGames.html.twig" %}
+		<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="100">
+			<div class="presentation_icon">
+				<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
+			</div>
+			<div class="numbers_stats display-xs stratos italic">
+				{{stats.allGames is empty ? 0 : stats.allGames}}
+				<span class="display-xs stratos italic">
+					Matchs joues
+				</span>
+			</div>
 		</div>
-		<div class="lastNews">
-		{% include "partials/_lastNews.html.twig" %}
-		</div>
-		<div class="countdownSaison">
-			<h3 class="display-lg stratos text-uppercase text-center my-5" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">La saison <span class="stroke">2024-2025 <br></span> debute dans </h3>
-			<div class="container-countdown ">
-				<section class="countdown-block" data-aos="zoom-in"  data-aos-duration="500" data-aos-delay="200">
-					<span class="days time-element">
-						<span class="top">00</span>
-						<span class="top-back">
-							<span>00</span>
-						</span>
-						<span class="bottom">00</span>
-						<span class="bottom-back">
-							<span>00</span>
-						</span>
-					</span>
-					<h2 class="subtitle">Jours</h2>
-				</section>
-
-				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="300">
-					<span class="hours time-element">
-						<span class="top">00</span>
-						<span class="top-back">
-							<span>00</span>
-						</span>
-						<span class="bottom">00</span>
-						<span class="bottom-back">
-							<span>00</span>
-						</span>
-					</span>
-					<h2 class="subtitle">Heures</h2>
-				</section>
-				
-				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="400">
-					<span class="minutes time-element">
-						<span class="top">00</span>
-						<span class="top-back">
-							<span>00</span>
-						</span>
-						<span class="bottom">00</span>
-						<span class="bottom-back">
-							<span>00</span>
-						</span>
-					</span>
-					<h2 class="subtitle">Minutes</h2>
-				</section>
-				
-				<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="500">
-					<span class="seconds time-element">
-						<span class="top">00</span>
-						<span class="top-back">
-							<span>00</span>
-						</span>
-						<span class="bottom">00</span>
-						<span class="bottom-back">
-							<span>00</span>
-						</span>
-					</span>
-					<h2 class="subtitle">Secondes</h2>
-				</section>
+		<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">
+			<div class="presentation_icon">
+				<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
+			</div>
+			<div
+				class="numbers_stats display-xs stratos italic">
+				{# nombres de points marqués#}
+				{{stats.allPoints is empty ? 0 : stats.allPoints}}
+				<span class="display-xs stratos italic">
+					Points Marques
+				</span>
 			</div>
 		</div>
 	</div>
+</div></div><div class="lastGames">
+{% include "partials/_lastGames.html.twig" %}</div><div class="lastNews">
+{% include "partials/_lastNews.html.twig" %}</div><div class="countdownSaison">
+<h3 class="display-lg stratos text-uppercase text-center my-5" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">La saison
+	<span class="stroke">2024-2025
+		<br></span>
+	debute dans
+</h3>
+<div class="container-countdown ">
+	<section class="countdown-block" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="200">
+		<span class="days time-element">
+			<span class="top">00</span>
+			<span class="top-back">
+				<span>00</span>
+			</span>
+			<span class="bottom">00</span>
+			<span class="bottom-back">
+				<span>00</span>
+			</span>
+		</span>
+		<h2 class="subtitle">Jours</h2>
+	</section>
+
+	<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="300">
+		<span class="hours time-element">
+			<span class="top">00</span>
+			<span class="top-back">
+				<span>00</span>
+			</span>
+			<span class="bottom">00</span>
+			<span class="bottom-back">
+				<span>00</span>
+			</span>
+		</span>
+		<h2 class="subtitle">Heures</h2>
+	</section>
+
+	<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="400">
+		<span class="minutes time-element">
+			<span class="top">00</span>
+			<span class="top-back">
+				<span>00</span>
+			</span>
+			<span class="bottom">00</span>
+			<span class="bottom-back">
+				<span>00</span>
+			</span>
+		</span>
+		<h2 class="subtitle">Minutes</h2>
+	</section>
+
+	<section class="countdown-block" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="500">
+		<span class="seconds time-element">
+			<span class="top">00</span>
+			<span class="top-back">
+				<span>00</span>
+			</span>
+			<span class="bottom">00</span>
+			<span class="bottom-back">
+				<span>00</span>
+			</span>
+		</span>
+		<h2 class="subtitle">Secondes</h2>
+	</section>
+</div></div></div>{% endblock %}{% block javascripts %}{{encore_entry_script_tags('sliderTeam')}}{{encore_entry_script_tags('home')}}<script>window.addEventListener("load", () => {
+const elDays = document.querySelector(".days");
+const elHours = document.querySelector(".hours");
+const elMinutes = document.querySelector(".minutes");
+const elSeconds = document.querySelector(".seconds");
+
+let timeLeft = {
+days: 0,
+hours: 0,
+minutes: 0,
+seconds: 0
+};
+
+let totalSeconds = 0;
+
+let futureDate = new Date("Augustus 16 21:00:00 2024");
+
+function init() {
+totalSeconds = Math.floor((futureDate - new Date()) / 1000);
+setTimeLeft();
+let interval = setInterval(() => {
+if (totalSeconds < 0) {
+clearInterval(interval);
+}
+countTime();
+}, 1000);
+}
+
+function countTime() {
+if (totalSeconds > 0) {
+-- timeLeft.seconds;
+if (timeLeft.minutes >= 0 && timeLeft.seconds < 0) {
+timeLeft.seconds = 59;
+-- timeLeft.minutes;
+if (timeLeft.hours >= 0 && timeLeft.minutes < 0) {
+timeLeft.minutes = 59;
+-- timeLeft.hours;
+if (timeLeft.days >= 0 && timeLeft.hours < 0) {
+timeLeft.hours = 23;
+-- timeLeft.days;
+}
+}
+}
+}
+-- totalSeconds;
+printTime();
+}
+
+function printTime() {
+animateFlip(elDays, timeLeft.days);
+animateFlip(elHours, timeLeft.hours);
+animateFlip(elMinutes, timeLeft.minutes);
+animateFlip(elSeconds, timeLeft.seconds);
+}
+
+function animateFlip(element, value) {
+const valueInDom = element.querySelector(".bottom-back").innerText;
+const currentValue = value < 10 ? "0" + value : "" + value;
+
+if (valueInDom === currentValue) 
+return;
 
 
-{% endblock %}
-{% block javascripts %}
-	{{encore_entry_script_tags('sliderTeam')}}
-	{{encore_entry_script_tags('home')}}
-	<script>
-	window.addEventListener("load", () => {
-	const elDays = document.querySelector(".days");
-	const elHours = document.querySelector(".hours");
-	const elMinutes = document.querySelector(".minutes");
-	const elSeconds = document.querySelector(".seconds");
+element.querySelector(".top-back span").innerText = currentValue;
+element.querySelector(".bottom-back span").innerText = currentValue;
 
-	let timeLeft = {
-		days: 0,
-		hours: 0,
-		minutes: 0,
-		seconds: 0
-	};
-
-	let totalSeconds = 0;
-
-	let futureDate = new Date("Augustus 16 21:00:00 2024");
-
-	function init() {
-		totalSeconds = Math.floor((futureDate - new Date()) / 1000);
-		setTimeLeft();
-		let interval = setInterval(() => {
-			if (totalSeconds < 0) {
-				clearInterval(interval);
-			}
-			countTime();
-		}, 1000);
-	}
-
-	function countTime() {
-		if (totalSeconds > 0) {
-			--timeLeft.seconds;
-			if (timeLeft.minutes >= 0 && timeLeft.seconds < 0) {
-				timeLeft.seconds = 59;
-				--timeLeft.minutes;
-				if (timeLeft.hours >= 0 && timeLeft.minutes < 0) {
-					timeLeft.minutes = 59;
-					--timeLeft.hours;
-					if (timeLeft.days >= 0 && timeLeft.hours < 0) {
-						timeLeft.hours = 23;
-						--timeLeft.days;
-					}
-				}
-			}
-		}
-		--totalSeconds;
-		printTime();
-	}
-
-	function printTime() {
-		animateFlip(elDays, timeLeft.days);
-		animateFlip(elHours, timeLeft.hours);
-		animateFlip(elMinutes, timeLeft.minutes);
-		animateFlip(elSeconds, timeLeft.seconds);
-	}
-
-	function animateFlip(element, value) {
-		const valueInDom = element.querySelector(".bottom-back").innerText;
-		const currentValue = value < 10 ? "0" + value : "" + value;
-
-		if (valueInDom === currentValue) return;
-
-		element.querySelector(".top-back span").innerText = currentValue;
-		element.querySelector(".bottom-back span").innerText = currentValue;
-
-		gsap.to(element.querySelector(".top"), 0.2, {
-			rotationX: "-180deg",
-			transformPerspective: 300,
-			ease: Quart.easeOut,
-			onComplete: function () {
-				element.querySelector(".top").innerText = currentValue;
-				element.querySelector(".bottom").innerText = currentValue;
-				gsap.set(element.querySelector(".top"), { rotationX: 0 });
-			}
-		});
-
-		gsap.to(element.querySelector(".top-back"), 0.7, {
-			rotationX: 0,
-			transformPerspective: 300,
-			ease: Quart.easeOut,
-			clearProps: "all"
-		});
-	}
-
-	function setTimeLeft() {
-		timeLeft.days = Math.floor(totalSeconds / (60 * 60 * 24));
-		timeLeft.hours = Math.floor((totalSeconds / (60 * 60)) % 24);
-		timeLeft.minutes = Math.floor((totalSeconds / 60) % 60);
-		timeLeft.seconds = Math.floor(totalSeconds % 60);
-	}
-
-	init();
+gsap.to(element.querySelector(".top"), 0.2, {
+rotationX: "-180deg",
+transformPerspective: 300,
+ease: Quart.easeOut,
+onComplete: function () {
+element.querySelector(".top").innerText = currentValue;
+element.querySelector(".bottom").innerText = currentValue;
+gsap.set(element.querySelector(".top"), {rotationX: 0});
+}
 });
-	</script>
+
+gsap.to(element.querySelector(".top-back"), 0.7, {
+rotationX: 0,
+transformPerspective: 300,
+ease: Quart.easeOut,
+clearProps: "all"
+});
+}
+
+function setTimeLeft() {
+timeLeft.days = Math.floor(totalSeconds / (60 * 60 * 24));
+timeLeft.hours = Math.floor((totalSeconds / (60 * 60)) % 24);
+timeLeft.minutes = Math.floor((totalSeconds / 60) % 60);
+timeLeft.seconds = Math.floor(totalSeconds % 60);
+}
+
+init();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('#search-input');
+    const searchResults = document.querySelector('#search-results');
+    const resultsList = searchResults.querySelector('ul');
+
+    searchInput.addEventListener('input', function () {
+        const query = this.value.trim();
+        if (query.length > 1) {
+            fetch(`/teams/search/ajax?query=${encodeURIComponent(query)}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    resultsList.innerHTML = '';
+                    if (data.length > 0) {
+                        searchResults.style.display = 'block';
+                        data.forEach((result) => {
+                            const item = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `/teams/${result.slug}`;
+                            const logoSrc = result.logo ? `/uploads/${result.logo}` : '/images/defaultTeam.png';
+                            link.innerHTML = `<img src="${logoSrc}" alt="${result.title}" style="width:20px; height:20px; object-fit:cover; margin-right: 10px;">${result.title}`;
+                            item.appendChild(link);
+                            resultsList.appendChild(item);
+                        });
+                    } else {
+                        searchResults.style.display = 'block';
+                        resultsList.innerHTML = '<li class="text-md hero text-white">Aucun résultat</li>';
+                    }
+                });
+        } else {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    searchInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            searchResults.style.display = 'none';
+        }, 200);
+    });
+});
+
+</script>
 {% endblock %}
