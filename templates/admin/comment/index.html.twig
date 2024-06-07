@@ -1,0 +1,57 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% block body %}
+    <div class="container-fluid full">
+        <h1 class="my-3">Administration des commentaires</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                    <th>Commentaire</th>
+                    <th>Note</th>
+                    <th>Actualités</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in pagination.data %}
+                    <tr>
+                        <td>{{comment.id}}</td>
+                        <td>{{comment.createdAt | date("d/m/Y")}}</td>
+                        <td>
+                            {% if comment.author.picture %}
+                                <img src="/uploads/{{comment.author.picture}}" alt="avatar de {{comment.author.fullName}}">
+                            {% else %}
+                                <img src="https://www.placehold.it/18x18" alt="avatar par défaut">
+                            {% endif %}
+                            {{comment.author.fullName}}
+                        </td>
+                        <td>{{comment.content}}</td>
+                        <td>
+                            <span class="badge bg-dark">{{comment.rating}}</span>
+                        </td>
+                        <td>{{comment.news.title}}</td>
+                        <td class="text-center">
+                              <a href="#deleteModal{{ comment.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ comment.id }}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                                                    {# Confirmation de suppression #}
+                            {% include 'partials/_delete_modal.html.twig' with {
+                                'modalId': 'deleteModal' ~ comment.id,
+                                'modalTitle': 'Supprimer le commentaire',
+                                'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+                                'modalAction': path('admin_comments_delete', {'id': comment.id})
+                                } 
+                            %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+         {{pagination.display()}}
+    </div>
+{% endblock %}

@@ -385,7 +385,7 @@ thead .criteres{
   font-family: $font-family-stratos;
   margin: 0 auto;
   .bloc-time {
-    float: left;    
+ 
     margin-right: 45px;    
     text-align: center;    
 
@@ -417,6 +417,7 @@ thead .criteres{
 .container-countdown {
   display: flex;
   flex-flow: row nowrap;
+  gap: $spacing-5xl
 }
 .countdown-block {
   align-items: center;
