@@ -15,6 +15,15 @@ class MatchesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Matches::class);
     }
+    
+    public function searchMatches(string $query): array
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.homeTeam LIKE :query OR t.awayTeam LIKE :query ')
+                    ->setParameter('query', '%' . $query . '%')
+                    ->getQuery()
+                    ->getResult();
+    }
 
     //    /**
     //     * @return Matches[] Returns an array of Matches objects

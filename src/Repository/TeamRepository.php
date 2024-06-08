@@ -48,4 +48,16 @@ class TeamRepository extends ServiceEntityRepository
             ->where('a.name LIKE :term')
             ->setParameter('term', '%' . $term . '%');
     }
+
+    // src/Repository/TeamRepository.php
+
+public function searchTeamsByName(string $query): array
+{
+    return $this->createQueryBuilder('t')
+                ->andWhere('t.name LIKE :query')
+                ->setParameter('query', '%' . $query . '%')
+                ->getQuery()
+                ->getResult();
+}
+
 }

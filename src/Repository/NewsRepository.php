@@ -70,5 +70,14 @@ class NewsRepository extends ServiceEntityRepository
             ->where('a.title LIKE :term ')  // Rechercher par titre ou nom de l'auteur
             ->setParameter('term', '%' . $term . '%');
     }
+    
+    public function searchNewsByName(string $query): array
+    {
+        return $this->createQueryBuilder('t')
+        ->andWhere('t.title LIKE :query ')
+                    ->setParameter('query', '%' . $query . '%')
+                    ->getQuery()
+                    ->getResult();
+    }
 
 }

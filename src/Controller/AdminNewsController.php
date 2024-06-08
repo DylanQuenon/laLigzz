@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Form\SearchTeamType;
 use App\Repository\NewsRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,17 +22,32 @@ class AdminNewsController extends AbstractController
      * @return Response
      */
     #[Route('/admin/news/{page<\d+>?1}', name: 'admin_news_index')]
-    public function index(PaginationService $pagination, int $page): Response
+    public function index(Request $request, PaginationService $pagination, NewsRepository $newsRepository, int $page): Response
     {
-        $pagination->setEntityClass(News::class) // App\Entity\Team string
-                ->setPage($page)
-                ->setLimit(9);
-       
-
+        $form = $this->createForm(SearchTeamType::class);
+        $form->handleRequest($request);
+        $isSubmitted = false;
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $term = $form->get('query')->getData();
+            $isSubmitted = true;
+            $news = $newsRepository->searchNewsByName($term);
+        } else {
+            $pagination->setEntityClass(News::class)
+                       ->setPage($page)
+                       ->setLimit(9);
+    
+            $news = $pagination->getData();
+        }
+    
         return $this->render('admin/news/index.html.twig', [
-           'pagination' => $pagination
+            'pagination' => $pagination,
+            'news' => $news,
+            'searchForm' => $form->createView(),
+            'isSubmitted' => $isSubmitted,
         ]);
     }
+    
        /**
      * Efface les news
      *

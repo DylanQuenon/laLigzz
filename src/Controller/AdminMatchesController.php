@@ -6,7 +6,9 @@ use App\Entity\Team;
 use App\Entity\Matches;
 use App\Entity\Ranking;
 use App\Form\MatchesType;
+use App\Form\SearchTeamType;
 use App\Service\PaginationService;
+use App\Repository\MatchesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,15 +26,29 @@ class AdminMatchesController extends AbstractController
      * @return Response
      */
     #[Route('/admin/matches/{page<\d+>?1}', name: 'admin_matches_index')]
-    public function index(PaginationService $pagination, int $page): Response
+    public function index(PaginationService $pagination, int $page, Request $request,MatchesRepository $repo): Response
     {
-        $pagination->setEntityClass(Matches::class) // App\Entity\Team string
-                ->setPage($page)
-                ->setLimit(9);
+        $form = $this->createForm(SearchTeamType::class);
+        $form->handleRequest($request);
+        $isSubmitted = false;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $form->get('query')->getData();
+            $isSubmitted=true;
+            $matches = $repo->searchMatches($query);
+        }else{
+            $pagination->setEntityClass(Matches::class) // App\Entity\Team string
+                    ->setPage($page)
+                    ->setLimit(9);
+            $matches = $pagination->getData();
+
+        }
        
 
         return $this->render('admin/matches/index.html.twig', [
-           'pagination' => $pagination
+           'pagination' => $pagination,
+           'games' => $matches,
+           'searchForm' => $form->createView(),
+           'isSubmitted'=>$isSubmitted
         ]);
     }
     /**

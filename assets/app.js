@@ -14,6 +14,7 @@ import './styles/pages/teams.scss';
 import './styles/pages/_sliderTeam.scss';
 // import './styles/partials/_cardNews.scss';
 import './styles/partials/header.scss';
+import './styles/partials/footer.scss';
 import './styles/partials/_cardTeam.scss';
 import 'bootstrap/dist/js/bootstrap.bundle';
 // import './js/sliderTeam.js'

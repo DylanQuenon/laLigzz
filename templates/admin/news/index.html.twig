@@ -6,11 +6,28 @@
 {% block body %}
 	<div class="container-fluid full">
 		<h1 class="my-2">Gestion des actualités</h1>
+
+		{# Formulaire de recherche #}
+		<div class="d-flex justify-content-center my-3">
+			<div class="col-md-6">
+				{{ form_start(searchForm) }}
+				<div class="input-group">
+					{{ form_widget(searchForm.query, {'attr': {'class': 'form-control'}}) }}
+					<div class="input-group-append  mx-4">
+						<button type="submit" class="btn btn-primary">Rechercher</button>
+					</div>
+				</div>
+				{{ form_end(searchForm) }}
+			</div>
+		</div>
 		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>Id</th>
 					<th>Titre</th>
+					<th>Subtitle</th>
+					<th class="text-center">Auteur</th>
+					<th class="text-center">Note moyenne</th>
 					<th>Image</th>
 					<th class="text-center">Description</th>
 					<th class="text-center">Date</th>
@@ -18,10 +35,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for news in pagination.data %}
+				{% for news in news %}
 					<tr>
 						<td>{{news.id}}</td>
 						<td>{{news.title}}</td>
+						<td>{{news.subtitle}}</td>
+						<td class="text-center">{{news.author.fullName}}</td>
+						<td class="text-center">
+							{% include "partials/rating.html.twig" with {'rating': news.avgRatings} %}
+						</td>
 						<td><img src="/uploads/{{news.cover}}" alt="" style="max-width: 30px;"></td>
 						<td>{{ news.text|length > 50 ? news.text|slice(0, 50) ~ '...' : news.text }}</td>
 						<td class="text-center">{{news.createdAt | date("d-m-Y")}}</td>
@@ -31,7 +53,7 @@
 								<i class="fas fa-trash"></i>
 							</a>
 							{# fais la confirmation de suppresion #}
-						{% include 'partials/_delete_modal.html.twig' with {
+							{% include 'partials/_delete_modal.html.twig' with {
     'modalId': 'deleteModal' ~ news.slug,
     'modalTitle': 'Supprimer le match',
     'modalMessage': 'Êtes-vous sûr de vouloir supprimer cette news ?',
@@ -45,7 +67,9 @@
 			</tbody>
 		</table>
 		{# pagination #}
-		{{pagination.display()}}
+		{% if not isSubmitted %}
+			{{ pagination.display() }}
+		{% endif %}
 
 	</div>
 {% endblock %}

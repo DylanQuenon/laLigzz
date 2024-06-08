@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\TeamType;
+use App\Form\SearchTeamType;
 use Doctrine\ORM\EntityManager;
+use App\Repository\UserRepository;
 use App\Service\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,14 +26,28 @@ class AdminUserController extends AbstractController
      * @return Response
      */
     #[Route('/admin/users/{page<\d+>?1}', name: 'admin_users_index')]
-    public function index(PaginationService $pagination, int $page): Response
+    public function index(Request $request, PaginationService $pagination, UserRepository $repo, int $page): Response
     {
-        $pagination->setEntityClass(User::class) // App\Entity\Team string
-                ->setPage($page)
-                ->setLimit(10);
+        $form = $this->createForm(SearchTeamType::class);
+        $form->handleRequest($request);
+        $isSubmitted=false;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $form->get('query')->getData();
+            $isSubmitted=true;
+            $users = $repo->searchUserByName($query);
+        } else {
+            $pagination->setEntityClass(User::class)
+                       ->setPage($page)
+                       ->setLimit(10);
+            $users = $pagination->getData();
+        }
     
          return $this->render('admin/user/index.html.twig', [
            'pagination' => $pagination,
+           'users' => $users,
+           'searchForm' => $form->createView(),
+           'isSubmitted'=>$isSubmitted
           
         ]);
     }

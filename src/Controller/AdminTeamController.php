@@ -8,6 +8,7 @@ use App\Form\TeamType;
 use App\Entity\Matches;
 use App\Entity\Ranking;
 use App\Form\TeamEditType;
+use App\Form\SearchTeamType;
 use App\Repository\TeamRepository;
 use App\Service\PaginationService;
 use App\Service\FileUploaderService;
@@ -29,18 +30,35 @@ class AdminTeamController extends AbstractController
      * @param integer $page
      * @return Response
      */
-    #[Route('/admin/teams/{page<\d+>?1}', name: 'admin_teams_index')]
-    public function index(PaginationService $pagination, int $page): Response
-    {
-        $pagination->setEntityClass(Team::class) // App\Entity\Team string
-                ->setPage($page)
-                ->setLimit(9);
-       
+// src/Controller/Admin/TeamController.php
 
-        return $this->render('admin/team/index.html.twig', [
-           'pagination' => $pagination
-        ]);
+#[Route('/admin/teams/{page<\d+>?1}', name: 'admin_teams_index')]
+public function index(Request $request, PaginationService $pagination, TeamRepository $teamRepository, int $page): Response
+{
+    $form = $this->createForm(SearchTeamType::class);
+    $form->handleRequest($request);
+    $isSubmited=false;
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $query = $form->get('query')->getData();
+        $isSubmited=true;
+        $teams = $teamRepository->searchTeamsByName($query);
+    } else {
+        $pagination->setEntityClass(Team::class)
+                   ->setPage($page)
+                   ->setLimit(9);
+
+        $teams = $pagination->getData();
     }
+
+    return $this->render('admin/team/index.html.twig', [
+        'pagination' => $pagination,
+        'teams' => $teams,
+        'searchForm' => $form->createView(),
+        'isSubmitted'=>$isSubmited
+    ]);
+}
+
 
     /**
      * Permet d'ajouter une équipe

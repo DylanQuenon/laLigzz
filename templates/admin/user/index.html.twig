@@ -6,6 +6,19 @@
 
     <div class="container-fluid full">
         <h1 class="my-2">Gestion des utilisateurs</h1>
+        	{# Formulaire de recherche #}
+		<div class="d-flex justify-content-center my-3">
+			<div class="col-md-6">
+				{{ form_start(searchForm) }}
+				<div class="input-group">
+					{{ form_widget(searchForm.query, {'attr': {'class': 'form-control'}}) }}
+					<div class="input-group-append  mx-4">
+						<button type="submit" class="btn btn-primary">Rechercher</button>
+					</div>
+				</div>
+				{{ form_end(searchForm) }}
+			</div>
+		</div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -17,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for user in pagination.data %}
+                {% for user in users %}
                     <tr>
                         <td>{{ user.id }}</td>
                         <td>{{ user.fullName }}</td>
@@ -29,14 +42,16 @@
                          {% endfor %}
                         </td>
                         <td class="text-center">
-                           <a href="{{path("admin_users_edit",{"id":user.id})}}" class="btn btn-warning">Modifier les rôles</a>
+                           <a href="{{path("admin_users_edit",{"id":user.id})}}" class="btn btn-warning"><i class="fa-solid fa-list-check"></i> Modifier les rôles</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
         {# pagination #}
-        {{ pagination.display() }}
+     		{% if not isSubmitted %}
+			{{ pagination.display() }}
+		{% endif %}
     </div>
 
 

@@ -1,0 +1,93 @@
+@import '../variables/variables.scss';
+#footer{
+    
+    color:$color-secondary;
+    padding-top: 10px;
+    border-top: solid 5px $color-tertiary;
+    font-size: 14px;
+    min-height: 50px;
+    font-family: $font-family-hero;
+    background-color: #3d3d3d;
+  
+    .footer_container{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: start;
+        justify-content: space-between;
+        width: 85%;
+        margin: 0 auto;
+    }
+    #footer1{
+        padding: 20px 0;
+        width: 100%;
+      
+        img{
+           height: 60px;
+           margin-right: 4%;
+        }
+        #footertext{
+            display: flex;
+            width: 35%;
+            justify-content: space-between;
+            line-height: 18px;
+            @media all and (max-width: 992px)
+            {  
+                width: 100%;
+                margin: 20px;
+            }
+        }
+        #contact-footer,#mentions_legales{
+         a{
+            cursor: pointer;
+            margin-top: 5px;
+            font-family: $font-family-hero;
+            text-decoration: none;
+            color: $color-secondary;
+         }
+         h4{
+            font-size: 20px;
+            font-weight: normal;
+            font-family: $font-family-stratos;
+            text-transform: uppercase;
+         }
+            
+        }
+        .reseaux{
+            display: flex;
+            a{
+                text-decoration: none;
+                color: $color-tertiary;
+                font-size: 24px;
+                margin: 0 15px;
+            }
+            @media all and (max-width: 768px)
+            {
+                width: 100%;
+                justify-content: space-between;
+                order: -5;
+                margin: 20px;
+         
+            
+            }
+        }
+    }
+    #footer2{
+        padding: 15px 0;
+        background-color: #252525b7;
+        a{
+            text-decoration: none;
+            color: $color-secondary;
+            font-family: $font-family-hero;
+            font-size: $text-font-size-sm;
+        }
+        span{
+            color: $color-tertiary;
+          
+        }
+        @media all and (max-width: 992px)
+        { 
+            display: flex;
+            order: -4;
+        }
+    }
+}
