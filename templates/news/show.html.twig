@@ -28,13 +28,19 @@
 								<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer la news</button>
 							</div>
 						{% endif %}
-						<div>
+						<div class="d-flex flex-column gap-2">
+
 							<p class="text-xl stratos text-uppercase">{{news.subtitle}}
 							</p>
-							<p class="text-sm hero  text-decoration-underline link-offset-3">Temps de lecture estimé :
-								<span class="text-sm hero fw-bold">{{ (news.text | split(' ') | length / 200) | round(0, 'common') }}
-									minutes</span>
-							</p>
+																				<p class="text-sm hero d-flex align-items-center">
+    <i class="fas fa-stopwatch me-2"></i>
+    <span class="text-sm hero fw-bold ms-1">
+        {{ ((news.text | split(' ') | length / 200) | round(0, 'ceil')) }} min
+    </span>
+</p>
+
+
+
 
 						</div>
 						<p class="content_text text-md hero">{{ news.text | striptags | nl2br | raw }}</p>
@@ -77,37 +83,47 @@
 						/ 5 )</span>
 				</h2>
 				<hr>
+
 				{% if news.comments | length > 0 %}
-					{% for comment in news.comments %}
-						<div class="cardComments col-md-7 my-5">
-							<div class="headingComment d-flex justify-content-between align-items-center">
-								<p class="text-md hero fw-bold  align-items-center">{{comment.author.fullName}}
-									<span class="fw-normal">
-										a dit le
-										<span class="fw-bold">{{comment.createdAt | date('d-m-Y')}}</span>
-									</span>
-								</p>
-								{% include "partials/rating.html.twig" with {'rating': comment.rating} %}
-							</div>
-							<div class="contentCard d-flex gap-5 text-md hero">
-								{{comment.content | nl2br | raw}}
-								{% if comment.author.picture %}
-									<img src="/uploads/{{comment.author.picture}}" alt="Photo de profil de {{comment.author.fullName}}" class="img-fluid newsPP" width="50px" height="50px">
-								{% endif %}
-								{% if app.user and (app.user == comment.author or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR')) %}
-									<button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteModalComment">Supprimer le commentaire</button>
-								{% endif %}
-							</div>
+				<div class="">
+    {% for comment in news.comments %}
+        <div class="cardComments col-md-7 my-5">
+            <div class="headingComment d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    {% if comment.author.picture %}
+                        <img src="/uploads/{{ comment.author.picture }}" alt="Photo de profil de {{ comment.author.fullName }}" class="mx-2" width="50px" height="50px" style="border-radius:50% 50%; object-fit:cover;">
+                    {% endif %}
+                    <p class="text-md hero fw-bold mb-0">{{ comment.author.fullName }}
+                        <span class="fw-normal">
+                            a dit le
+                            <span class="fw-bold">{{ comment.createdAt | date('d-m-Y') }}</span>
+                        </span>
+                    </p>
+                </div>
+                {% include "partials/rating.html.twig" with {'rating': comment.rating} %}
+            </div>
+
+            <div class="contentCard d-flex gap-5 text-md hero">
+                {{ comment.content | nl2br | raw }}
+            </div>
+
+            {% if app.user and (app.user == comment.author or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR')) %}
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger m-4" data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{ comment.id }}">Supprimer le commentaire</button>
+                </div>
+            {% endif %}
+        </div>
+
+        {% include 'partials/_delete_modal.html.twig' with {
+            'modalId': 'deleteCommentModal' ~ comment.id,
+            'modalTitle': 'Supprimer le commentaire',
+            'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+            'modalAction': path('comment_delete', {'id': comment.id})
+        } %}
+    {% endfor %}
+</div>
 
 
-						</div>
-						{% include 'partials/_delete_modal.html.twig' with {
-							'modalId': 'deleteCommentModal' ~ comment.id,
-							'modalTitle': 'Supprimer le commentaire',
-							'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
-							'modalAction': path('comment_delete', {'id': comment.id})
-						} %}
-					{% endfor %}
 				{% else %}
 					<p class="text-md hero my-5">Cette actualité n'a pas encore reçu de commentaire...Soyez le premier !</p>
 				{% endif %}

@@ -47,6 +47,9 @@
   position: relative;
   padding-left: 30px;
 }
+.search-bar{
+  z-index: 20;
+}
   #search-form{
     i{
       position: absolute;

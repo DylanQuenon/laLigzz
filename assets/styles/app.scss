@@ -13,6 +13,11 @@ html,body{
     min-height: 100vh;
     width: 100%;
     background-color: $color-primary;
+    @media all and (max-width: 1200px) {
+        overflow: hidden !important;
+      min-height: auto;
+      }
+    
 }
 .modal-content button:first-child {
     background-color: none !important;
@@ -107,6 +112,7 @@ html,body{
 }
 .rating i{
     color: goldenrod;
+    cursor: pointer;
 }
 
 
@@ -183,4 +189,7 @@ html,body{
         flex-direction: column;
         gap: $spacing-2xl;
     }
+}
+.modal-dialog{
+    color: $color-primary !important;
 }

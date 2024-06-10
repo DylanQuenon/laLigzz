@@ -108,7 +108,7 @@ thead .criteres{
     font-family: $font-family-stratos;
     border: solid 1px $color-tertiary;
 }
-@media all and (max-width: 768px) {
+@media all and (max-width: 900px) {
     .ranking-table th.hidden,
     .ranking-table td.hidden {
         display: none;
@@ -116,9 +116,10 @@ thead .criteres{
     .ranking-table td,th {
         font-size: $text-font-size-md;
     }
-    #ranking .wrapper{
-        width: 95% !important;
+    #ranking .cardNews{
+        width: 100% !important;
     }
+  
     #ranking h2{
         width: 100% !important;
     }

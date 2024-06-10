@@ -1,11 +1,15 @@
 @import "../variables/variables.scss";
 #home {
   position: relative;
-  .home_wave {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
+
+    @media all and (max-width: 1200px) and (min-width:1500px) {
+      .home_wave  {
+        position: absolute;
+        bottom: -1px;
+      }
+  
+    }
+
   @include background("../../../public/images/background/backgroundHome.webp");
   .container_home {
     padding: $spacing-9xl 0;
@@ -13,11 +17,11 @@
       .left {
         @include flexGap(column, $spacing-4xl);
 
-        @media all and (max-width: 798px) {
+        @media all and (max-width: 992px) {
           order: 2;
         }
       }
-      @media all and (max-width: 798px) {
+      @media all and (max-width: 992px) {
         display: flex;
         flex-direction: column;
         gap: $spacing-8xl;
@@ -43,7 +47,7 @@
 }
 #right {
   // position: relative;
-  @media all and (max-width: 798px) {
+  @media all and (max-width: 992px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,7 +64,7 @@
     align-items: center;
     position: relative;
     justify-content: center;
-    @media all and (max-width: 798px) {
+    @media all and (max-width: 992px) {
       width: 200px;
       height: 200px;
     }
@@ -68,7 +72,7 @@
       display: block;
       height: 600px;
       z-index: 5;
-      @media all and (max-width: 798px) {
+      @media all and (max-width: 992px) {
         height: 350px;
       }
     }
@@ -101,7 +105,7 @@
   transform: translateX(-74%) rotate(-90deg);
   position: relative;
   border-bottom: solid 2px $color-secondary;
-  @media all and (max-width: 798px) {
+  @media all and (max-width: 992px) {
     display: none;
   }
 }
@@ -181,6 +185,7 @@
   padding: $spacing-6xl 0;
   background-color: $color-tertiary;
   width: 100%;
+  overflow: hidden;
   .col-md-4 {
     @include flexGap(column, $spacing-4xl);
   }
@@ -212,7 +217,7 @@
   color: $color-secondary;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden !important;
 
   padding: $spacing-9xl 0;
   .presentation_text {

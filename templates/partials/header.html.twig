@@ -11,7 +11,7 @@
 
 	{% if app.user %}
 
-		<li class="nav-item dropdown">
+		<li class="nav-item dropdown" id="navLogged">
 			<a
 				href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false" id="accountDropdownLink">
 				{{app.user.fullName}}
@@ -27,7 +27,7 @@
     			{% endif %}
     
 				<div class="dropdown-divider"></div>
-				<a href="{{path('account_logout')}}" class="dropdown-item text-danger">Déconnexion</a>
+				<a href="{{path('account_logout')}}" class="dropdown-item deco text-danger">Déconnexion</a>
 			</div>
 
 

@@ -23,6 +23,9 @@
     &:focus{
         box-shadow: none;
         outline: none;
+        background-color: $color-secondary;
+        color: $color-tertiary !important;
+
     }
 
 }

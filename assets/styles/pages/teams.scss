@@ -1,6 +1,7 @@
 @import '../variables/variables.scss';
 #teamsPage{
     color: $color-secondary;
+    min-height: 100vh;
     .wrapper{
         padding: $spacing-9xl 0;
         .container_teamsPage{

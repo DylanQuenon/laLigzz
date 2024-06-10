@@ -17,8 +17,7 @@
         gap: $spacing-2xl;
         @media all and (max-width:760px) {
             width: 80%;
-            font-size: $text-font-size-lg !important;
-            
+            font-size: $text-font-size-lg !important;  
         }
         h5{
             width: 85%;
@@ -151,7 +150,7 @@
     display: flex;
     flex-direction: column;
     gap: $spacing-2xl;
-    height: 200px;
+    min-height: 200px;
     border: solid 3px $color-tertiary;
     overflow: hidden;
     .headingComment{

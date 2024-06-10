@@ -314,13 +314,13 @@ class NewsController extends AbstractController
     public function deleteComment(Comment $comment, EntityManagerInterface $manager): Response
     {
         // Vérifier si l'utilisateur connecté est l'auteur du commentaire
-      
+        $news = $comment->getNews();
         $manager->remove($comment);
         $manager->flush();
     
         $this->addFlash('success', "Le commentaire a été effacé avec succès");
 
-        return $this->redirectToRoute('account_index');
+        return $this->redirectToRoute('news_show', ['slug' => $news->getSlug()]);
     }
 
  
