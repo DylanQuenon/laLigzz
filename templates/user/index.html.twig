@@ -3,58 +3,144 @@
 {% block title %}Page de
 	{{ user.fullName }}
 {% endblock %}
+{% block stylesheets %}
+	{{encore_entry_link_tags('accountStyle')}}
+{% endblock %}
 
 {% block body %}
-	<div class="bg-light py-5" id="userPage">
-		<div
-			class="container">
-			<!-- Profil de l'utilisateur -->
-			<div class="row align-items-center mb-5">
-				<div class="col-md-3 text-center">
-					{% if user.picture %}
-						<img src="/uploads/{{ user.picture }}" alt="Avatar de {{ user.fullName }}" class="avatar mb-3 rounded-circle" style="width:150px; height:150px; object-fit:cover; border: 5px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-					{% else %}
-						<img src="http://placehold.it/150x150" alt="Avatar de {{ user.fullName }}" class="avatar mb-3 rounded-circle" style="width:150px; height:150px; object-fit:cover; border: 5px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-					{% endif %}
+	<div class="slide" id="userPage">
+		<div class="heading">
+			<div class="wrapper">
+				<div class="heading__infos row ">
+					<div class="heading__infos__picture col-md-2">
+						{% if user.picture %}
+							<img src="/uploads/{{user.picture}}" alt="Avatar de {{user.fullName}}" class="avatar">
+						{% else %}
+							<img src="http://placehold.it/128x128" class="avatar" alt="Avatar de {{ user.fullName }}">
+						{% endif %}
+						{% if user is same as (app.user) %}
+							<a href="{{path('account_modifimg')}}" class="heading__infos__editAvatar">
+								<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960" width="24px" fill="#ff4b44"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg>
+							</a>
+
+						{% endif %}
+					</div>
+
+					<div class="heading__infos__name col-md-6 d-flex flex-wrap">
+						<div>
+							<div class="heading__infos__fullname">
+								<h4 class="display-md hero">Profil de
+									<span class="fullname bold">
+										{{user.fullName}}</span>
+								</h4>
+							</div>
+
+
+							<div class="heading__infos__roles">
+
+								{% if 'ROLE_REDACTEUR' in user.roles %}
+									<span class="badge text-md hero bg-dark">Rédacteur</span>
+								{% elseif 'ROLE_MODERATEUR' in user.roles %}
+									<span class="badge text-md hero bg-dark">Modérateur</span>
+								{% endif %}
+							</div>
+						</div>
+
+						{% if user is same as (app.user) %}
+							<a href="{{path('account_delete')}}" class="deleteAccount text-md hero">Supprimer votre compte</a>
+
+
+						{% endif %}
+
+					</div>
 				</div>
-				<div class="col-md-9">
-					<h1 class="display-4 mb-4">{{ user.fullName }}</h1>
+				<div class="heading__actions row col-md-6">
 					{% if user is same as (app.user) %}
-						<div class="mt-4">
-							<a href="{{ path('account_profile') }}" class="btn btn-primary me-2 mb-2">Modifier mes informations</a>
-							<a href="{{ path('account_password') }}" class="btn btn-primary me-2 mb-2">Modifier mon mot de passe</a>
-							<a href="{{ path('account_modifimg') }}" class="btn btn-primary me-2 mb-2">Modifier mon avatar</a>
-							<a href="{{ path('account_delimg') }}" class="btn btn-warning me-2 mb-2">Supprimer mon avatar</a>
-							<a href="{{ path('account_delete') }}" class="btn btn-danger me-2 mb-2">Supprimer mon compte</a>
+						<div class="mt-4 d-flex flex-wrap">
+							<a href="{{ path('account_profile') }}" class="btnAccount btnBlack me-2 mb-2">Modifier mon profil
+								<i class="fa-solid fa-pen-to-square"></i>
+							</a>
+							<a href="{{ path('account_delimg') }}" class="btnAccount btnWhite me-2 mb-2">Supprimer mon avatar<i class="fa-solid fa-user-tie"></i>
+							</a>
+							<a href="{{ path('account_password') }}" class="btnAccount btnBlack me-2 mb-2">Modifier mon mot de passe
+								<i class="fa-solid fa-key"></i>
+							</a>
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDACTEUR') %}
+								<a href="{{ path('news_create') }}" class="btnAccount btnWhite me-2 mb-2">Ajouter un article
+									<i class="fa-solid fa-plus"></i>
+								</a>
+							{% endif %}
+
 						</div>
 					{% endif %}
-				</div>
-			</div>
-			<div class="mb-5">
-				<h2 class="h4 mb-3">Description</h2>
-				<p class="lead">{{ user.description | raw | nl2br }}</p>
-			</div>
-			<hr>
 
-			<!-- Équipes suivies -->
-			<div class="mt-5">
-				<h2 class="h4 mb-4">Équipes suivies</h2>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="account__content">
+			<div class="wrapper">
+				<div class="row">
+					<div class="col-md-5">
+						<h2 class="display-md hero">Description du profil</h2>
+						<p class="text-md hero fw-bold">{{user.introduction }}</p>
+						<p class="text-md hero descri">{{user.description | raw | nl2br | striptags}}</p>
+
+					</div>
+					<div class="col-md-6 offset-md-1 cardRedac">
+						<h3 class="display-md hero">Découvrez nos rédacteurs</h3>
+						{% for redac in redacteurs %}
+							<div class="redacteur d-flex flex-wrap">
+								<div class="redac__picture">
+									{% if redac.picture %}
+										<img src="/uploads/{{redac.picture}}" alt="Avatar de {{redac.fullName}}" class="avatar">
+									{% else %}
+										<img src="http://placehold.it/76x76" class="avatar" alt="Avatar de {{ redac.fullName }}">
+									{% endif %}
+								</div>
+								<div class="redac__info">
+									<a href="{{path('user_show', {'slug': redac.slug })}}" class="text-md hero fw-bold">{{redac.fullName}}</a>
+
+									<p class="text-md hero">
+										{{redac.description |raw | nl2br | striptags |slice(0, 50) ~ '...' }}
+									</p>
+								</div>
+								<hr>
+
+							</div>
+
+						{% endfor %}
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="teamFollowed">
+			<div class="wrapper">
+				<h2 class="display-md hero">Equipe(s) suivie(s)</h2>
 				<div class="row">
 					{% for team in teamsFollow %}
 						<div class="col-md-3 text-center my-4">
-							<div class="card h-100">
-								{% if team.logo %}
-									<img src="/uploads/{{ team.logo }}" alt="{{ team.name }}" class="card-img-top" style="max-height: 150px; object-fit: contain;">
-								{% else %}
-									<img src="/images/defaultTeam.png" alt="Logo de {{ team.name }}" class="card-img-top" style="max-height: 150px; object-fit: contain;">
-								{% endif %}
-								<div class="card-body">
-									<h5 class="card-title">{{ team.name }}</h5>
-									{% if user is same as (app.user) %}
-										<a href="{{ path('remove_team_from_followed_user', {'slug': team.slug}) }}" class="btn btn-warning btn-sm">Retirer des équipes suivies</a>
+							<a href="{{ path('teams_show', {'slug': team.slug}) }}" class="linkToTeam">
+								<div class="cardFollow h-100">
+									{% if team.logo %}
+										<img src="/uploads/{{ team.logo }}" alt="{{ team.name }}" class="card-img-top" style="max-height: 150px; object-fit: contain;">
+									{% else %}
+										<img src="/images/defaultTeam.png" alt="Logo de {{ team.name }}" class="card-img-top" style="max-height: 150px; object-fit: contain;">
 									{% endif %}
+									<div class="cardFollow-body">
+										<h5 class="cardFollow-title">{{ team.name }}</h5>
+										{% if user is same as (app.user) %}
+											<a href="{{ path('remove_team_from_followed_user', {'slug': team.slug}) }}" class="btn btn-warning btnRemove btn-sm">Retirer des équipes suivies</a>
+										{% endif %}
+									</div>
 								</div>
-							</div>
+
+							</a>
 						</div>
 					{% else %}
 						<div class="col-12 text-center mb-4">
@@ -64,5 +150,37 @@
 				</div>
 			</div>
 		</div>
+
+		{% if 'ROLE_REDACTEUR' in user.roles %}
+			<div class="lastNewsRedac">
+				<div class="wrapper">
+					<h2 class="display-md hero">Dernières actualités écrites par
+						{{ user.fullName }}</h2>
+					{% if latestArticles is not empty %}
+						<div class="container_lastNewsRedac">
+							<div class="row">
+								{% for new in latestArticles %}
+									<div class="col-md-4">
+										{% include "partials/_cardNews.html.twig" %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="w-100 d-flex justify-content-center">
+							{% include "partials/_buttonLink.html.twig" with {
+                        'text': 'Voir les actualités',
+                        'url': path('news_index')
+                    } %}
+						{% else %}
+							<p class="text-md hero">Aucun article écrit par
+								{{ user.fullName }}</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+
+		{% endif %}
+
 	</div>
 {% endblock %}

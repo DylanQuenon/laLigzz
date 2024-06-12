@@ -94,6 +94,15 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    @media all and (max-width:768px) {
+        flex-direction: column;
+        a{
+            width: max-content;
+            margin: 5px 0;
+        }
+        
+    }
+
     a{
         padding: 8px 16px;
         display: flex;

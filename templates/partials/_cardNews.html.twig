@@ -26,7 +26,7 @@
 			<br>
 
 			{% for n in n %}
-				<span class="card-title badge badge_news_teams text-uppercase">{{n.name}}</span>
+				<a href="{{path('teams_show', {'slug': n.slug})}}" class="card-title badge badge_news_teams text-uppercase">{{n.name}}</a>
 			{% endfor %}
 			<p class="card-title text-xl stratos text-uppercase">{{new.title}}</p>
 			<p class="card-title text-xs hero text-uppercase">{{new.createdAt | date('d-m-Y')}}</p>

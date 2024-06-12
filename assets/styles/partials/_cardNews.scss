@@ -105,6 +105,7 @@ margin: 6px 0;
 .badge_news_teams{
   background-color: $color-primary !important;
   color: $color-tertiary !important;
+  text-decoration: none;
 }
 .button_news_more{
     @include button-primary();

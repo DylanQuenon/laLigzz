@@ -1,0 +1,200 @@
+@import "../variables/variables.scss";
+#userPage{
+    .row{
+        margin-right: 0 ;
+    }
+    .heading{
+        padding: $spacing-9xl 0;
+        width: 100%;
+        background: $gradient-circle;
+        border-bottom: solid 4px $color-tertiary;
+    
+        .heading__infos__picture{
+            position: relative;
+            width: max-content;
+        }
+      
+        .heading__infos__editAvatar{
+            width: 30px;
+            height: 30px;
+            border-radius: $radius-full;
+            background-color: $color-secondary;
+            border: solid 1px $color-tertiary;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+            position: absolute;
+            top: 0;
+            right: 10%;
+            z-index: 3;
+            @include flex(row);
+            svg{
+                color: $color-tertiary;
+                width: 16px;
+            }
+        }
+        .heading__infos__name{
+            @include flexGap(row,$spacing-md);
+            color:$color-secondary;
+            align-items: start;
+            .fullname{
+                font-weight: bold;
+            }
+        }
+
+    }
+    .deleteAccount{
+        padding: 8px 16px;
+        background-color: #a8251e;
+        color: $color-secondary;
+         border: solid 1px $color-secondary;
+        text-decoration: none;
+        margin: 1% 1%;
+    }
+
+    .teamFollowed{
+        padding: $spacing-9xl 0;
+        width: 100%;
+        background-color: $color-secondary;
+        color: $color-primary;
+        .cardFollow-title{
+            color: $color-primary !important;
+        }
+        .linkToTeam{
+          
+            text-decoration: none ;
+           
+        }
+        .cardFollow{
+            padding: $spacing-4xl;
+            background-color: white;
+            font-family: $font-family-hero;
+            font-size: $text-font-size-md;
+            border-radius: 10px;
+            
+            transition: all 0.3s;
+            cursor: pointer;
+            &:hover{
+                transform: scale(1.02) translateY(-10px);
+            }
+         
+            h5{
+                text-transform: capitalize;
+                margin: 10px 0;
+            }
+            .cardFollow-body{
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-md;
+            }
+        }
+        .btnRemove{
+            font-family: $font-family-hero;
+            font-size: $text-font-size-md;
+            padding: 8px 16px;
+            border-radius: $radius-full;
+            background-color: $color-primary;
+            color: $color-secondary;
+        }
+    }
+
+    .lastNewsRedac{
+        padding: $spacing-9xl 0;
+        color: $color-secondary;
+        .wrapper{
+           @include flexGap(column,$spacing-4xl);
+
+        }
+    }
+}
+.heading__actions{
+    .row{
+        place-items: center;
+        display: flex;
+        align-items: center;
+        gap: $spacing-2xl;
+    }
+    .btnAccount{
+        padding: 8px 16px;
+        border-radius: $radius-full;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        text-decoration: none;
+        font-family: $font-family-hero;
+        font-size: $text-font-size-md;
+        transition: all 0.3s;
+        margin: 10px 0;
+        &:nth-child(2),
+&:nth-child(3) {
+    background-color: $color-secondary;
+    color: $color-primary;
+    i, svg {
+        fill: $color-primary;
+        color: $color-primary;
+    }
+    &:hover{
+        background-color: #bfbbbb;
+    }
+}
+
+&:nth-child(1),
+&:nth-child(4) {
+    background-color: $color-primary;
+    color: $color-secondary;
+    svg {
+        fill: $color-secondary;
+    }
+    &:hover{
+        background-color: #7d7d7d;
+    }
+}
+
+    }
+}
+
+.account__content{
+    padding: $spacing-9xl 0;
+    color: $color-secondary;
+    .col-md-5{
+        @include flexGap(column,$spacing-4xl);
+        .descri{
+            line-height: 1.5rem;
+        }
+    }
+    
+}
+.avatar{
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
+    object-fit: cover;
+    border: solid 4px $color-tertiary;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+}
+.cardRedac{
+    padding: $spacing-4xl;
+    border-radius: 45px;
+    background-color: $color-secondary;
+    color: $color-primary;
+    .redacteur{
+        margin: 20px 0;
+        gap:$spacing-2xl;
+        align-items: center;
+        @media all and (max-width:768px) {
+            justify-content: center;
+            text-align: center;
+            
+        }
+    }
+    .avatar{
+        width: 76px;
+        height:76px;
+
+    }
+    .redac__info{
+        @include flexGap(column,$spacing-md);
+        a{
+            color:$color-primary;
+        }
+    }
+  
+}

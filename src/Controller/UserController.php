@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Repository\NewsRepository;
 use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,12 +23,16 @@ class UserController extends AbstractController
      * @return Response
      */
     #[Route('/user/{slug}', name: 'user_show')]
-    public function index(User $user): Response
+    public function index(User $user, UserRepository $repo, NewsRepository $articleRepository): Response
     {
         $followedTeams=$user->getFollowedTeams();
+        $redacteurs = $repo->findUsersByRole('ROLE_REDACTEUR');
+        $latestArticles = $articleRepository->findLatestArticlesByUser($user, 3);
         return $this->render('user/index.html.twig', [
             'user' => $user,
-            'teamsFollow'=>$followedTeams
+            'teamsFollow'=>$followedTeams,
+            'redacteurs' => $redacteurs,
+            'latestArticles' => $latestArticles,
         ]);
     }
 
@@ -52,12 +58,16 @@ class UserController extends AbstractController
      */
     #[Route("/account", name:"account_index")]
     #[IsGranted('ROLE_USER')]
-    public function myAccount(): Response
+    public function myAccount(UserRepository $repo,NewsRepository $articleRepository): Response
     {
         $followedTeams=$this->getUser()->getFollowedTeams();
+        $redacteurs = $repo->findUsersByRole('ROLE_REDACTEUR');
+        $latestArticles = $articleRepository->findLatestArticlesByUser($this->getUser(), 3);
         return $this->render('user/index.html.twig', [
             'user' => $this->getUser(),
-            'teamsFollow'=>$followedTeams
+            'teamsFollow'=>$followedTeams,
+            'redacteurs' => $redacteurs,
+            'latestArticles' => $latestArticles,
         ]);
     }
 }

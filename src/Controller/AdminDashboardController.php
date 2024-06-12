@@ -23,12 +23,14 @@ class AdminDashboardController extends AbstractController
         $users = $statsService->getUsersCount();
         $teams = $statsService->getTeamsCount();
         $news = $statsService->getNewsCount();
+        $matches = $statsService->getAllGames();
        
         return $this->render('admin/dashboard/index.html.twig', [
             'stats' => [
                 'users' => $users,
                 'teams' => $teams,
                 'news'=>$news,
+                'matches'=>$matches,
           
             ],
          

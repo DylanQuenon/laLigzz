@@ -41,6 +41,7 @@ Encore
     .addEntry('teamStyle', './assets/styles/pages/teamStyle.scss')
     .addEntry('newStyle', './assets/styles/pages/new.scss')
     .addEntry('lastNewsStyle', './assets/styles/partials/_lastNews.scss')
+    .addEntry('accountStyle', './assets/styles/pages/accountStyle.scss')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

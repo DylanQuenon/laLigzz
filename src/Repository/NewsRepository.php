@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\News;
 use App\Entity\Team;
+use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -78,6 +79,17 @@ class NewsRepository extends ServiceEntityRepository
                     ->setParameter('query', '%' . $query . '%')
                     ->getQuery()
                     ->getResult();
+    }
+
+    public function findLatestArticlesByUser(User $user, $limit)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.author = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 
 }
