@@ -18,7 +18,7 @@ class CommentType extends ApplicationType
         ->add('rating', HiddenType::class, [
             'attr' => ['class' => 'rating-input'],
         ])
-            ->add('content', TextareaType::class, $this->getConfiguration("Votre commentaire", "Exprimez-vous"))
+        ->add('content', TextareaType::class, $this->getConfiguration("Votre commentaire", "Exprimez-vous"))
         ;
     }
 

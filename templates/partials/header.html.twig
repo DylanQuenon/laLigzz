@@ -1,3 +1,4 @@
+
 <header>
 	<div class="menu">
 		<div class="round-menu">
@@ -77,6 +78,7 @@
     </div>
 {% endfor %}
 {% block javascripts %}
+{{encore_entry_script_tags('burgerJS')}}
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
     
@@ -97,5 +99,6 @@
         });
     });
 </script>
+
 
 {% endblock %}

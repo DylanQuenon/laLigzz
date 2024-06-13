@@ -19,6 +19,7 @@
             align-items: center;
             padding: $spacing-4xl;
             background-color: #2d2d2d88;
+            backdrop-filter: brightness(0.4)
         }
 
         form {
@@ -104,4 +105,8 @@ option{
 
 .form-select{
     font-size: $text-font-size-md !important;
+}
+.invalid-feedback {
+    font-size: $text-font-size-md;
+
 }

@@ -148,6 +148,8 @@
 							</div>
 
 							{{ form_widget(myForm.content) }}
+							{{ form_errors(myForm.content) }}
+
 							<button type="submit" class="btn mt-4">Ajouter le commentaire</button>
 
 							{{ form_end(myForm) }}

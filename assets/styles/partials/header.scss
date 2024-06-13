@@ -236,7 +236,8 @@ header.show{
 header .dropdown-item{
 color: $color-primary !important;
 &:focus{
-  background-color: #a3a3a3;
+  background-color: $color-primary;
+  color: $color-tertiary !important;
 }
 &.deco{
   color: $color-tertiary !important;

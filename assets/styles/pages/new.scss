@@ -127,6 +127,9 @@
 }
 .container_comment{
     padding: $spacing-9xl 0;
+    .invalid-feedback{
+        color: $color-tertiary;
+    }
 
 }
 .formComment{
