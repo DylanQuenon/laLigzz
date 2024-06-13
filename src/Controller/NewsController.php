@@ -27,6 +27,13 @@ class NewsController extends AbstractController
 {
 
     #[Route('/news/search/ajax', name: 'news_search_ajax', methods: ['GET'])]
+    /**
+     * Effectue la recherche
+     *
+     * @param Request $request
+     * @param NewsRepository $newsRepo
+     * @return JsonResponse
+     */
     public function searchAjax(Request $request, NewsRepository $newsRepo): JsonResponse
     {
         $query = $request->query->get('query', '');

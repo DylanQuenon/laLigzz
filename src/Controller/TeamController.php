@@ -48,6 +48,14 @@ class TeamController extends AbstractController
     }
 
 
+    /**
+     * Récupère les news de l'équipe
+     *
+     * @param Team $team
+     * @param NewsRepository $news
+     * @param TeamRepository $teamRepository
+     * @return Response
+     */
     #[Route("/teams/{slug}/news", name: "news_team_show")]
     public function teamNews(Team $team, NewsRepository $news, TeamRepository $teamRepository): Response
     {
@@ -58,6 +66,14 @@ class TeamController extends AbstractController
            'team'=>$team
         ]);
     }
+    /**
+     * Récupère les matchs de l'équipe
+     *
+     * @param Team $team
+     * @param NewsRepository $news
+     * @param TeamRepository $teamRepository
+     * @return Response
+     */
     #[Route("/teams/{slug}/matches", name: "matches_team_show")]
     public function teamMatches(Team $team, NewsRepository $news, TeamRepository $teamRepository): Response
     {
@@ -122,6 +138,15 @@ class TeamController extends AbstractController
             'lastNews' => $lastNews,
         ]);
     }
+    /**
+     * Ajouter l'équipe dans les suivis
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param Team $team
+     * @param TeamRepository $teamRepository
+     * @return Response
+     */
     #[Route('/teams/{slug}/add-team-to-followed', name: 'add_team_to_followed')]
     #[IsGranted('ROLE_USER')]
     public function addTeamToFollowed(Request $request, EntityManagerInterface $manager, Team $team, TeamRepository $teamRepository): Response
@@ -133,9 +158,21 @@ class TeamController extends AbstractController
             $user->addFollowedTeam($team);
             $manager->persist($user);
             $manager->flush();
+            $this->addFlash('success', 'Vous avez ajouté ' . $team->getName() . ' à vos équipes suivies !');
+
         }
         return $this->redirectToRoute('teams_show', ['slug' => $team->getSlug()]);
     }
+
+    /**
+     * Retire l'équipe des équipes suivies
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param Team $team
+     * @param TeamRepository $teamRepository
+     * @return Response
+     */
     #[Route('/teams/{slug}/remove-team-from-followed', name: 'remove_team_from_followed')]
     #[IsGranted('ROLE_USER')]
     public function RemoveTeamFromFollowed(Request $request, EntityManagerInterface $manager, Team $team, TeamRepository $teamRepository): Response
@@ -147,10 +184,19 @@ class TeamController extends AbstractController
             $user->removeFollowedTeam($team);
             $manager->persist($user);
             $manager->flush();
+            $this->addFlash('danger', 'Vous ne suivez plus l\'équipe ' . $team->getName() . '.');
+
         }
         return $this->redirectToRoute('teams_show', ['slug' => $team->getSlug()]);
     }
 
+    /**
+     * Permet d'effectuer la recherche en ajax
+     *
+     * @param Request $request
+     * @param TeamRepository $teamRepo
+     * @return JsonResponse
+     */
     #[Route('/teams/search/ajax', name: 'teams_search_ajax', methods: ['GET'])]
     public function searchAjax(Request $request, TeamRepository $teamRepo): JsonResponse
     {

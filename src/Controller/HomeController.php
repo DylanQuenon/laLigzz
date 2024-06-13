@@ -22,7 +22,9 @@ class HomeController extends AbstractController
      * @param NewsRepository $new
      * @param StatsService $stats
      * @param MatchesRepository $repoMatches
+     * @param RankingService $rankingService
      * @param Request $request
+     * @param RankingRepository $rankingRepo
      * @return Response
      */
     #[Route('/', name: 'homepage')]
@@ -54,8 +56,6 @@ class HomeController extends AbstractController
     #[Route('/mentions-legales', name: 'mentions')]
     public function mentionsLegales(): Response
     {
-       
-
         return $this->render('legals/index.html.twig');
     }
 

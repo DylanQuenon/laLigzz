@@ -32,14 +32,13 @@
 
 							<p class="text-xl stratos text-uppercase">{{news.subtitle}}
 							</p>
-																				<p class="text-sm hero d-flex align-items-center">
-    <i class="fas fa-stopwatch me-2"></i>
-    <span class="text-sm hero fw-bold ms-1">
-        {{ ((news.text | split(' ') | length / 200) | round(0, 'ceil')) }} min
-    </span>
-</p>
-
-
+							<p class="text-sm hero d-flex align-items-center">
+								<i class="fas fa-stopwatch me-2"></i>
+								<span class="text-sm hero fw-bold ms-1">
+									{{ ((news.text | split(' ') | length / 200) | round(0, 'ceil')) }}
+									min
+								</span>
+							</p>
 
 
 						</div>
@@ -85,43 +84,43 @@
 				<hr>
 
 				{% if news.comments | length > 0 %}
-				<div class="">
-    {% for comment in news.comments %}
-        <div class="cardComments col-md-7 my-5">
-            <div class="headingComment d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                    {% if comment.author.picture %}
-                        <img src="/uploads/{{ comment.author.picture }}" alt="Photo de profil de {{ comment.author.fullName }}" class="mx-2" width="50px" height="50px" style="border-radius:50% 50%; object-fit:cover;">
-                    {% endif %}
-                    <p class="text-md hero fw-bold mb-0">{{ comment.author.fullName }}
-                        <span class="fw-normal">
-                            a dit le
-                            <span class="fw-bold">{{ comment.createdAt | date('d-m-Y') }}</span>
-                        </span>
-                    </p>
-                </div>
-                {% include "partials/rating.html.twig" with {'rating': comment.rating} %}
-            </div>
+					<div class="">
+						{% for comment in news.comments %}
+							<div class="cardComments col-md-7 my-5">
+								<div class="headingComment d-flex justify-content-between align-items-center">
+									<div class="d-flex align-items-center">
+										{% if comment.author.picture %}
+											<img src="/uploads/{{ comment.author.picture }}" alt="Photo de profil de {{ comment.author.fullName }}" class="mx-2" width="50px" height="50px" style="border-radius:50% 50%; object-fit:cover;">
+										{% endif %}
+										<p class="text-md hero fw-bold mb-0">{{ comment.author.fullName }}
+											<span class="fw-normal">
+												a dit le
+												<span class="fw-bold">{{ comment.createdAt | date('d-m-Y') }}</span>
+											</span>
+										</p>
+									</div>
+									{% include "partials/rating.html.twig" with {'rating': comment.rating} %}
+								</div>
 
-            <div class="contentCard d-flex gap-5 text-md hero">
-                {{ comment.content | nl2br | raw }}
-            </div>
+								<div class="contentCard d-flex gap-5 text-md hero">
+									{{ comment.content | nl2br | raw }}
+								</div>
 
-            {% if app.user and (app.user == comment.author or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR')) %}
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger m-4" data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{ comment.id }}">Supprimer le commentaire</button>
-                </div>
-            {% endif %}
-        </div>
+								{% if app.user and (app.user == comment.author or is_granted('ROLE_ADMIN') or is_granted('ROLE_MODERATEUR')) %}
+									<div class="d-flex justify-content-end">
+										<button type="button" class="btn btn-danger m-4" data-bs-toggle="modal" data-bs-target="#deleteCommentModal{{ comment.id }}">Supprimer le commentaire</button>
+									</div>
+								{% endif %}
+							</div>
 
-        {% include 'partials/_delete_modal.html.twig' with {
-            'modalId': 'deleteCommentModal' ~ comment.id,
-            'modalTitle': 'Supprimer le commentaire',
-            'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
-            'modalAction': path('comment_delete', {'id': comment.id})
-        } %}
-    {% endfor %}
-</div>
+							{% include 'partials/_delete_modal.html.twig' with {
+								'modalId': 'deleteCommentModal' ~ comment.id,
+								'modalTitle': 'Supprimer le commentaire',
+								'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce commentaire ?',
+								'modalAction': path('comment_delete', {'id': comment.id})
+							} %}
+						{% endfor %}
+					</div>
 
 
 				{% else %}
@@ -180,27 +179,29 @@
 
 {% endblock %}
 {% block javascripts %}
-	<script>
-		document.addEventListener('DOMContentLoaded', () => {
-const stars = document.querySelectorAll('.rating i');
-const ratingInput = document.querySelector('.rating-input');
-stars.forEach(star => {
-star.addEventListener('click', () => {
-const ratingValue = star.getAttribute('data-value');
-ratingInput.value = ratingValue;
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const stars = document.querySelectorAll('.rating i');
+        const ratingInput = document.querySelector('.rating-input');
 
-// Met à jour l'affichage des étoiles
-stars.forEach(s => {
-if (s.getAttribute('data-value') <= ratingValue) {
-s.classList.remove('far');
-s.classList.add('fas');
-} else {
-s.classList.remove('fas');
-s.classList.add('far');
-}
-});
-});
-});
-});
-	</script>
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const ratingValue = star.getAttribute('data-value');
+                ratingInput.value = ratingValue;
+
+                // Met à jour l'affichage des étoiles
+                stars.forEach(s => {
+                    if (s.getAttribute('data-value') <= ratingValue) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 {% endblock %}

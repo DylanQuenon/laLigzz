@@ -255,35 +255,35 @@ class AdminMatchesController extends AbstractController
         $manager->flush();
     }
 
-    /**
- * Annule les anciennes valeurs du classement d'une équipe
- *
- * @param Team $team
- * @param int $oldGoalsFor
- * @param int $oldGoalsAgainst
- * @param EntityManagerInterface $manager
- */
-private function cancelTeamRanking(Team $team, int $oldGoalsFor, int $oldGoalsAgainst, EntityManagerInterface $manager): void
-{
-    $ranking = $team->getRanking();
+        /**
+     * Annule les anciennes valeurs du classement d'une équipe
+     *
+     * @param Team $team
+     * @param int $oldGoalsFor
+     * @param int $oldGoalsAgainst
+     * @param EntityManagerInterface $manager
+     */
+    private function cancelTeamRanking(Team $team, int $oldGoalsFor, int $oldGoalsAgainst, EntityManagerInterface $manager): void
+    {
+        $ranking = $team->getRanking();
 
-    $ranking->setMatchesPlayed($ranking->getMatchesPlayed() - 1);
-    $ranking->setGoalsFor($ranking->getGoalsFor() - $oldGoalsFor);
-    $ranking->setGoalsAgainst($ranking->getGoalsAgainst() - $oldGoalsAgainst);
+        $ranking->setMatchesPlayed($ranking->getMatchesPlayed() - 1);
+        $ranking->setGoalsFor($ranking->getGoalsFor() - $oldGoalsFor);
+        $ranking->setGoalsAgainst($ranking->getGoalsAgainst() - $oldGoalsAgainst);
 
-    if ($oldGoalsFor > $oldGoalsAgainst) {
-        $ranking->setWins($ranking->getWins() - 1);
-        $ranking->setPoints($ranking->getPoints() - 3);
-    } elseif ($oldGoalsFor < $oldGoalsAgainst) {
-        $ranking->setLosses($ranking->getLosses() - 1);
-    } else {
-        $ranking->setDraws($ranking->getDraws() - 1);
-        $ranking->setPoints($ranking->getPoints() - 1);
+        if ($oldGoalsFor > $oldGoalsAgainst) {
+            $ranking->setWins($ranking->getWins() - 1);
+            $ranking->setPoints($ranking->getPoints() - 3);
+        } elseif ($oldGoalsFor < $oldGoalsAgainst) {
+            $ranking->setLosses($ranking->getLosses() - 1);
+        } else {
+            $ranking->setDraws($ranking->getDraws() - 1);
+            $ranking->setPoints($ranking->getPoints() - 1);
+        }
+
+        $manager->persist($ranking);
+        $manager->flush();
     }
-
-    $manager->persist($ranking);
-    $manager->flush();
-}
 
  
 }
