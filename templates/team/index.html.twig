@@ -9,6 +9,7 @@
             <div class="title">
                 <h2 class="display-md kizard col-md-3">Equipes</h2>
             </div>
+            {% include "partials/_search.html.twig" %}
             <div class="row row_teams">
                 {% for team in pagination.data() %}
                     {% include "partials/_teamsCard.html.twig" %}

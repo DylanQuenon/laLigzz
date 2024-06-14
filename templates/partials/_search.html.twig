@@ -1,0 +1,61 @@
+	<div class="search-bar">
+					<form class="d-flex" id="search-form">
+						<div class="dropdown">
+							<input class="form-control" type="text" id="search-input" placeholder="Chercher des équipes..." data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center">
+							<i class="fa-solid fa-magnifying-glass" data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center"></i>
+							<div class="dropdown-menu" id="search-results" style="display: none;">
+								<ul class="list-unstyled p-3"></ul>
+							</div>
+						</div>
+					</form>
+				</div>
+
+{% block javascripts %}
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('#search-input');
+            const searchResults = document.querySelector('#search-results');
+            const resultsList = searchResults.querySelector('ul');
+
+            searchInput.addEventListener('input', function () {
+                const query = this.value.trim();
+                if (query.length > 1) {
+                    fetch(`/teams/search/ajax?query=${encodeURIComponent(query)}`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            resultsList.innerHTML = '';
+                            if (data.length > 0) {
+                                searchResults.style.display = 'block';
+                                data.forEach((result) => {
+                                  
+                                    const item = document.createElement('li');
+                                    const link = document.createElement('a');
+                                    link.href = `/teams/${result.slug}`;
+                                      console.log(result.logo)
+                                    const logoSrc = `/uploads/${result.logo}`;
+                                    link.innerHTML = `
+                                        <img src="/uploads/${result.logo}" alt="${result.title}" 
+                                        style="width:20px; height:20px; object-fit:contain; margin-right: 10px;">
+                                        ${result.title}
+                                    `;
+                                    item.appendChild(link);
+                                    resultsList.appendChild(item);
+                                });
+                            } else {
+                                searchResults.style.display = 'block';
+                                resultsList.innerHTML = '<li class="text-md hero text-white">Aucun résultat</li>';
+                            }
+                        });
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            });
+
+            searchInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    searchResults.style.display = 'none';
+                }, 200);
+            });
+        });
+</script>
+{% endblock %}

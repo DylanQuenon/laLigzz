@@ -54,7 +54,8 @@
 						Explorez les vingt équipes vibrantes qui animent ce championnat, chacune apportant son énergie unique à cette compétition palpitante.
 					</p>
 				</div>
-				<div class="search-bar">
+				{% include "partials/_search.html.twig" %}
+				{# <div class="search-bar">
 					<form class="d-flex" id="search-form">
 						<div class="dropdown">
 							<input class="form-control" type="text" id="search-input" placeholder="Chercher des équipes..." data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center">
@@ -64,7 +65,7 @@
 							</div>
 						</div>
 					</form>
-				</div>
+				</div> #}
 			</div>
 		</div>
 		<div class="swiper " data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-duration="500">
@@ -381,7 +382,7 @@
             init();
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
+        {# document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.querySelector('#search-input');
             const searchResults = document.querySelector('#search-results');
             const resultsList = searchResults.querySelector('ul');
@@ -423,6 +424,6 @@
                     searchResults.style.display = 'none';
                 }, 200);
             });
-        });
+        }); #}
     </script>
 {% endblock %}

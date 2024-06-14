@@ -215,6 +215,7 @@ class TeamController extends AbstractController
             return [
                 'title' => $team->getName(),
                 'slug' => $team->getSlug(),
+                'logo' => $team->getLogo(),
             ];
         }, $results);
 
