@@ -11,72 +11,73 @@
         </a>
 
         {# Formulaire de recherche #}
-		<div class="d-flex justify-content-center my-3">
-			<div class="col-md-6">
-				{{ form_start(searchForm) }}
-				<div class="input-group">
-					{{ form_widget(searchForm.query, {'attr': {'class': 'form-control'}}) }}
-					<div class="input-group-append  mx-4">
-						<button type="submit" class="btn btn-primary">Rechercher</button>
-					</div>
-				</div>
-				{{ form_end(searchForm) }}
+        <div class="d-flex justify-content-center my-3">
+            <div class="col-md-6">
+                {{ form_start(searchForm) }}
+                <div class="input-group">
+                    {{ form_widget(searchForm.query, {'attr': {'class': 'form-control', 'placeholder': 'Rechercher un match'}}) }}
+                    <button type="submit" class="btn btn-primary ms-2">Rechercher</button>
+                </div>
+                {{ form_end(searchForm) }}
 
-                								<div class="my-3 text-center">
-    {{ games|length }} résultat(s)
-</div>
-		
-			</div>
-		</div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Journée</th>
-                    <th>Stade</th>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Équipe domicile</th>
-                    <th class="text-center">Buts équipe domicile</th>
-                    <th class="text-center">Équipe extérieure</th>
-                    <th class="text-center">Buts équipe extérieure</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for match in games %}
+                <div class="my-3 text-center">
+                    {{ games|length }} résultat(s)
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="table-dark">
                     <tr>
-                        <td>{{ match.id }}</td>
-                        <td>{{ match.journee }}</td>
-                        <td>{{ match.stadium }}</td>
-                        <td class="text-center">{{ match.date|date("d-m-Y") }}</td>
-                        <td class="text-center">{{ match.homeTeam.name }}</td>
-                        <td class="text-center">{{ match.homeTeamGoals }}</td>
-                        <td class="text-center">{{ match.awayTeam.name }}</td>
-                        <td class="text-center">{{ match.awayTeamGoals }}</td>
-                        <td class="text-center">
-                            <a href="{{ path('admin_matches_edit', {'id': match.id}) }}" class="btn btn-warning">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a href="#deleteModal{{ match.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ match.id }}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                                                    {# Confirmation de suppression #}
-                            {% include 'partials/_delete_modal.html.twig' with {
-                                'modalId': 'deleteModal' ~ match.id,
-                                'modalTitle': 'Supprimer le match',
-                                'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce match ?',
-                                'modalAction': path('admin_matches_delete', {'id': match.id})
-                                } 
-                            %}
-
-                        </td>
+                        <th>Id</th>
+                        <th class="text-center">Journée</th>
+                        <th class="text-center">Stade</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Match</th>
+                        <th class="text-center">Actions</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for match in games %}
+                        <tr>
+                            <td>{{ match.id }}</td>
+                            <td class="text-center">{{ match.journee }}</td>
+                            <td class="text-center">{{ match.stadium }}</td>
+                            <td class="text-center">{{ match.date|date("d-m-Y") }}</td>
+                            <td class="text-center">
+                                
+                                <img src="/uploads/{{ match.homeTeam.logo }}" alt="{{ match.homeTeam.name }} logo" class="" style="height: 30px; width: auto; margin-right: 5px;">
+                                {{ match.homeTeam.name }}
+                                {{ match.homeTeamGoals }} - {{ match.awayTeamGoals }}
+                                <img src="/uploads/{{ match.awayTeam.logo }}" alt="{{ match.awayTeam.name }} logo" class="" style="height: 30px; width: auto; margin-left: 5px;">
+                                {{ match.awayTeam.name }}
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ path('admin_matches_edit', {'id': match.id}) }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="#deleteModal{{ match.id }}" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ match.id }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                {# Confirmation de suppression #}
+                                {% include 'partials/_delete_modal.html.twig' with {
+                                    'modalId': 'deleteModal' ~ match.id,
+                                    'modalTitle': 'Supprimer le match',
+                                    'modalMessage': 'Êtes-vous sûr de vouloir supprimer ce match ?',
+                                    'modalAction': path('admin_matches_delete', {'id': match.id})
+                                    } 
+                                %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         {# Pagination #}
         {% if not isSubmitted %}
-			{{ pagination.display() }}
-		{% endif %}
+            {{ pagination.display() }}
+        {% endif %}
     </div>
 {% endblock %}

@@ -1,6 +1,30 @@
 @import "../variables/variables.scss";
 #ranking{
     color: $color-secondary;
+   
+    .dropdown-item{
+        background: $color-primary;
+        color: $color-tertiary;
+        font-family: $font-family-hero;
+        font-size: $text-font-size-lg;
+        border-bottom: solid 1px $color-tertiary;
+        padding: 8px 0;
+        width: 100%;
+        text-align: center;
+        &#last{
+            border-bottom: none !important;
+        }
+        &:hover{
+            background-color: #444;
+        }
+      
+      
+    }
+    .dropdown-menu{
+        background: $color-primary !important;
+        border: solid 1px $color-tertiary;
+        font-family: $font-family-hero !important;
+    }
     h2{
         width: 47%;
         span{
@@ -16,10 +40,14 @@
     }
 }
 
-canvas{
-    background-color: $color-secondary;
-    min-height: 150px;
-}
+// canvas{
+//     background-color: $color-primary;
+//     color: $color-secondary;
+//     border-color: $color-secondary;
+//     min-height: 150px;
+//     font-family: $font-family-hero !important;
+//     font-size: $text-font-size-md !important;
+// }
 
 
 .ranking-table {
@@ -45,9 +73,12 @@ thead .criteres{
     font-family: $font-family-hero;
     font-weight: bold;
     &.team{
+        padding: $spacing-md 0;
         text-align: start;
+        
         span{
             text-transform: capitalize;
+            margin-left: 10px;
 
         }
         font-weight: normal;
@@ -55,8 +86,8 @@ thead .criteres{
         align-items: center;
         gap: $spacing-md;
         .teamPic{
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,6 +99,9 @@ thead .criteres{
     }
 }
 
+#accordion{
+    width: max-content;
+}
 .points{
     color: $color-tertiary;
 }
@@ -128,6 +162,7 @@ thead .criteres{
     }
    
 }
+
 .block-leagues{
     @include flexGap(column,$spacing-2xl);
     .leagues{

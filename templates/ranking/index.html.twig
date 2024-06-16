@@ -13,8 +13,20 @@
 			<h2 class="display-md stratos text-uppercase" data-aos="fade-down" data-aos-duration="700" data-aos-anchor-placement="top-center">Decouvrez le classement
 				<span>2023-2024</span>
 				de la liga</h2>
-			<table class="ranking-table">
-				<thead data-aos="fade-left" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+				<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle text-lg hero" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        Options de classement
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="{{ path('app_ranking')}}">Général</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_ranking', {'filter': 'best_attack'}) }}">Meilleure attaque</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_ranking', {'filter': 'best_defense'}) }}">Meilleure défense</a></li>
+        <li id="last"><a class="dropdown-item"id="last" href="{{ path('app_ranking', {'filter': 'most_wins'}) }}">Plus de victoires</a></li>
+    </ul>
+</div>
+
+			<table class="ranking-table"data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="100">
+				<thead data-aos="fade-left" data-aos-duration="700" data-aos-delay="200">
 
 					<tr>
 						<th class=""></th>
@@ -35,7 +47,7 @@
 							               {% if loop.index <= 4 %}champions-league{% endif %}
 							               {% if loop.index > 4 and loop.index <= 6 %}europa-league{% endif %}
 							               {% if loop.index == 7 %}conference-league{% endif %}
-							               {% if loop.index > 17 %}relegation{% endif %}" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00" onclick="window.location.href='{{ path('teams_show', {'slug': team.team.slug}) }}'">
+							               {% if loop.index > 17 %}relegation{% endif %}"  onclick="window.location.href='{{ path('teams_show', {'slug': team.team.slug}) }}'">
 							<td>
 								<span class="position">{{ loop.index }}</span>
 							</td>
@@ -59,26 +71,85 @@
 
 			</table>
 			<div class="block-leagues">
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="100">
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="100">
 					<span class="ligne blue"></span>
 					<span class="compet">Champions league</span>
 				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="200">
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="200">
 					<span class="ligne orange"></span>
 					<span class="compet">Europa league</span>
 				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="300">
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="300">
 					<span class="ligne green"></span>
 					<span class="compet">Conference league</span>
 				</div>
-				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="center-center" data-aos-delay="400">
+				<div class="leagues" data-aos="fade-right" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="400">
 					<span class="ligne red"></span>
 					<span class="compet">Relégués</span>
 				</div>
 			</div>
-
+		<div class="my-4">
+		<h4 class="display-md stratos text-uppercase text-center"data-aos="zoom-in" data-aos-duration="700">Evolution du nombre de buts marques par journee</h4>
+		<canvas id="goals-chart" width="800" height="300"data-aos="zoom-in" data-aos-duration="700" data-aos-delay="400"></canvas>
+		
+		</div>
 		</div>
 		{% include "partials/_lastGames.html.twig" %}
 		{% include "partials/_lastNews.html.twig" %}
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const goalsByMatchday = {{ goalsByMatchday|json_encode|raw }};
+    const ctx = document.getElementById('goals-chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Object.keys(goalsByMatchday),
+            datasets: [{
+                label: 'Buts par journée',
+                data: Object.values(goalsByMatchday),
+                backgroundColor: '#FF4B44',
+                borderColor: '#FF4B44',
+                borderWidth: 2,
+				color: '#ff4b44'
+            }]
+        },
+         options: {
+        scales: {
+            y: {
+                beginAtZero: true, // Commencer l'axe des ordonnées à zéro
+                grid: {
+                    borderColor: '#FF4B44', // Couleur de la bordure de l'axe des Y
+					color: '#e1e1e1'
+                },
+                 ticks: {
+                    color: '#e1e1e1', // Couleur des labels de l'axe des Y
+					   font: {
+                        family: 'Stratos', // Changer la famille de police ici
+                        size: 14, // Taille de la police
+                        lineHeight: 1.2 // Espacement des lignes
+                    },
+                }
+            },
+            x: {
+                grid: {
+                    borderColor: '#FF4B44' ,// Couleur de la bordure de l'axe des X
+					color: '#e1e1e1'
+                },
+                 ticks: {
+                    color: '#FF4B44', // Couleur des labels de l'axe des Y
+					   font: {
+                        family: 'Stratos', // Changer la famille de police ici
+                        size: 14, // Taille de la police
+                        lineHeight: 1.2 // Espacement des lignes
+                    },
+                }
+            }
+        }
+    }
+    });
+</script>
 {% endblock %}

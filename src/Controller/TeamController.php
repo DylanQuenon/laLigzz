@@ -75,9 +75,14 @@ class TeamController extends AbstractController
      * @return Response
      */
     #[Route("/teams/{slug}/matches", name: "matches_team_show")]
-    public function teamMatches(Team $team, NewsRepository $news, TeamRepository $teamRepository): Response
+    public function teamMatches(Team $team, NewsRepository $news, TeamRepository $teamRepository, MatchesRepository $repo): Response
     {
-        $matchesTeam= $team->getMatches();
+        $matchesTeam = $repo->createQueryBuilder('m')
+        ->where('m.homeTeam = :team OR m.awayTeam = :team')
+        ->setParameter('team', $team)
+        ->orderBy('m.date', 'ASC')
+        ->getQuery()
+        ->getResult();
 
         return $this->render("team/matches.html.twig", [
            'games'=>$matchesTeam,

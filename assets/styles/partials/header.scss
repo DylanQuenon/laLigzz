@@ -14,7 +14,7 @@ header{
     align-items: center;
     justify-content: space-between;
     @media all and (max-width: 992px) {
-     justify-content: start;
+     justify-content: space-around;
      gap: 3rem;
   }
     
@@ -63,6 +63,11 @@ header.show{
   opacity: 1;
 }
 
+.logActions{
+  @media all and (max-width: 992px) {
+    order: 1;
+ }
+}
 .menu {
     background-color: transparent;
     border: none;
@@ -70,6 +75,9 @@ header.show{
     padding: 0;
     justify-content: space-between;
     z-index: 2000;
+    @media all and (max-width: 992px) {
+      order: 2;
+   }
     .round-menu{
       @include flex(row);
       padding: 5px;

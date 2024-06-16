@@ -38,7 +38,7 @@ class AdminMatchesController extends AbstractController
         }else{
             $pagination->setEntityClass(Matches::class) // App\Entity\Team string
                     ->setPage($page)
-                    ->setLimit(9);
+                    ->setLimit(10);
             $matches = $pagination->getData();
 
         }
@@ -59,7 +59,7 @@ class AdminMatchesController extends AbstractController
      * @return Response
      */
     #[Route('/admin/games/new', name: 'admin_matches_create')]
-    public function create(Request $request, EntityManagerInterface $manager): Response
+    public function create(Request $request, EntityManagerInterface $manager, MatchesRepository $matchRepo): Response
     {
         $match = new Matches();
         $form = $this->createForm(MatchesType::class, $match);     
@@ -75,7 +75,7 @@ class AdminMatchesController extends AbstractController
             }
 
             // Vérifier si les équipes ne se sont pas déjà affrontées deux fois cette saison
-            $seasonMatches = $this->getDoctrine()->getRepository(Matches::class)->findSeasonMatches($match->getHomeTeam(), $match->getAwayTeam(), '2023-08-01', '2024-06-30');
+            $seasonMatches = $matchRepo->findSeasonMatches($match->getHomeTeam(), $match->getAwayTeam(), '2023-08-01', '2024-06-30');
             if (count($seasonMatches) >= 2) {
                 $this->addFlash('danger', 'Ces équipes se sont déjà affrontées deux fois cette saison.');
                 return $this->redirectToRoute('admin_matches_index');

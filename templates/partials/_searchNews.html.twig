@@ -1,0 +1,60 @@
+<div class="search-bar" data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center">
+	<form class="d-flex" id="search-form">
+		<div class="dropdown">
+			<input class="form-control" type="text" id="search-input-news" placeholder="Chercher des actualités...">
+			<i class="fa-solid fa-magnifying-glass"></i>
+			<div class="dropdown-menu" id="search-results-news" style="display: none;">
+				<ul class="list-unstyled p-3"></ul>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+{% block javascripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('#search-input-news');
+    const searchResults = document.querySelector('#search-results-news');
+    const resultsList = searchResults.querySelector('ul');
+
+    // Réinitialiser la valeur de l'input à une chaîne vide
+    searchInput.value = '';
+
+    searchInput.addEventListener('input', function () {
+        const query = this.value.trim();
+        if (query.length > 1) {
+            fetch(`/news/search/ajax?query=${encodeURIComponent(query)}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    resultsList.innerHTML = '';
+                    if (data.length > 0) {
+                        searchResults.style.display = 'block';
+                        data.forEach((result) => {
+                            const item = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `/news/${result.slug}`;
+                            link.textContent = `${result.title} - ${result.author}`;
+                            item.appendChild(link);
+                            resultsList.appendChild(item);
+                        });
+                    } else {
+                        searchResults.style.display = 'block';
+                        resultsList.innerHTML = '<li>Aucun résultat</li>';
+                    }
+                });
+        } else {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    searchInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            searchResults.style.display = 'none';
+        }, 200);
+    });
+});
+
+
+</script>
+{% endblock %}

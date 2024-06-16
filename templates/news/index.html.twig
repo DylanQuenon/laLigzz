@@ -10,6 +10,7 @@
 				<div class="title">
 					<h2 class="display-md kizard col-md-3">actualités</h2>
 				</div>
+				{% include "partials/_searchNews.html.twig" %}
 				<div class="d-flex flex-wrap row_news">
 					{% for new in pagination.data() %}
 						{% include "partials/_cardNews.html.twig" %}

@@ -18,11 +18,28 @@ class MatchesRepository extends ServiceEntityRepository
     
     public function searchMatches(string $query): array
     {
-        return $this->createQueryBuilder('t')
-        ->andWhere('t.homeTeam LIKE :query OR t.awayTeam LIKE :query ')
-                    ->setParameter('query', '%' . $query . '%')
-                    ->getQuery()
-                    ->getResult();
+        return $this->createQueryBuilder('m')
+            ->join('m.homeTeam', 'home')
+            ->join('m.awayTeam', 'away')
+            ->andWhere('home.name LIKE :query OR away.name LIKE :query OR CONCAT(home.name, \' - \', away.name) LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+    public function findSeasonMatches($homeTeam, $awayTeam, $startDate, $endDate)
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.homeTeam = :homeTeam AND m.awayTeam = :awayTeam')
+            ->andWhere('m.date >= :startDate')
+            ->andWhere('m.date <= :endDate')
+            ->setParameter('homeTeam', $homeTeam)
+            ->setParameter('awayTeam', $awayTeam)
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

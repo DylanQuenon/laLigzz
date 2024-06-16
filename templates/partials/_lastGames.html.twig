@@ -10,7 +10,7 @@
 	</div>
     <div class="row">
         {% for games in lastMatches %}
-        <div class="col-md-5" data-aos="flip-left" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="{{loop.index}}00">
+        <div class="col-md-4" data-aos="flip-left" data-aos-duration="700" data-aos-anchor-placement="top-center" data-aos-delay="{{loop.index}}00">
             {% include "partials/_cardMatches.html.twig" %} 
         </div>
         {% endfor %}

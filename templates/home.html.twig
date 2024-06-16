@@ -55,17 +55,7 @@
 					</p>
 				</div>
 				{% include "partials/_search.html.twig" %}
-				{# <div class="search-bar">
-					<form class="d-flex" id="search-form">
-						<div class="dropdown">
-							<input class="form-control" type="text" id="search-input" placeholder="Chercher des équipes..." data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center">
-							<i class="fa-solid fa-magnifying-glass" data-aos="zoom-in" data-aos-duration="500" data-aos-anchor-placement="top-center"></i>
-							<div class="dropdown-menu" id="search-results" style="display: none;">
-								<ul class="list-unstyled p-3"></ul>
-							</div>
-						</div>
-					</form>
-				</div> #}
+			
 			</div>
 		</div>
 		<div class="swiper " data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-duration="500">
@@ -120,7 +110,7 @@
 						</thead>
 						<tbody>
 							{% for rank in ranking|slice(0, 5) %}
-								<tr class="result" data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-duration="800" data-aos-delay="{{ loop.index }}00">
+								<tr class="result" data-aos="fade-left" data-aos-duration="800" data-aos-delay="{{ loop.index }}000">
 									<td>
 										<span class="position">{{ loop.index }}</span>
 									</td>
@@ -184,7 +174,7 @@
 
 				<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="100">
 					<div class="presentation_icon">
-						<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
+						<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#ff4b44"><path d="M220-360v-180h-60v-60h120v240h-60Zm140 0v-100q0-17 11.5-28.5T400-500h80v-40H360v-60h140q17 0 28.5 11.5T540-560v60q0 17-11.5 28.5T500-460h-80v40h120v60H360Zm240 0v-60h120v-40h-80v-40h80v-40H600v-60h140q17 0 28.5 11.5T780-560v160q0 17-11.5 28.5T740-360H600Z"/></svg>
 					</div>
 					<div class="numbers_stats display-xs stratos italic">
 						{{stats.allGames is empty ? 0 : stats.allGames}}
@@ -196,7 +186,7 @@
 
 				<div class="col-md-4" data-aos="zoom-in" data-aos-anchor-placement="top-center" data-aos-duration="500" data-aos-delay="200">
 					<div class="presentation_icon">
-						<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewbox="0 -960 960 960" width="32px" fill="#FF4B44"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z"/></svg>
+						<svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#ff4b44"><path d="M280-880h400v314q0 23-10 41t-28 29l-142 84 28 92h152l-124 88 48 152-124-94-124 94 48-152-124-88h152l28-92-142-84q-18-11-28-29t-10-41v-314Zm80 80v234l80 48v-282h-80Zm240 0h-80v282l80-48v-234ZM480-647Zm-40-12Zm80 0Z"/></svg>
 					</div>
 					<div
 						class="numbers_stats display-xs stratos italic">
@@ -382,48 +372,5 @@
             init();
         });
 
-        {# document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.querySelector('#search-input');
-            const searchResults = document.querySelector('#search-results');
-            const resultsList = searchResults.querySelector('ul');
-
-            searchInput.addEventListener('input', function () {
-                const query = this.value.trim();
-                if (query.length > 1) {
-                    fetch(`/teams/search/ajax?query=${encodeURIComponent(query)}`)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            resultsList.innerHTML = '';
-                            if (data.length > 0) {
-                                searchResults.style.display = 'block';
-                                data.forEach((result) => {
-                                    const item = document.createElement('li');
-                                    const link = document.createElement('a');
-                                    link.href = `/teams/${result.slug}`;
-                                    const logoSrc = result.logo ? `/uploads/${result.logo}` : '/images/defaultTeam.png';
-                                    link.innerHTML = `
-                                        <img src="${logoSrc}" alt="${result.title}" 
-                                        style="width:20px; height:20px; object-fit:cover; margin-right: 10px;">
-                                        ${result.title}
-                                    `;
-                                    item.appendChild(link);
-                                    resultsList.appendChild(item);
-                                });
-                            } else {
-                                searchResults.style.display = 'block';
-                                resultsList.innerHTML = '<li class="text-md hero text-white">Aucun résultat</li>';
-                            }
-                        });
-                } else {
-                    searchResults.style.display = 'none';
-                }
-            });
-
-            searchInput.addEventListener('blur', () => {
-                setTimeout(() => {
-                    searchResults.style.display = 'none';
-                }, 200);
-            });
-        }); #}
     </script>
 {% endblock %}

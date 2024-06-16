@@ -13,9 +13,12 @@
                 {% for matchDay, matches in groupedMatches %}
                     <div class="match-day">
                         <h3 class="text-xl hero mb-2">Journée {{ matchDay }}</h3>
-                        <div class="d-flex flex-wrap gap-4 justify-content-start">
+                        <div class="row justify-content-center">
                             {% for games in matches %}
+                            <div class="col-md-4 my-4">
                             {% include "partials/_cardMatches.html.twig" %}
+                            
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
