@@ -147,11 +147,11 @@
             background-color: rgba(230, 230, 230, 0.5);
             border: solid 1px $color-secondary;
             color: $color-secondary;
+            max-width:102% ;
         }
         .games{
             background-color: rgba(37, 37, 37, 0.5);
             border: solid 1px $color-primary;
-            max-width:min-content !important;
 
         }
         .followButton {
