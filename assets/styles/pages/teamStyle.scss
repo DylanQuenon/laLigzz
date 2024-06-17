@@ -10,8 +10,7 @@
         opacity: 30%;
         transform: rotate(-15deg);
         @media all and (max-width: 768px) {
-           top: 0;
-           left: -30%;
+          display: none;
 
         }
     }
@@ -60,9 +59,7 @@
                 height: 60%;
             }
             @media all and (max-width: 768px) {
-                height: 17%;
-                right: -13.5%;
-                top: 48%;
+               display: none;
             }
           
         }
@@ -135,6 +132,7 @@
     }
     .blockTeam_left_actions {
         @include flexGap(row, $spacing-3xl);
+        flex-wrap: nowrap !important;
         a {
             font-size: 14px !important;
             font-family: $font-family-hero;
