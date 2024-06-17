@@ -24,7 +24,7 @@
                         <td>{{comment.createdAt | date("d/m/Y")}}</td>
                         <td>
                             {% if comment.author.picture %}
-                                <img src="/uploads/{{comment.author.picture}}" alt="avatar de {{comment.author.fullName}}">
+                                <img src="/uploads/{{comment.author.picture}}" alt="avatar de {{comment.author.fullName}}" style="width:40px; height:40px; border-radius:100%; object-fit:cover">
                             {% else %}
                                 <img src="https://www.placehold.it/18x18" alt="avatar par défaut">
                             {% endif %}
