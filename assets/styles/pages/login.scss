@@ -3,6 +3,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    .alert{
+        padding: $spacing-4xl;
+        color: $color-secondary;
+        background-color: $color-primary;
+        border: solid 1px $color-tertiary;
+    }
     @include background("../../../public/images/background/image.webp");
 
     .login-container{
