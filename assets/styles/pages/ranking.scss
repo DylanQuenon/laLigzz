@@ -1,6 +1,9 @@
 @import "../variables/variables.scss";
 #ranking{
     color: $color-secondary;
+    .cardNews{
+        width: auto;
+    }
    
     .dropdown-item{
         background: $color-primary;

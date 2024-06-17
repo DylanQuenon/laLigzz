@@ -37,7 +37,7 @@
 						<th class="criteres">D</th>
 						<th class="hidden md:table-cell criteres">BP</th>
 						<th class="hidden md:table-cell criteres">BC</th>
-						<th class="criteres">DB</th>
+						<th class="criteres hidden md:table-cell criteres">DB</th>
 						<th class="criteres">Pts</th>
 					</tr>
 				</thead>
@@ -63,7 +63,7 @@
 							<td class="stats losses">{{ team.losses }}</td>
 							<td class="stats goalsFor hidden">{{ team.goalsFor }}</td>
 							<td class="stats goalsAgainst hidden">{{ team.goalsAgainst }}</td>
-							<td class="stats goalDifference">{{ team.goalsFor - team.goalsAgainst }}</td>
+							<td class="stats goalDifference hidden">{{ team.goalsFor - team.goalsAgainst }}</td>
 							<td class="stats points">{{ team.points }}</td>
 						</tr>
 					{% endfor %}

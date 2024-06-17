@@ -1,18 +1,39 @@
 {% extends "base.html.twig" %}
 
-
-{% block title %}Création d'une news
+{% block title %}
+	Ajout d'une actualité
 {% endblock %}
 
 {% form_theme myForm _self %}
 
 {% block body %}
-	{% include 'partials/_form.html.twig' with {
-		slideId:"addNews",
-		title: "Ajout d'une actualité",
-		form: myForm,
-		fields: myForm,
-		buttonText: "Ajouter",
-	} %}
+	
+
+	<div class="slide">
+		<div class="container py-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card card-custom">
+						<div class="card-header">
+							<h1 class="display-xs hero text-center">Ajout d'une actualité</h1>
+						</div>
+						<div class="card-body">
+							{{ form_start(myForm) }}
+							{{ form_widget(myForm) }}
+							<div class="d-flex justify-content-between mt-3">
+								<button type="submit" class="btn btn-primary">Enregistrer</button>
+							</div>
+							{{ form_end(myForm) }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
 {% endblock %}
-{% block javascripts %}{% endblock %}
+
+{% block javascripts %}
+	{# Scripts JavaScript #}
+{% endblock %}

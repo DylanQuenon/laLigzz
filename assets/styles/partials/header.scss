@@ -63,7 +63,7 @@ header.show{
   opacity: 1;
 }
 
-.logActions{
+#navLogged,.logAction{
   @media all and (max-width: 992px) {
     order: 1;
  }
@@ -257,8 +257,9 @@ color: $color-primary !important;
 
     @media all and (max-width: 992px) {
   
-    position: absolute !important;
-    left: 60% !important;
+    // position: absolute !important;
+    // left: 60% !important;
+       order: 1 !important;
    }
 
   }
