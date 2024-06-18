@@ -14,7 +14,7 @@
                 <p class="card-text">
                     <strong>Nom :</strong> {{ contact.name }}<br>
                     <strong>Prénom :</strong> {{ contact.firstName }}<br>
-                    <strong>Email :</strong> {{ contact.email }}<br>
+                 <strong>Email :</strong> <a href="mailto:{{ contact.email }}">{{ contact.email }}</a><br>
                     <strong>Contenu :</strong> {{ contact.content }}
                 </p>
                  <a href="#deleteModal{{ contact.id }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ contact.id }}">
