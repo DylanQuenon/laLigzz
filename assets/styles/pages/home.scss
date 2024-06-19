@@ -1,8 +1,16 @@
 @import "../variables/variables.scss";
 #home {
   position: relative;
+  
 
-    @media all and (max-width: 1200px) and (min-width:1500px) {
+    @media all and (max-width: 1200px) {
+      .home_wave  {
+        position: absolute;
+        bottom: -1px;
+      }
+  
+    }
+    @media all  and (min-width:1500px) {
       .home_wave  {
         position: absolute;
         bottom: -1px;
