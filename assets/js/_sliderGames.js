@@ -27,7 +27,7 @@ const swiper = new Swiper('.swiper-games', {
       
         1024: {
             slidesPerView: 3,
-            spaceBetween: 30
+ 
         }
     
     },

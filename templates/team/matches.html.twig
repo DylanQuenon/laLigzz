@@ -6,12 +6,12 @@
     <div class="slide">
         <div class="wrapper wrapperContainerTeam">
             <h2 class="display-xl kizard">Les matches de {{team.name}}</h2>
-            <div class="row">
+            <div class="row" id="rowTeamMatches">
                 {% if games is empty %}
                     <p class="text-lg text-center hero">Aucun match disponible pour cette équipe.</p>
                 {% else %}
                     {% for games in games %}
-                        <div class="col-md-4 me-4">
+                        <div class="col-md-4">
                             {% include "partials/_cardMatches.html.twig" %}
                         </div>
                     {% endfor %}

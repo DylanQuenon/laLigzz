@@ -12,8 +12,10 @@
     }
     .name_team{
         @include flexGap(column,9px);
+        align-items: center;
         img{
             width: 80px;
+            height: 80px;
         }
         p{
             text-transform: uppercase;

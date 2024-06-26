@@ -342,3 +342,29 @@ html,body{
     z-index: 2;
   }
   
+  .wrapperContainerTeam{
+    @media all and (max-width:768px) {
+      #rowTeamMatches{
+        justify-content: center;
+          margin: 0 auto;
+          .col-md-4{
+            justify-content: center;
+  display: flex;
+          }
+        
+      }
+      .cardsMatches{
+        width: 100% !important;
+    }
+      
+    }
+    .cardsMatches{
+      width: 82% !important;
+  }
+  }
+  .row_news{
+    .cardNews{
+      width:100% !important;
+
+    }
+  }

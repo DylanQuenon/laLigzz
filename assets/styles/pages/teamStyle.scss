@@ -229,6 +229,9 @@
 }
 .swiper-games{
     position: relative;
+    padding: 10px;
+    overflow: hidden;
+    width:100%;
     i{
        font-size: 20px;
      
@@ -237,6 +240,7 @@
  
     position: absolute;
     top: 40%;
+    left: 0%;
         z-index: 5;
   cursor: pointer;
 
@@ -244,7 +248,7 @@
     .arrow_next_games{
         position: absolute;
         top: 40%;
-        right: 0;
+        right: 0%;
         z-index: 5;
         @include flex(row);
         cursor: pointer;
@@ -302,9 +306,9 @@
 
 
 @media all and (max-width:768px) {
-    .swiper-slide:nth-child(1) {
-        margin-left: 0%;
-      }
+    // .swiper-slide:nth-child(1) {
+    //     margin-left: 0%;
+    //   }
       .container_slide{
         display: flex;
         justify-content: center;
@@ -317,11 +321,14 @@
     .arrow_prev_games{
         position: absolute;
         top: 50%;
-        left: -5%;
+        left: 0% !important;
     }
     .swiper-games .arrow_next_games{
         position: absolute;
-        right: -5% !important;
+        right: 0% !important;
+    }
+    .swiper-games{
+        padding: 20px;
     }
     
 }
@@ -333,7 +340,7 @@
     min-height: auto !important;
 }
 .swiper-slide{
-    margin-right: 0 !important;
+    margin-left: 0 !important;
     display: flex;
     justify-content: center;
 }

@@ -1,15 +1,12 @@
 @import '../variables/variables.scss';
 
-.row_news{
-  --bs-gutter-x: 0rem !important;
-  --bs-gutter-y: 0 !important;
-  gap: 32px;
-}
+
 .cardNews{
   position: relative;
   border-radius: 25px;
 width: 387px;
   height: 250px;
+  margin: 15px 0;
   transition: all 0.3s;
   display: flex;
   align-items: end;

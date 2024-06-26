@@ -11,9 +11,12 @@
 					<h2 class="display-md kizard col-md-3">actualités</h2>
 				</div>
 				{% include "partials/_searchNews.html.twig" %}
-				<div class="d-flex flex-wrap row_news">
+				<div class="row row_news">
 					{% for new in pagination.data() %}
+					<div class="col-md-4">
 						{% include "partials/_cardNews.html.twig" %}
+					
+					</div>
 					{% endfor %}
 				</div>
 				<div class="pagination">
