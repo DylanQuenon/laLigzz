@@ -306,7 +306,7 @@ class AccountController extends AbstractController
     
     #[Route("/account/followed-matches", name: "account_followed_matches")]
     #[IsGranted('ROLE_USER')]
-    public function followedMatches(Request $request, EntityManagerInterface $manager): Response
+    public function followedMatches(EntityManagerInterface $manager): Response
     {
         $user = $this->getUser();
         $followedTeams = $user->getFollowedTeams();
@@ -319,14 +319,42 @@ class AccountController extends AbstractController
                 $homeTeam = $match->getHomeTeam();
                 $awayTeam = $match->getAwayTeam();
                 
-                // Identifier l'ID de l'équipe opposée
-                $opponentTeamId = ($homeTeam === $followedTeam) ? $awayTeam->getId() : $homeTeam->getId();
-    
-                // Vérifier si le match a déjà été affiché
-                if (!isset($displayedMatches[$opponentTeamId])) {
+                // Identifier les IDs des deux équipes
+                $homeTeamId = $homeTeam->getId();
+                $awayTeamId = $awayTeam->getId();
+                
+                // Vérifier si le match a déjà été affiché pour les deux équipes
+                if (!isset($displayedMatches[$match->getId()][$homeTeamId]) &&
+                    !isset($displayedMatches[$match->getId()][$awayTeamId])) {
+                    
+                    // Ajouter le match à la liste des matchs suivis
                     $followedMatches[] = $match;
-                    // Marquer le match comme déjà affiché
-                    $displayedMatches[$opponentTeamId] = true;
+                    
+                    // Marquer le match comme déjà affiché pour les deux équipes
+                    $displayedMatches[$match->getId()][$homeTeamId] = true;
+                    $displayedMatches[$match->getId()][$awayTeamId] = true;
+                }
+            }
+    
+            foreach ($followedTeam->getAwayMatches() as $match) {
+                // Récupérer les équipes du match
+                $homeTeam = $match->getHomeTeam();
+                $awayTeam = $match->getAwayTeam();
+                
+                // Identifier les IDs des deux équipes
+                $homeTeamId = $homeTeam->getId();
+                $awayTeamId = $awayTeam->getId();
+                
+                // Vérifier si le match a déjà été affiché pour les deux équipes
+                if (!isset($displayedMatches[$match->getId()][$homeTeamId]) &&
+                    !isset($displayedMatches[$match->getId()][$awayTeamId])) {
+                    
+                    // Ajouter le match à la liste des matchs suivis
+                    $followedMatches[] = $match;
+                    
+                    // Marquer le match comme déjà affiché pour les deux équipes
+                    $displayedMatches[$match->getId()][$homeTeamId] = true;
+                    $displayedMatches[$match->getId()][$awayTeamId] = true;
                 }
             }
         }
