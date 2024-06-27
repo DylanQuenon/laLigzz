@@ -304,7 +304,7 @@ class AccountController extends AbstractController
         ]);
     }
     
-    #[Route("/account/followed-matches", name:"account_followed_matches")]
+    #[Route("/account/followed-matches", name: "account_followed_matches")]
     #[IsGranted('ROLE_USER')]
     public function followedMatches(Request $request, EntityManagerInterface $manager): Response
     {
@@ -313,12 +313,16 @@ class AccountController extends AbstractController
         $followedMatches = [];
         $displayedMatches = []; // Tableau pour suivre les matchs déjà affichés
     
-        foreach($followedTeams as $followedTeam)
-        {
-            foreach($followedTeam->getMatches() as $match)
-            {
+        foreach ($followedTeams as $followedTeam) {
+            foreach ($followedTeam->getMatches() as $match) {
+                // Récupérer les équipes du match
+                $homeTeam = $match->getHomeTeam();
+                $awayTeam = $match->getAwayTeam();
+                
+                // Identifier l'ID de l'équipe opposée
+                $opponentTeamId = ($homeTeam === $followedTeam) ? $awayTeam->getId() : $homeTeam->getId();
+    
                 // Vérifier si le match a déjà été affiché
-                $opponentTeamId = $match->getOpponentTeam()->getId();
                 if (!isset($displayedMatches[$opponentTeamId])) {
                     $followedMatches[] = $match;
                     // Marquer le match comme déjà affiché
@@ -326,17 +330,18 @@ class AccountController extends AbstractController
                 }
             }
         }
-
-               // Trier les actualités du plus récent au plus ancien
-               usort($followedMatches, function($a, $b) {
-                return $b->getDate()->getTimestamp() - $a->getDate()->getTimestamp();
-            });
+    
+        // Trier les matches du plus récent au plus ancien
+        usort($followedMatches, function($a, $b) {
+            return $b->getDate()->getTimestamp() - $a->getDate()->getTimestamp();
+        });
     
         return $this->render("account/followedMatches.html.twig", [
             'followedMatches' => $followedMatches,
             'user' => $user
         ]);
     }
+    
 
      /**
      * Delete account
