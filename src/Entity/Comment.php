@@ -20,7 +20,7 @@ class Comment
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column]
-    #[Assert\Range(min: 1, max: 5, notInRangeMessage:"Vous devez choisir un chiffre entre 1 et 5")]
+    #[Assert\NotNull(message: "Veuillez attribuer une note")]
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT)]
