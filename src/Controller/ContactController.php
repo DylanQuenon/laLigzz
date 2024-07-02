@@ -45,6 +45,7 @@ class ContactController extends AbstractController
             $email = (new Email())
                 ->from('contact@laligzz.dylanquenon.com')  // E-mail de l'expéditeur
                 ->to($this->contactEmail)  // Utilisation de l'e-mail du destinataire récupéré depuis .env
+                ->replyTo($contact->getEmail())
                 ->subject($contact->getSubject())
                 ->html($this->renderView('mail/mail.html.twig', [
                     'contact' => $contact,
