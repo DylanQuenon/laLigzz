@@ -1,0 +1,78 @@
+{# templates/email/contact_notification.html.twig #}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nouveau message de contact{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            padding: 20px;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .card-body p {
+            margin-bottom: 15px;
+        }
+        .card-body hr {
+            margin: 20px 0;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="m-0">Nouveau message de contact</h3>
+                        <small>Envoyé le {{ contact.sendAt|date("d/m/Y H:i") }}</small>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Prénom :</strong> {{ contact.firstName }}</p>
+                        <p><strong>Nom :</strong> {{ contact.name }}</p>
+                        <p><strong>Email :</strong> {{ contact.email }}</p>
+                        <p><strong>Sujet :</strong> {{ contact.subject }}</p>
+                        <hr>
+                        <p><strong>Message :</strong></p>
+                        <p>{{ contact.content|raw|nl2br }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; {{ "now"|date("Y") }} Mon Entreprise. Tous droits réservés.</p>
+    </div>
+</body>
+</html>
